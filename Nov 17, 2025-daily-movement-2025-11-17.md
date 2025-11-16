@@ -8,3 +8,32 @@
 
 ## Notes & Highlights
 - Observations, energy, BP trends, strength notes
+
+- # Daily Movement – November 17, 2025
+
+## Mini-Movements & Walks
+- Time:  
+- Duration:  
+- Steps:  
+- Notes:  
+
+## Strength Training
+- Notes:  
+
+## Blood Pressure
+- AM:  
+- PM:  
+- Notes:  
+
+## Meals & Nutrition
+- Breakfast:  
+- Lunch:  
+- Dinner:  
+- Snacks:  
+
+## Sleep
+- Hours:  
+- Notes:  
+
+## Overall Notes
+- Observations, energy, anything important

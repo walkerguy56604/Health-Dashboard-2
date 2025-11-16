@@ -1,10 +1,15 @@
 # Health Dashboard #2
 
-## Daily Movement Logs
+## Recent Logs (most recent first)
+- [Nov 16, 2025](daily-movement-2025-11-16.md)  ← updated with latest Mini Movement
+- [Nov 17, 2025](daily-movement-2025-11-17.md)
+- [Nov 18, 2025](daily-movement-2025-11-18.md)
+
+## All Daily Movement Logs
 - [Nov 16, 2025](daily-movement-2025-11-16.md)
 - [Nov 17, 2025](daily-movement-2025-11-17.md)
 - [Nov 18, 2025](daily-movement-2025-11-18.md)
-- ...add each day as it comes
+- … (you can keep adding more days here)
 
 ## Notes & Highlights
 - Observations, energy, BP trends, strength notes

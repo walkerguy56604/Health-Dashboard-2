@@ -13,16 +13,16 @@
 
 ## Notes & Highlights
 - Observations, energy, BP trends, strength notes
-
-- # Daily Movement – November 16, 2025
+# Daily Movement – November 16, 2025
 
 ## Mini-Movements & Walks
 - 12:00–12:05 AM → 5 min → 550 steps
 - 1:15–1:20 AM → 5 min → 550 steps
 - 3:50–3:55 AM → 5 min → 550 steps
-- 5:18–5:23 AM → 5 min → 550 steps  ← new
-**Total mini-movements:** 4  
-**Total steps:** ~2200  
+- 5:18–5:23 AM → 5 min → 550 steps
+- 7:55–8:00 AM → 5 min → 550 steps  ← new
+**Total mini-movements:** 5  
+**Total steps:** ~2750  
 **Notes:** Energy good, relaxed pace, low-key walks.
 
 ## Strength Training

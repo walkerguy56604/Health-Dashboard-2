@@ -15,3 +15,20 @@ Blood Pressure Check
 Nutrition Notes (Partial)
 	•	Coffee: 1 tbsp + 1 tsp → ~5 cal, 0g fat, 1g carbs, 0.2g protein, 50mg potassium, 1mg iron
 	•	Honey: 1 tbsp → 60 cal, 0g fat, 1.6g carbs, 0.1g protein, 10mg potassium, 0.1mg iron
+Daily Totals
+Activity Type
+Duration/Steps
+Notes
+Mini Movement Walk
+5 min × 4 sessions
+~550 steps each
+Primary Walk
+22 min
+~2,800 steps
+Strength Training
+14 min
+3 lateral + biceps sets, 10 reps each
+
+
+
+	

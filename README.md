@@ -34,8 +34,7 @@
 - /data          ← your daily logs
 /sql           ← optional scripts for analysis
 /logs          ← optional daily summaries
-README.md      ← this file
-SELECT 
+README.md      ← this fileSELECT 
     date,
     AVG(systolic) AS avg_sys,
     AVG(diastolic) AS avg_dia,
@@ -43,7 +42,3 @@ SELECT
 FROM bp_readings
 GROUP BY date
 ORDER BY date DESC;
-SELECT
-    corr(pulse, systolic) AS pulse_sys_corr,
-    corr(pulse, diastolic) AS pulse_dia_corr
-FROM bp_readings;

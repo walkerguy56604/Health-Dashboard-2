@@ -1,8 +1,6 @@
--- Example: Correlate pulse and blood pressure
-SELECT
-    date,
-    CORR(pulse, systolic) AS pulse_systolic_corr,
-    CORR(pulse, diastolic) AS pulse_diastolic_corr
+-- Correlates pulse with blood pressure trends
+SELECT date,
+       CORR(pulse, systolic) AS corr_pulse_systolic,
+       CORR(pulse, diastolic) AS corr_pulse_diastolic
 FROM blood_pressure
-GROUP BY date
-ORDER BY date DESC;
+WHERE date = '2025-11-16';

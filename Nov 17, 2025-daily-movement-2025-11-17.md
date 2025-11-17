@@ -18,11 +18,13 @@ Health Dashboard – Nov 17, 2025
 | Morning | 116 | 65 | 84 | Hypertension L (Left arm) |
 | Morning | 120 | 67 | 84 | Hypertension 
 | Time            | Duration | Steps |
-|-----------------|---------|-------|
-| 12:52–12:57 AM  | 5 min   | ~550  |
-| 3:55–4:00 AM    | 5 min   | ~550  |
-| 8:00–8:16 AM    | 16 min  | ~550  |
-| Time       | Duration | Details                     |
+| Time           | Duration | Steps | Notes |
+|----------------|---------|-------|-------|
+| 8:00–8:05 AM   | 5 min   | ~550  | Morning Walk #1 |
+| 8:16–8:21 AM   | 5 min   | ~550  | Morning Walk #2 |
+| 12:55–1:00 PM  | 5 min   | ~550  | Post-strength walk |
+| 1:30 PM        | 5 min   | 550   | Outside walk; update times if needed |
+| TBD (~8:00 PM) | 5–10 min | 550  | Evening walk / light activity |                 |
 |-----------|---------|-----------------------------|
 | 8:18–8:32 AM | 14 min | 3 laterals, 3 curls, 10 reps each |
 ### Noon Strength Training

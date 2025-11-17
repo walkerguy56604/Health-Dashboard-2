@@ -35,7 +35,28 @@ Health Dashboard – Nov 17, 2025
 |----------------|---------|-------|---------------------------|
 | 12:20–12:25 PM | 5 min   | TBD   | Short walk (placeholder)  |
 | 12:45–12:50 PM | 5 min   | TBD   | Short walk (placeholder)  |
-| Time           | Duration | Steps | Notes                                 |
+| Time           | Duration | Steps | Notes      
+#### Lunch
+| Time           | Meal                        | Notes / Items          |
+|----------------|----------------------------|-----------------------|
+| TBD (~12:30–1:00 PM) | Lunch                     | Placeholder; update with actual meal details |
+
+#### Afternoon Snack
+| Time           | Snack                       | Notes / Items          |
+|----------------|----------------------------|-----------------------|
+| TBD            | Snack                       | Placeholder; update with actual snack details |
+
+#### Dinner
+| Time           | Meal                        | Notes / Items          |
+|----------------|----------------------------|-----------------------|
+| TBD (~6:00–7:00 PM) | Dinner                     | Placeholder; update with actual meal details |
+
+#### Evening Snack
+| Time           | Snack                       | Notes / Items          |
+|----------------|----------------------------|-----------------------|
+| TBD            | Snack                       | Placeholder; update with actual snack details |
+
+|
 |----------------|---------|-------|--------------------------------------|
 | 12:55–1:00 PM  | 5 min   | ~550  | Post-strength training walk completed |
 | Time           | Duration | Steps | Notes                                           |

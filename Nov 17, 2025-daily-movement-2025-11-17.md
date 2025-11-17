@@ -1,3 +1,8 @@
+# Nov 17, 2025 – Health Dashboard
+Sections include:
+1️⃣ Blood Pressure
+2️⃣ Activity Log
+3️⃣ Nutrition Log
 Health Dashboard – Nov 17, 2025
 
 ## Recent Logs (most recent first)
@@ -35,7 +40,8 @@ Health Dashboard – Nov 17, 2025
 | Time | Duration | Steps | Notes |
 |------|---------|-------|-------|
 | 9:14–9:36 AM | 22 min | 2,200 | First post-strength walk |
-| 9:00 AM | TBD | Placeholder | Second walk after strength training |
+| 9:00 AM | TBD | Placeholder | Second walk after strength 
+training |
 ## 3️⃣ Nutrition Log
 | Time | Item | Notes | Calories | Carbs | Protein | Fat | Glycemic Load |
 |------|------|-------|----------|-------|---------|-----|---------------|

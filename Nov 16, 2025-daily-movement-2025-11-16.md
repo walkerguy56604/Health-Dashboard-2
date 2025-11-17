@@ -29,6 +29,24 @@ Strength Training
 14 min
 3 lateral + biceps sets, 10 reps each
 
+Daily Movement – Nov 16, 2025
+
+Mini Movement
+	•	5-minute walk: 3:54 PM – 3:59 PM (~550 steps)
+
+Strength Training
+	•	Duration: 16 minutes (4:04 PM – 4:20 PM)
+	•	Exercises:
+	•	3 sets biceps curls ×10
+	•	3 sets lateral raises ×10
+
+Notes & Highlights
+	•	Energy level: good
+	•	Observations: strength felt solid, mini walk completed comfortably
+	•	BP trends: pending entry
+	•	Additional notes: N/A
+
+
 
 
 	

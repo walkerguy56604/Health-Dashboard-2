@@ -52,6 +52,9 @@ Health Dashboard – Nov 17, 2025
 | Dinner | TBD | 
 | Time          | Weight (lbs) | Notes                                |
 |---------------|--------------|--------------------------------------|
+| Calories | Carbs (g) | Protein (g) | Fat (g) |
+|----------|-----------|-------------|---------|
+| ~395     | ~45.5     | 15          | 19      |
 | ~1:30–2:00 PM | 150          | Without shoes/orthotics; placeholder |
 
 ## 5️⃣ Visualization Placeholders
@@ -59,3 +62,6 @@ Health Dashboard – Nov 17, 2025
 - **Stability Metrics:** Standard deviation, ΔAM–PM  
 - **Zones Summary:** Ideal / Elevated / High  
 - **Activity Overlay:** Walks, strength training, coffee, other rec notes
+| Time       | Observation                                     | Notes                                         |
+|-----------|-------------------------------------------------|-----------------------------------------------|
+| Morning / Afternoon | Slight fullness in right ear; mild dizziness | Possible mild vertigo-related or sinus effect; no pain or discharge; monitor and track |

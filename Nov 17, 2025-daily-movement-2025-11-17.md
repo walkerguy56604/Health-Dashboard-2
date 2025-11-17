@@ -35,8 +35,13 @@ Health Dashboard – Nov 17, 2025
 |----------------|---------|-------|---------------------------|
 | 12:20–12:25 PM | 5 min   | TBD   | Short walk (placeholder)  |
 | 12:45–12:50 PM | 5 min   | TBD   | Short walk (placeholder)  |
-| 1:00–1:05 PM   | 5 min   | TBD   | Short walk (placeholder)  |
-| Time     | Item                     | Notes                 | Calories | Carbs | Protein | Fat | Glycemic Load |
+| Time           | Duration | Steps | Notes                                 |
+|----------------|---------|-------|--------------------------------------|
+| 12:55–1:00 PM  | 5 min   | ~550  | Post-strength training walk completed |
+| Time           | Duration | Steps | Notes                                           |
+|----------------|---------|-------|------------------------------------------------|
+| TBD (~1:30 PM) | 5 min   | 550   | Outside walk; update actual start/end time and steps after walk |
+| TBD (~1:35 PM) | --      | --    | Weigh-in placeholder; remove shoes/orthotics and record actual weight |
 |---------|--------------------------|----------------------|----------|-------|---------|-----|---------------|
 | Morning | Coffee                   | Black, no honey      | 0        | 0     | 0       | 0   | 0             |
 | Breakfast | 2 Eggs + 1 White Bun    | Grandma made the bun | ~235     | ~22.5 | 14      | 12  | ~8            |

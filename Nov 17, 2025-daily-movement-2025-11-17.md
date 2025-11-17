@@ -4,86 +4,118 @@ Sections include:
 2️⃣ Activity Log
 3️⃣ Nutrition Log
 Health Dashboard – Nov 17, 2025
+# Health Dashboard – Nov 17, 2025
 
 ## Recent Logs (most recent first)
-- [Nov 17, 2025](daily-movement-2025-11-17.md)  
-- [Nov 16, 2025](daily-movement-2025-11-16.md)
-
-## All Daily Movement Logs
+- [Nov 17, 2025](daily-movement-2025-11-17.md) ← today  
 - [Nov 16, 2025](daily-movement-2025-11-16.md)  
-- [Nov 17, 2025](daily-movement-2025-11-17.md)
-- ## 1️⃣ Blood Pressure Readings
-| Time | Systolic | Diastolic | Pulse | Notes |
-|------|----------|-----------|-------|-------|
-| Morning | 116 | 65 | 84 | Hypertension L (Left arm) |
-| Morning | 120 | 67 | 84 | Hypertension 
-| Time            | Duration | Steps |
+- [Nov 18, 2025](daily-movement-2025-11-18.md)  
+
+## Full Daily Movement & Health Log
+
+### Activity Summary
+| Time / Activity           | Duration | Steps / Reps | Notes |
+|---------------------------|---------|-------------|-------|
+| Morning Walk #1           | 5 min   | ~550        | Completed |
+| Morning Walk #2           | 5 min   | ~550        | Completed |
+| Strength Training         | 15 min  | Laterals: 3×10, Biceps: 3×10 | Completed at 12:10 |
+| Post-Strength Walk        | 5 min   | ~550        | Completed 12:55–1:00 PM |
+| 1:30 PM Outside Walk      | 5 min   | 550         | Update actual time if different |
+| Evening Walk / Activity   | 5–10 min | 550         | Placeholder; update when completed |
+| Mini-Stretch / Cooldown   | 3–5 min | –           | Note any tightness or recovery observations |
+
+### Meals & Snacks
+| Time           | Meal / Snack                 | Notes / Items          |
+|----------------|-----------------------------|-----------------------|
+| Breakfast      | Scrambled eggs + 1 bun       | Completed |
+| Lunch          | TBD                          | Placeholder |
+| Afternoon Snack| TBD                          | Placeholder |
+| Dinner         | TBD                          | Placeholder |
+| Evening Snack  | TBD                          | Placeholder |
+
+### Hydration & Drinks
+| Time           | Beverage                     | Notes |
+|----------------|------------------------------|-------|
+| Morning        | Black coffee                 | Completed |
+| Other          | TBD                          | Placeholder |
+
+### Weigh-In
+| Time           | Weight | Notes |
+|----------------|-------|-------|
+| 1:35 PM (est)  | 150 lb | Remove shoes/orthotics; update if different |
+
+### Blood Pressure
+| Time           | BP Reading | Notes |
+|----------------|------------|-------|
+| Morning        | 116/65/84 | Hypertension L |
+| Morning        | 120/67/84 | Hypertension M |
+| Other          | TBD        | Placeholder |
+
+### Notes & Observations
+- Energy levels, dizziness, vertigo, ear sensations  
+- Any other symptoms, thoughts, or reminders for tomorrow  
+
+### End-of-Day Summary
+| Section                 | Summary / Notes |
+|-------------------------|----------------|
+| Total Steps / Activity  | TBD; sum all walks and other activity |
+| Strength Training        | Completed 15 min; 3×10 laterals & biceps |
+| Meals / Snacks           | Update with actual meals and snacks |
+| Weigh-In                 | 150 lb (update if different) |
+| Blood Pressure           | Update with additional readings if taken |
+| Hydration                | Update with drinks consumed |
+| Notes / Observations     | Fill in any relevant health notes, energy, or symptoms |
+
+---
+
+## Quick-Update Mini Sections
+
+### Walks & Steps
 | Time           | Duration | Steps | Notes |
 |----------------|---------|-------|-------|
 | 8:00–8:05 AM   | 5 min   | ~550  | Morning Walk #1 |
 | 8:16–8:21 AM   | 5 min   | ~550  | Morning Walk #2 |
 | 12:55–1:00 PM  | 5 min   | ~550  | Post-strength walk |
 | 1:30 PM        | 5 min   | 550   | Outside walk; update times if needed |
-| TBD (~8:00 PM) | 5–10 min | 550  | Evening walk / light activity |                 |
-|-----------|---------|-----------------------------|
-| 8:18–8:32 AM | 14 min | 3 laterals, 3 curls, 10 reps each |
-### Noon Strength Training
-| Time       | Duration | Details                     |
-|-----------|---------|-----------------------------|
-| 12:00–12:15 PM | 15 min | TBD (placeholder for exercises, reps, sets) |
+| TBD (~8:00 PM) | 5–10 min | 550  | Evening walk / light activity |
 
-### Post-Noon Walks
-| Time           | Duration | Steps | Notes                     |
-|----------------|---------|-------|---------------------------|
-| 12:20–12:25 PM | 5 min   | TBD   | Short walk (placeholder)  |
-| 12:45–12:50 PM | 5 min   | TBD   | Short walk (placeholder)  |
-| Time           | Duration | Steps | Notes      
-#### Lunch
-| Time           | Meal                        | Notes / Items          |
-|----------------|----------------------------|-----------------------|
-| TBD (~12:30–1:00 PM) | Lunch                     | Placeholder; update with actual meal details |
+### Strength Training
+| Time   | Exercise | Sets × Reps | Notes |
+|--------|----------|------------|-------|
+| 12:10  | Laterals & Biceps | 3×10 each | Completed; 15 min total |
 
-#### Afternoon Snack
-| Time           | Snack                       | Notes / Items          |
-|----------------|----------------------------|-----------------------|
-| TBD            | Snack                       | Placeholder; update with actual snack details |
+### Meals & Snacks
+| Time           | Meal / Snack | Notes / Items |
+|----------------|-------------|----------------|
+| Breakfast      | Scrambled eggs + 1 bun | Completed |
+| Lunch          | TBD         | Placeholder |
+| Afternoon Snack| TBD         | Placeholder |
+| Dinner         | TBD         | Placeholder |
+| Evening Snack  | TBD         | Placeholder |
 
-#### Dinner
-| Time           | Meal                        | Notes / Items          |
-|----------------|----------------------------|-----------------------|
-| TBD (~6:00–7:00 PM) | Dinner                     | Placeholder; update with actual meal details |
+### Hydration & Drinks
+| Time    | Beverage | Notes |
+|---------|---------|-------|
+| Morning | Black coffee | Completed |
+| Other   | TBD         | Placeholder |
 
-#### Evening Snack
-| Time           | Snack                       | Notes / Items          |
-|----------------|----------------------------|-----------------------|
-| TBD            | Snack                       | Placeholder; update with actual snack details |
-| Time           | Duration | Steps | Notes                        |
-|----------------|---------|-------|------------------------------|
-| TBD (~8:00–8:30 PM) | 5–10 min | 550   | Evening walk or light activity; update actual start/end time, steps, and notes |
+### Weigh-In
+| Time           | Weight | Notes |
+|----------------|-------|-------|
+| 1:35 PM (est)  | 150 lb | Remove shoes/orthotics; update if different |
 
-|
-|----------------|---------|-------|--------------------------------------|
-| 12:55–1:00 PM  | 5 min   | ~550  | Post-strength training walk completed |
-| Time           | Duration | Steps | Notes                                           |
-|----------------|---------|-------|------------------------------------------------|
-| TBD (~1:30 PM) | 5 min   | 550   | Outside walk; update actual start/end time and steps after walk |
-| TBD (~1:35 PM) | --      | --    | Weigh-in placeholder; remove shoes/orthotics and record actual weight |
-|---------|--------------------------|----------------------|----------|-------|---------|-----|---------------|
-| Morning | Coffee                   | Black, no honey      | 0        | 0     | 0       | 0   | 0             |
-| Breakfast | 2 Eggs + 1 White Bun    | Grandma made the bun | ~235     | ~22.5 | 14      | 12  | ~8            |
-| Snack   | Chips Ahoy Chewy Tenders | 3 cookies, 35 g     | 160      | 23    | 1       | 7   | ~12–13        |
-| Lunch   | TBD                      | Placeholder          | --       | --    | --      | --  | --            |
-| Dinner  | TBD                      | Placeholder          | --       | --    | --      | --  | --            |
-| Calories | Carbs (g) | Protein (g) | Fat (g) |
-|----------|-----------|-------------|---------|
-| ~395     | ~45.5     | 15          | 19      |
-| Time          | Weight (lbs) | Notes                                |
-|---------------|--------------|--------------------------------------|
-| ~1:30–2:00 PM | 150          | Without shoes/orthotics; placeholder |
-| Time | Item       | Notes       | Calories | Carbs | Protein | Fat | Glycemic Load |
-|------|-----------|------------|----------|-------|---------|-----|---------------|
-| TBD  | Snack / Meal | Placeholder | --       | --    | --      | --  | --            |
-| TBD  | Snack / Meal | Placeholder | --       | --    | --      | --  | --            |
-| Time       | Observation                                     | Notes                                         |
-|-----------|-------------------------------------------------|-----------------------------------------------|
-| Morning / Afternoon | Slight fullness in right ear; mild dizziness | Possible mild vertigo-related or sinus effect; no pain or discharge; monitor and track |
+### Blood Pressure
+| Time           | BP Reading | Notes |
+|----------------|------------|-------|
+| Morning        | 116/65/84 | Hypertension L |
+| Morning        | 120/67/84 | Hypertension M |
+| Other          | TBD        | Placeholder |
+
+### Mini-Stretch / Cooldown
+| Time           | Duration | Notes |
+|----------------|---------|-------|
+| Post-walk      | 3–5 min | Stretching / recovery; note tightness if any |
+
+### Notes & Observations
+- Energy levels, dizziness, vertigo, ear sensations  
+- Any other symptoms, thoughts, or reminders for tomorrow

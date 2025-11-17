@@ -1,27 +1,43 @@
-# Daily Movement – Nov 16, 2025
+Daily Movement – Nov 16, 2025
 
-## Primary Walk / WalkManyMovements
-- **Start time:** 
-- **End time:** 
-- **Duration:** 
-- **Steps / Distance:** 
-- **Notes / Observations:** 
+Primary Walk (Outdoor)
+	•	Start: 5:00 PM (update after)
+	•	End: …
+	•	Duration: …
+	•	Steps: …
+	•	Distance: … km (estimated OK)
+	•	Calories: … kcal (estimated OK)
+	•	Notes: …
 
-## Mini Walks / Short Movements
-- **Walk 1:** 
-  - Start / End / Duration / Steps / Notes
-- **Walk 2:** 
-  - Start / End / Duration / Steps / Notes
-- … (add more as needed)
+⸻
 
-## Strength Training
-- **Start time:** 
-- **End time:** 
-- **Exercises:** 
-  - Biceps curls – reps / sets
-  - Laterals – reps / sets
-  - … (add more as needed)
-- **Notes / Observations:** 
+Strength Training
+	•	Start: 8:00 PM planned
+	•	End: …
+	•	Duration: …
+	•	Exercises:
+	•	Biceps: … reps × … sets
+	•	Laterals: … reps × … sets
+	•	Anything else: …
 
-## Other Notes
-- Energy, mood, BP trends, or anything else worth noting
+⸻
+
+Additional Short Walks
+	•	Walk #1:
+	•	Time: …
+	•	Duration: …
+	•	Notes: …
+	•	Walk #2:
+	•	Time: …
+	•	Duration: …
+	•	Notes: …
+
+(You can add more as needed.)
+
+⸻
+
+Daily Summary
+	•	Total Steps: …
+	•	Total Distance: … km
+	•	Total Calories Burned: … kcal
+	•	Energy / Notes: …

@@ -16,52 +16,43 @@ Health Dashboard – Nov 17, 2025
 | Time | Systolic | Diastolic | Pulse | Notes |
 |------|----------|-----------|-------|-------|
 | Morning | 116 | 65 | 84 | Hypertension L (Left arm) |
-| Morning | 120 | 67 | 84 | Hypertension M |
+| Morning | 120 | 67 | 84 | Hypertension 
+| Time            | Duration | Steps |
+|-----------------|---------|-------|
+| 12:52–12:57 AM  | 5 min   | ~550  |
+| 3:55–4:00 AM    | 5 min   | ~550  |
+| 8:00–8:16 AM    | 16 min  | ~550  |
+| Time       | Duration | Details                     |
+|-----------|---------|-----------------------------|
+| 8:18–8:32 AM | 14 min | 3 laterals, 3 curls, 10 reps each |
+### Noon Strength Training
+| Time       | Duration | Details                     |
+|-----------|---------|-----------------------------|
+| 12:00–12:15 PM | 15 min | TBD (placeholder for exercises, reps, sets) |
 
-**Trend & Stability:**
-- Morning readings healthy and consistent.
-- AM vs PM comparison placeholder.
-- Stability Score: 9.2 / 10 (excellent).
-- ## 2️⃣ Activity Log
-
-### **Morning Walks**
-| Time | Duration | Steps |
-|------|---------|-------|
-| 12:52–12:57 AM | 5 min | ~550 |
-| 3:55–4:00 AM | 5 min | ~550 |
-| 8:00–8:16 AM | 16 min | ~550 |
-
-### **Strength Training**
-| Time | Duration | Details |
-|------|---------|--------|
-| 8:18–8:32 AM | 14 min | 3 laterals, 3 curls, 10 reps 
-| Time           | Duration | Steps | Notes                                  |
-| Time           | Duration | Steps | Notes                                  |
-|----------------|---------|-------|----------------------------------------|
-| 9:14–9:36 AM   | 22 min  | 2,200 | First post-strength walk               |
-| 10:56–11:01 AM | 5 min   | 550   | Second post-strength walk              |
-| 11:25–11:30 AM | 5 min   | 550   | Short indoor walk                       |
-| 11:55–12:00 PM | 5 min   | TBD   | 11:55 walk (placeholder)              |
-## 3️⃣ Nutrition Log
-| Time | Item | Notes | Calories | Carbs | Protein | Fat | Glycemic Load |
-|------|------|-------|----------|-------|---------|-----|---------------|
-| Morning | Coffee | Black, no honey | 0 kcal | 0 g | 0 g | 0 g | 0 |
-| Breakfast | TBD | Placeholder for first meal | -- | -- | -- | -- | -- |
-| Snack | TBD | Placeholder | -- | -- | -- | -- | -- |
-| Lunch | TBD | Placeholder | -- | -- | -- | -- | -- |
-| Dinner | TBD | 
-| Time          | Weight (lbs) | Notes                                |
-|---------------|--------------|--------------------------------------|
+### Post-Noon Walks
+| Time           | Duration | Steps | Notes                     |
+|----------------|---------|-------|---------------------------|
+| 12:20–12:25 PM | 5 min   | TBD   | Short walk (placeholder)  |
+| 12:45–12:50 PM | 5 min   | TBD   | Short walk (placeholder)  |
+| 1:00–1:05 PM   | 5 min   | TBD   | Short walk (placeholder)  |
+| Time     | Item                     | Notes                 | Calories | Carbs | Protein | Fat | Glycemic Load |
+|---------|--------------------------|----------------------|----------|-------|---------|-----|---------------|
+| Morning | Coffee                   | Black, no honey      | 0        | 0     | 0       | 0   | 0             |
+| Breakfast | 2 Eggs + 1 White Bun    | Grandma made the bun | ~235     | ~22.5 | 14      | 12  | ~8            |
+| Snack   | Chips Ahoy Chewy Tenders | 3 cookies, 35 g     | 160      | 23    | 1       | 7   | ~12–13        |
+| Lunch   | TBD                      | Placeholder          | --       | --    | --      | --  | --            |
+| Dinner  | TBD                      | Placeholder          | --       | --    | --      | --  | --            |
 | Calories | Carbs (g) | Protein (g) | Fat (g) |
 |----------|-----------|-------------|---------|
 | ~395     | ~45.5     | 15          | 19      |
+| Time          | Weight (lbs) | Notes                                |
+|---------------|--------------|--------------------------------------|
 | ~1:30–2:00 PM | 150          | Without shoes/orthotics; placeholder |
-
-## 5️⃣ Visualization Placeholders
-- **Trend Graphs:** AM/PM BP over past 14 days  
-- **Stability Metrics:** Standard deviation, ΔAM–PM  
-- **Zones Summary:** Ideal / Elevated / High  
-- **Activity Overlay:** Walks, strength training, coffee, other rec notes
+| Time | Item       | Notes       | Calories | Carbs | Protein | Fat | Glycemic Load |
+|------|-----------|------------|----------|-------|---------|-----|---------------|
+| TBD  | Snack / Meal | Placeholder | --       | --    | --      | --  | --            |
+| TBD  | Snack / Meal | Placeholder | --       | --    | --      | --  | --            |
 | Time       | Observation                                     | Notes                                         |
 |-----------|-------------------------------------------------|-----------------------------------------------|
 | Morning / Afternoon | Slight fullness in right ear; mild dizziness | Possible mild vertigo-related or sinus effect; no pain or discharge; monitor and track |

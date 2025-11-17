@@ -42,3 +42,24 @@ README.md      ← this fileSELECT
 FROM bp_readings
 GROUP BY date
 ORDER BY date DESC;
+Health Dashboard #2
+
+Recent Logs (most recent first)
+	•	Nov 17, 2025￼  ← today’s placeholder
+	•	Nov 16, 2025￼
+
+All Daily Movement Logs
+	•	Nov 16, 2025￼
+	•	Nov 17, 2025￼  ← new placeholder
+	•	… (keep adding more days as you go)
+
+Notes & Highlights
+	•	Mini walk: 5 minutes (3:54–3:59 PM, Nov 17)
+	•	Strength training: 16 minutes (4:04–4:20 PM, Nov 17)
+	•	Exercises: 3 biceps, 3 lateral, 10 each
+	•	Observations: Energy, BP trends, daily notes, and progress
+
+Dashboard Placeholder
+	•	SQL Totals & Analytics: [Link to SQL or placeholder]
+	•	Primary Walk Session: [Link or placeholder for detailed activity]
+	•	Future GitHub Pages Dashboard: [Placeholder link]

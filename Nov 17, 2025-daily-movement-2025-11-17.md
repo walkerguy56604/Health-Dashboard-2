@@ -9,34 +9,21 @@
 - [Nov 16, 2025](daily-movement-2025-11-16.md)
 - [Nov 17, 2025](daily-movement-2025-11-17.md)  ← new placeholder
 - [Nov 18, 2025](daily-movement-2025-11-18.md)
-- … (you can keep adding more days here)
+- … (you can keep adding more days
 
-## Notes & Highlights
-- Observations, energy, BP trends, strength notes
-# Daily Movement — Nov 17, 2025
+- Daily Movement – Nov 17, 2025
 
-## Activity
-- Walks:
-- Strength training:
-- Steps:
-- Other movement:
+Mini Movement
+	•	5-minute walk: ⬜ (time/steps placeholder)
 
-## Nutrition
-- Meals:
-- Snacks:
-- Notes:
+Strength Training
+	•	Duration: ⬜ (minutes placeholder)
+	•	Exercises:
+	•	⬜ sets biceps curls ×⬜
+	•	⬜ sets lateral raises ×⬜
 
-## Blood Pressure
-- Morning:
-- Evening:
-- Observations:
-
-## General Notes
-- Energy:
-- Sleep:
-- Mood:
-- Symptoms:
-- Plans/Goals:
-
----
-[Back to Health Dashboard](health-dashboard.md)
+Notes & Highlights
+	•	Energy level: ⬜
+	•	Observations: ⬜
+	•	BP trends: ⬜
+	•	Additional notes: ⬜

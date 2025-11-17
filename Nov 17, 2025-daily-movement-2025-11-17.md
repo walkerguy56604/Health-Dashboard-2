@@ -36,9 +36,11 @@ Health Dashboard – Nov 17, 2025
 |------|---------|--------|
 | 8:18–8:32 AM | 14 min | 3 laterals, 3 curls, 10 reps 
 | Time           | Duration | Steps | Notes                                  |
+| Time           | Duration | Steps | Notes                                  |
 |----------------|---------|-------|----------------------------------------|
 | 9:14–9:36 AM   | 22 min  | 2,200 | First post-strength walk               |
 | 10:56–11:01 AM | 5 min   | 550   | Second post-strength walk              |
+| 11:25–11:30 AM | 5 min   | 550   | Short indoor walk                       |
 | 11:55–12:00 PM | 5 min   | TBD   | 11:55 walk (placeholder)              |
 ## 3️⃣ Nutrition Log
 | Time | Item | Notes | Calories | Carbs | Protein | Fat | Glycemic Load |

@@ -55,6 +55,9 @@ Health Dashboard – Nov 17, 2025
 | Time           | Snack                       | Notes / Items          |
 |----------------|----------------------------|-----------------------|
 | TBD            | Snack                       | Placeholder; update with actual snack details |
+| Time           | Duration | Steps | Notes                        |
+|----------------|---------|-------|------------------------------|
+| TBD (~8:00–8:30 PM) | 5–10 min | 550   | Evening walk or light activity; update actual start/end time, steps, and notes |
 
 |
 |----------------|---------|-------|--------------------------------------|

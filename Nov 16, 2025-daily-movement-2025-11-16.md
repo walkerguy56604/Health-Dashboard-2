@@ -1,43 +1,30 @@
-Daily Movement – Nov 16, 2025
+Daily Summary – November 16, 2025
 
-Primary Walk (Outdoor)
-	•	Start: 5:00 PM (update after)
-	•	End: …
-	•	Duration: …
-	•	Steps: …
-	•	Distance: … km (estimated OK)
-	•	Calories: … kcal (estimated OK)
-	•	Notes: …
+Activity
+	•	Strength Training: 7:55–8:07 PM (12 minutes, first round completed)
+	•	Walks:
+	•	7:48–7:53 PM (5 min)
+	•	8:24–8:29 PM (5 min, ~550 steps)
+	•	8:48–8:53 PM (5 min, ~550 steps)
+	•	9:29–9:34 PM (5 min, ~550 steps)
+	•	9:57–10:02 PM (5 min, ~550 steps)
 
-⸻
+Nutrition
+	•	Orange: Large, skin included (~size of small 5-pin bowling ball), cut into 4 slices.
+	•	Coffee + Honey: 1 cup coffee with 1 tbsp honey
+	•	Calories: ~64 kcal
+	•	Carbs: ~17 g (all sugars)
+	•	Protein: 0 g
+	•	Fat: 0 g
+	•	Fiber: 0 g
+	•	Estimated Glycemic Load: ~9–10 (low-to-moderate impact)
 
-Strength Training
-	•	Start: 8:00 PM planned
-	•	End: …
-	•	Duration: …
-	•	Exercises:
-	•	Biceps: … reps × … sets
-	•	Laterals: … reps × … sets
-	•	Anything else: …
+Sleep Prep
+	•	CPAP machine set up for tonight ✅
 
-⸻
-
-Additional Short Walks
-	•	Walk #1:
-	•	Time: …
-	•	Duration: …
-	•	Notes: …
-	•	Walk #2:
-	•	Time: …
-	•	Duration: …
-	•	Notes: …
-
-(You can add more as needed.)
-
-⸻
-
-Daily Summary
-	•	Total Steps: …
-	•	Total Distance: … km
-	•	Total Calories Burned: … kcal
-	•	Energy / Notes: …
+Notes / Observations
+	•	Evening strength training + multiple 5-minute walks kept energy balanced
+	•	Coffee + honey provides antioxidants, gentle caffeine boost, and moderate glycemic impact
+	•	French press research planned — looking forward to optimizing coffee routine
+	•	Relaxing recovery periods between walks and strength training went well
+	•	Evening routine is now complete, ready for CPAP-supported sleep

@@ -1,4 +1,4 @@
-# Health Dashboard – Nov 17, 2025
+Health Dashboard – Nov 17, 2025
 
 ## Recent Logs (most recent first)
 - [Nov 17, 2025](daily-movement-2025-11-17.md)  

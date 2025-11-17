@@ -85,3 +85,23 @@ Dashboard Placeholder
 	•	SQL Totals & Analytics: [Link to SQL or placeholder]
 	•	Primary Walk Session: [Link or placeholder for detailed activity]
 	•	Future GitHub Pages Dashboard: [Placeholder link]
+## Nov 17, 2025
+
+### Daily Totals
+- Steps: 
+- Distance: 
+- Calories (estimated): 
+- Strength Training: 
+
+### Walks & Movements
+- Primary Walk: Start ___ / End ___
+- Mini Walks / Movements: Start ___ / End ___
+
+### Strength Training
+- Exercise: Sets x Reps
+- Notes:
+
+### Notes & Highlights
+- Energy, mood, observations:
+- Blood Pressure / Pulse trends:
+- Other notes:

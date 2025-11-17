@@ -13,3 +13,30 @@
 
 ## Notes & Highlights
 - Observations, energy, BP trends, strength notes
+# Daily Movement — Nov 17, 2025
+
+## Activity
+- Walks:
+- Strength training:
+- Steps:
+- Other movement:
+
+## Nutrition
+- Meals:
+- Snacks:
+- Notes:
+
+## Blood Pressure
+- Morning:
+- Evening:
+- Observations:
+
+## General Notes
+- Energy:
+- Sleep:
+- Mood:
+- Symptoms:
+- Plans/Goals:
+
+---
+[Back to Health Dashboard](health-dashboard.md)

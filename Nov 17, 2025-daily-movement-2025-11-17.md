@@ -47,12 +47,10 @@ Health Dashboard – Nov 17, 2025
 | Breakfast | TBD | Placeholder for first meal | -- | -- | -- | -- | -- |
 | Snack | TBD | Placeholder | -- | -- | -- | -- | -- |
 | Lunch | TBD | Placeholder | -- | -- | -- | -- | -- |
-| Dinner | TBD | Placeholder | -- | -- | -- | -- | -- |
-## 4️⃣ Notes & Lifestyle
-- CPAP setup ready for sleep (last night)
-- Trend charts & AM/PM comparisons placeholders included
-- Stability and zones summaries to be auto-calculated when charts are added
-- Additional notes: breakfast and snacks to be updated as consumed
+| Dinner | TBD | 
+| Time          | Weight (lbs) | Notes                                |
+|---------------|--------------|--------------------------------------|
+| ~1:30–2:00 PM | 150          | Without shoes/orthotics; placeholder |
 
 ## 5️⃣ Visualization Placeholders
 - **Trend Graphs:** AM/PM BP over past 14 days  

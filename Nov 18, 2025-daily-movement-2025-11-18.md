@@ -6,43 +6,44 @@
 - [Nov 18, 2025](daily-movement-2025-11-18.md)
 - ...add each day as it comes
 
-## Notes & Highlights
-- Observations, energy, BP trends, strength notes
-# Daily Movement — Nov 17, 2025
+## Notes & Highlights# Daily Health & Activity Closeout – 2025-11-18
 
-## Activity
-- Walks:
-- Strength training:
-- Steps:
-- Other movement:
+## 1. Summary of Day
+- Strength training: Completed ✅
+- Walks: Morning short walk (~4 min), Afternoon walk (~4,500 steps)
+- Symptoms: Dizziness post-strength training, mild fatigue, improving after walks
+- Nutrition highlights: Breakfast (eggs + toast, approx.), Hot chocolate – 1 pouch Swiss Miss (150 cal, 2g fat, 33g carbs, 28g sugar, 1g protein, 180mg sodium)
 
-## Nutrition
-- Meals:
-- Snacks:
-- Notes:
+## 2. Activity Log
+| Time  | Activity | Steps | Observations / Symptoms |
+|-------|---------|-------|------------------------|
+| 06:56 | Morning short walk | TBD | Quick morning movement, starting the day |
+| 12:00 | Strength training | 0 | Mild dizziness afterward |
+| 16:55 | Afternoon walk | 4,500 | Dizziness improving, mild fatigue |
 
-## Blood Pressure
-- Morning:
-- Evening:
-- Observations:
+### Quick One-Line Entries
+- `2025-11-18 – 06:56 – short morning walk – Quick movement, mild fatigue – None`
+- `2025-11-18 – 12:00 – Strength training – 0 steps – Mild dizziness afterward – None`
+- `2025-11-18 – 16:55 – 4,500 steps – Afternoon walk, dizziness improving, mild fatigue – None`
+- `2025-11-18 – 18:30 – 4,500 steps – Drinking hot chocolate, mild post-exercise dizziness – None – 1 pouch Swiss Miss hot chocolate (150 cal, 2g fat, 33g carbs, 28g sugar, 1g protein, 180mg sodium)`
 
-## General Notes
-- Energy:
-- Sleep:
-- Mood:
-- Symptoms:
-- Plans/Goals:
+## 3. Nutrition Log
+| Time  | Item | Calories | Fat | Carbs | Sugar | Protein | Sodium |
+|-------|------|---------|-----|------|-------|--------|-------|
+| Morning | Eggs + toast (approx.) | TBD | TBD | TBD | TBD | TBD | TBD |
+| 18:30 | Swiss Miss hot chocolate (1 pouch) | 150 | 2g | 33g | 28g | 1g | 180mg |
 
----
-[Back to Health Dashboard](health-dashboard.md)
-# 🌟 Ultra-Compact Daily Snapshots – Weekly Overview
+## 4. Symptoms / Health Notes
+- Post-strength-training dizziness (several hours)
+- Mild fatigue throughout the day
+- Notes for mobile team / doctor review
 
-| Date       | Quick Snapshot |
-|------------|----------------|
-| Nov 16, 2025 | 🚶‍♂️ 550✅ 550✅ | 💪 3×10 | 🍳+🥖✅ 🥗⏳ 🍪⏳ 🍲⏳ 🍎⏳ | ☕✅ 💧⏳ | ⚖️150 | ❤️116/65/84🟢 120/67/84🟡 | ⚡💫⚠️👂📝 |
-| Nov 17, 2025 | 🚶‍♂️ 550✅ 550✅ 550✅ 550⏳ 550⏳ | 💪 3×10 | 🍳+🥖✅ 🥗⏳ 🍪⏳ 🍲⏳ 🍎⏳ | ☕✅ 💧⏳ | ⚖️150 | ❤️116/65/84🟢 120/67/84🟡 | ⚡💫⚠️👂📝 |
-| Nov 18, 2025 | 🚶‍♂️⏳ TBD | 💪⏳ TBD | 🍳⏳ 🥗⏳ 🍪⏳ 🍲⏳ 🍎⏳ | ☕⏳ 💧⏳ | ⚖️⏳ TBD | ❤️⚪ TBD | ⏳ TBD |
-| Nov 19, 2025 | 🚶‍♂️⏳ TBD | 💪⏳ TBD | 🍳⏳ 🥗⏳ 🍪⏳ 🍲⏳ 🍎⏳ | ☕⏳ 💧⏳ | ⚖️⏳ TBD | ❤️⚪ TBD | ⏳ TBD |
-| Nov 20, 2025 | 🚶‍♂️⏳ TBD | 💪⏳ TBD | 🍳⏳ 🥗⏳ 🍪⏳ 🍲⏳ 🍎⏳ | ☕⏳ 💧⏳ | ⚖️⏳ TBD | ❤️⚪ TBD | ⏳ TBD |
-| Nov 21, 2025 | 🚶‍♂️⏳ TBD | 💪⏳ TBD | 🍳⏳ 🥗⏳ 🍪⏳ 🍲⏳ 🍎⏳ | ☕⏳ 💧⏳ | ⚖️⏳ TBD | ❤️⚪ TBD | ⏳ TBD |
-| Nov 22, 2025 | 🚶‍♂️⏳ TBD | 💪⏳ TBD | 🍳⏳ 🥗⏳ 🍪⏳ 🍲⏳ 🍎⏳ | ☕⏳ 💧⏳ | ⚖️⏳ TBD | ❤️⚪ TBD | ⏳ TBD |
+## 5. Flags / Alerts
+| Time  | Flagged Item | System Alert / Urgency | Doctor Interpretation | Follow-Up / Notes |
+|-------|-------------|----------------------|---------------------|-----------------|
+| TBD   | TBD         | Medium – CHF context | Pending             | Monitor symptoms; log for mobile team review |
+
+## 6. Optional Notes / Future Observations
+- Blood group info pending
+- Halter results pending
+- Any additional notes throughout the evening

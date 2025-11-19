@@ -27,7 +27,7 @@
 | Time | Activity | Steps | Notes |
 |------|---------|-------|------|
 | 07:25-07:30 | Walk | 4500 | Morning walk |
-| 19:48-19:53 | Walk | 0 | Short walk before evening training |
+| 19:48-19:53 | Walk | 550 | Short walk before evening training |
 | 20:00-20:10 | Walk | 6000 | Evening walk |
 | 20:10-20:30 | Strength | 0 | Dizziness noted |
 | 20:30-20:50 | Strength Curls/Laterals | 0 | Upper body strength training |

@@ -32,7 +32,7 @@
 | 20:00-20:10 | Walk | 6000 | Evening walk |
 | 20:10-20:30 | Strength | 0 | Dizziness noted |
 | 20:30-20:50 | Strength Curls/Laterals | 0 | Upper body strength training |
-| 20:30-20:35 | Walk | [add steps after walk] | Evening 5-minute walk |
+| 20:30-20:35 | Walk | [550] | Evening 5-minute walk |
 
 ## 4. Symptoms / Health Notes
 - Dizziness lasted several hours today

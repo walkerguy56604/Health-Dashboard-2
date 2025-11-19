@@ -14,7 +14,7 @@
 - 19:48-19:53 – 5 min walk – 0 steps (short walk)
 - 20:00-20:10 – 10 min walk – 6000 steps
 - 20:10-20:30 – Strength training – dizziness noted
-- 20:30-20:50 – Strength training curls/laterals – 0 steps
+- 20:30-20:50 – Strength training curls/laterals – 0 steps 
 
 ## 2. Nutrition Log
 | Meal | Item | Calories | Notes |

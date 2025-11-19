@@ -22,9 +22,7 @@
       border-radius: 8px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
-    .log {
-      white-space: pre-wrap;
-    }
+    .log { white-space: pre-wrap; }
   </style>
 </head>
 <body>
@@ -57,12 +55,8 @@
       const calRegex = /(\d+)\s*cal/gi;
 
       let match;
-      while ((match = stepRegex.exec(log)) !== null) {
-        steps += parseInt(match[1]);
-      }
-      while ((match = calRegex.exec(log)) !== null) {
-        calories += parseInt(match[1]);
-      }
+      while ((match = stepRegex.exec(log)) !== null) steps += parseInt(match[1]);
+      while ((match = calRegex.exec(log)) !== null) calories += parseInt(match[1]);
 
       document.getElementById('total-steps').innerText = steps;
       document.getElementById('total-calories').innerText = calories;

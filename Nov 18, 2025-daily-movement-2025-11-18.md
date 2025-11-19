@@ -7,8 +7,7 @@
 - ...add each day as it comes
 
 ## Notes & Highlights# Daily Health & Activity Closeout – 2025-11-18
-# Daily Health Log – 2025-11-18
-# Daily Health Log – 2025-11-18
+# # Daily Health Log – 2025-11-18
 
 ## 1. Quick One-Line Entries
 - 07:25-07:30 – 5 min walk – 4500 steps
@@ -22,6 +21,7 @@
 |------|------|---------|-------|
 | Breakfast | Eggs & Toast | 350 cal | Protein-rich |
 | Snack | Swiss Miss Hot Chocolate | 150 cal | 180 mg sodium |
+| Snack | Chapman's Markdale Creamery Mint Chocolate Chip | 200 cal | Fat: 10g, Sat: 7g, Trans: 0.2g, Carbs: 25g, Fiber: 0g, Sugar: 18g, Protein: 1g, Cholesterol: 25mg, Sodium: 35mg |
 
 ## 3. Activity Log
 | Time | Activity | Steps | Notes |

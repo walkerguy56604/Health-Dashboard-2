@@ -7,14 +7,15 @@
 - ...add each day as it comes
 
 ## Notes & Highlights# Daily Health & Activity Closeout – 2025-11-18
-# # Daily Health Log – 2025-11-18
+# Daily Health Log – 2025-11-18
 
 ## 1. Quick One-Line Entries
 - 07:25-07:30 – 5 min walk – 4500 steps
 - 19:48-19:53 – 5 min walk – 0 steps (short walk)
 - 20:00-20:10 – 10 min walk – 6000 steps
 - 20:10-20:30 – Strength training – dizziness noted
-- 20:30-20:50 – Strength training curls/laterals – 0 steps 
+- 20:30-20:50 – Strength training curls/laterals – 0 steps
+- 20:30-20:35 – 5 min walk – [add steps after walk]
 
 ## 2. Nutrition Log
 | Meal | Item | Calories | Notes |
@@ -31,7 +32,12 @@
 | 20:00-20:10 | Walk | 6000 | Evening walk |
 | 20:10-20:30 | Strength | 0 | Dizziness noted |
 | 20:30-20:50 | Strength Curls/Laterals | 0 | Upper body strength training |
+| 20:30-20:35 | Walk | [add steps after walk] | Evening 5-minute walk |
 
 ## 4. Symptoms / Health Notes
 - Dizziness lasted several hours today
 - Feeling generally okay otherwise
+
+## 5. Grand Totals (Steps & Calories)
+- **Total Steps**: [sum of all steps here, including 5-min walk]
+- **Total Calories**: 1200 (update if you add anything else)

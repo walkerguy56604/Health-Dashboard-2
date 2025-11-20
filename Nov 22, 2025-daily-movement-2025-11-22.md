@@ -7,28 +7,22 @@
 - [Nov 23, 2025](daily-movement-2025-11-23.md)
 - # Daily Movement — Nov 22, 2025
 
-## Activity
-- Walks:
-- Strength training:
-- Steps:
-- Other movement:
+## daily-movement-2025-11-21.md
+date: 2025-11-21
+day_of_week: Friday
 
-## Nutrition
-- Meals:
-- Snacks:
-- Notes:
+walks: []
 
-## Blood Pressure
-- Morning:
-- Evening:
-- Observations:
+strength_training: []
 
-## General Notes
-- Energy:
-- Sleep:
-- Mood:
-- Symptoms:
-- Plans/Goals:
+summary:
+  total_walks: 0
+  total_walk_steps: 0
+  total_walk_calories: 0
+  total_strength_sets: 0
+  total_strength_duration_min: 0
+  total_strength_calories: 0
+  estimated_total_steps: 0
+  estimated_total_calories: 0
 
----
-[Back to Health Dashboard](health-dashboard.md)
+notes: []

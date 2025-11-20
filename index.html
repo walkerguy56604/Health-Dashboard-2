@@ -44,4 +44,19 @@
 
     parseMarkdownLog();
   </script>
+  <script>
+const owner = "walkerguy56604";
+const repo = "Health-Dashboard-2";
+const path = "logs/2025-11-19.md"; // today's log
+
+fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`)
+  .then(res => res.json())
+  .then(data => {
+    const content = atob(data.content); // decode Base64 from GitHub API
+    const logContainer = document.createElement("pre");
+    logContainer.textContent = content;
+    document.body.appendChild(logContainer);
+  })
+  .catch(err => console.error(err));
+</script>
 </body>

@@ -6,43 +6,48 @@
 - [Nov 22, 2025](daily-movement-2025-11-22.md)
 - [Nov 23, 2025](daily-movement-2025-11-23.md)
 
-# health_dashboard_2025-11-20.yaml
-
-date: 2025-11-20
+date: 2025-11-20-2025
+day: Thursday
 
 walks:
-  - start: "02:10"
-    end: "02:15"
-    duration_min: 5
+  - start_time: "2:30"
+    end_time: "2:35"
+    duration_minutes: 5
     steps: 550
-  - start: "04:45"
-    end: "04:50"
-    duration_min: 5
+  - start_time: "4:10"
+    end_time: "4:15"
+    duration_minutes: 5
     steps: 550
-  - start: "07:50"
-    end: "07:55"
-    duration_min: 5
+  - start_time: "7:50"
+    end_time: "7:55"
+    duration_minutes: 5
     steps: 550
+  - start_time: "9:30"
+    end_time: "9:35"
+    duration_minutes: 5
+    steps: 550
+  - start_time: "10:32"
+    end_time: "10:37"
+    duration_minutes: 5
+    steps: 550
+  - start_time: "10:33"
+    end_time: "10:37"
+    duration_minutes: 5
+    steps: 550
+
+estimated_total_steps: 8400
 
 strength_training:
-  curls:
-    - start: "08:18"
-      end: "08:23"
-      reps: 10
-      sets: 3
-      duration_min: 5
-  laterals:
-    - start: "08:16"
-      end: "08:19"
-      reps: 10
-      sets: 3
-      duration_min: 3
-
-estimated_steps_total: 8400
-estimated_calories_burned: 350
+  start_time: "12:36"
+  end_time: "12:50"
+  duration_minutes: 14
+  exercises:
+    - curls
+    - laterals
+  estimated_calories: 85
 
 notes:
-  - "Holter removed today."
-  - "A1c tested recently: 6.5 (down from 6.1)."
-  - "Medical lab doing home visits, video consultation at 10:00 AM."
-  - "All morning walks were Siri-triggered."
+  - "Holter monitor removed today"
+  - "Video with medical team completed"
+  - "All walks Siri-triggered"
+  - "Data ready for GitHub logging and Cloudflare integration"

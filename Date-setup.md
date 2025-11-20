@@ -26,10 +26,10 @@
 - [Dec 5, 2025](daily-movement-2025-12-05.md)   # Thursday
 - [Dec 6, 2025](daily-movement-2025-12-06.md)   # Friday
 - [Dec 7, 2025](daily-movement-2025-12-07.md)   # Saturday
-- [Dec 8, 2025 - Sunday](daily-movement-2025-12-08.md)
-- [Dec 9, 2025 - Monday](daily-movement-2025-12-09.md)
-- [Dec 10, 2025 - Tuesday](daily-movement-2025-12-10.md)
-- [Dec 11, 2025 - Wednesday](daily-movement-2025-12-11.md)
-- [Dec 12, 2025 - Thursday](daily-movement-2025-12-12.md)
-- [Dec 13, 2025 - Friday](daily-movement-2025-12-13.md)
-- [Dec 14, 2025 - Saturday](daily-movement-2025-12-14.md)
+- [Dec 8, 2025](daily-movement-2025-12-08.md)   # Sunda
+- [Dec 9, 2025](daily-movement-2025-12-09.md)   # Monday
+- [Dec 10, 2025](daily-movement-2025-12-10.md)  # Tuesday
+- [Dec 11, 2025](daily-movement-2025-12-11.md)  # Wednesday
+- [Dec 12, 2025](daily-movement-2025-12-12.md)  # Thursday
+- [Dec 13, 2025](daily-movement-2025-12-13.md)  # Friday
+- [Dec 14, 2025](daily-movement-2025-12-14.md)  # Saturday

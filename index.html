@@ -1,42 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Health Dashboard</title>
-</head>
-<body>
-  <h1>Health Dashboard</h1>
-  <script>
-    const username = "walkerguy56604"; 
-    const repo = "Health-Dashboard-2";  
+<script>
+// ==== CONFIGURE THESE ==== 
+const username = "walkerguy56604"; // GitHub username
+const repo = "Health-Dashboard-2"; // Repo name
+// =========================
 
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth()+1).padStart(2,'0');
-    const day = String(today.getDate()).padStart(2,'0');
-    const path = `logs/${year}-${month}-${day}.md`;
+// Get today's date in YYYY-MM-DD
+const today = new Date();
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2, '0');
+const day = String(today.getDate()).padStart(2, '0');
+const path = `logs/${year}-${month}-${day}.md`;
 
-    const dateLabel = document.createElement("h2");
-    dateLabel.textContent = `Daily Log for ${year}-${month}-${day}`;
-    document.body.appendChild(dateLabel);
+// Display the date label
+const dateLabel = document.createElement("h2");
+dateLabel.textContent = `Daily Log for ${year}-${month}-${day}`;
+document.body.appendChild(dateLabel);
 
-    fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`)
-      .then(res => {
-        if (!res.ok) throw new Error("Today's log not found yet");
-        return res.json();
-      })
-      .then(data => {
-        if (!data.content) throw new Error("Log file is empty");
-        const content = atob(data.content);
-        const pre = document.createElement("pre");
-        pre.textContent = content;
-        document.body.appendChild(pre);
-      })
-      .catch(err => {
-        const p = document.createElement("p");
-        p.textContent = `Error loading today's log: ${err.message}`;
-        document.body.appendChild(p);
-      });
-  </script>
-</body>
-</html>
+// Fetch the log from GitHub
+fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`)
+  .then(res => {
+    if (!res.ok) throw new Error("Log not found for today");
+    return res.json();
+  })
+  .then(data => {
+    const content = atob(data.content); // decode Base64
+    const logContainer = document.createElement("pre");
+    logContainer.textContent = content;
+    document.body.appendChild(logContainer);
+  })
+  .catch(err => {
+    // Friendly placeholder instead of raw error
+    const placeholder = document.createElement("p");
+    placeholder.textContent = "No log found for today yet. Come back later!";
+    placeholder.style.fontStyle = "italic";
+    placeholder.style.color = "gray";
+    document.body.appendChild(placeholder);
+  });
+</script>

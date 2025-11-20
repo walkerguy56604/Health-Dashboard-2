@@ -6,28 +6,43 @@
 - [Nov 22, 2025](daily-movement-2025-11-22.md)
 - [Nov 23, 2025](daily-movement-2025-11-23.md)
 
-# Daily Log — 2025-11-20
+# health_dashboard_2025-11-20.yaml
 
-## Walks
-| # | Time          | Duration | Trigger |
-|---|---------------|----------|---------|
-| 1 | 7:50–7:55 AM  | 5 min    | Siri    |
-| 2 | 2:10–2:15 PM  | 5 min    | Siri    |
-| 3 | 4:45–4:50 PM  | 5 min    | Siri    |
+date: 2025-11-20
 
-## Activity / Exercise
-- 
+walks:
+  - start: "02:10"
+    end: "02:15"
+    duration_min: 5
+    steps: 550
+  - start: "04:45"
+    end: "04:50"
+    duration_min: 5
+    steps: 550
+  - start: "07:50"
+    end: "07:55"
+    duration_min: 5
+    steps: 550
 
-## Blood Pressure
-| Time | Reading | Notes |
-|------|---------|-------|
-|      |         |       |
+strength_training:
+  curls:
+    - start: "08:18"
+      end: "08:23"
+      reps: 10
+      sets: 3
+      duration_min: 5
+  laterals:
+    - start: "08:16"
+      end: "08:19"
+      reps: 10
+      sets: 3
+      duration_min: 3
 
-## Meals & Snacks
-Breakfast:
-Lunch:
-Dinner:
-Snacks:
+estimated_steps_total: 8400
+estimated_calories_burned: 350
 
-## Notes
--
+notes:
+  - "Holter removed today."
+  - "A1c tested recently: 6.5 (down from 6.1)."
+  - "Medical lab doing home visits, video consultation at 10:00 AM."
+  - "All morning walks were Siri-triggered."

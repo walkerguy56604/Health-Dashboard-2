@@ -1,0 +1,8 @@
+date: 2025-11-20
+summary: "Quick walk in the afternoon"
+activities:
+  - type: walk
+    start_time: "13:50"
+    end_time: "14:08"
+    steps: 1400
+notes: "Felt good, 18 minutes"

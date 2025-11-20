@@ -1,0 +1,4 @@
+- [Nov 20, 2025](daily-movement-2025-11-20.md)
+- [Nov 21, 2025](daily-movement-2025-11-21.md)
+- [Nov 22, 2025](daily-movement-2025-11-22.md)
+- [Nov 23, 2025](daily-movement-2025-11-23.md)

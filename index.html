@@ -1,6 +1,36 @@
-// Get today’s date in YYYY-MM-DD format
+<script>
+// ==== CONFIGURE THESE ====
+const username = "YOUR_USERNAME"; // keep your GitHub username
+const repo = "YOUR_REPO_NAME";    // keep your repo name
+// =========================
+
+// Get today's date in YYYY-MM-DD
 const today = new Date();
 const year = today.getFullYear();
-const month = String(today.getMonth() + 1).padStart(2, '0'); // months start at 0
+const month = String(today.getMonth() + 1).padStart(2, '0');
 const day = String(today.getDate()).padStart(2, '0');
 const path = `logs/${year}-${month}-${day}.md`;
+
+// Display the date label
+const dateLabel = document.createElement("h2");
+dateLabel.textContent = `Daily Log for ${year}-${month}-${day}`;
+document.body.appendChild(dateLabel);
+
+// Fetch the log from GitHub
+fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`)
+  .then(res => {
+    if (!res.ok) throw new Error("Log not found for today");
+    return res.json();
+  })
+  .then(data => {
+    const content = atob(data.content); // decode Base64
+    const logContainer = document.createElement("pre");
+    logContainer.textContent = content;
+    document.body.appendChild(logContainer);
+  })
+  .catch(err => {
+    const errorMsg = document.createElement("p");
+    errorMsg.textContent = `Error loading today's log: ${err.message}`;
+    document.body.appendChild(errorMsg);
+  });
+</script>

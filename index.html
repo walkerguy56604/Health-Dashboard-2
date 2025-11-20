@@ -1,62 +1,6 @@
-<body>
-  <h1>Health Dashboard</h1>
-
-  <!-- Totals section -->
-  <div class="totals">
-    <h2>Totals</h2>
-    <p>Steps: <span id="total-steps">0</span></p>
-    <p>Calories: <span id="total-calories">0</span></p>
-  </div>
-
-  <!-- Markdown logs -->
-  <div class="log" id="markdown-log">
-## 2025-11-18
-- Walk: 4500 steps
-- Strength Training: 30 min
-- Breakfast: 2 eggs, toast
-- Snack: Swiss Miss hot chocolate, 150 cal
-- Ice Cream: 200 cal
-
-## 2025-11-19
-- Walk: 5000 steps
-- Strength Training: 20 min
-- Breakfast: Oatmeal, banana
-- Lunch: Salad, 350 cal
-- Snack: Apple, 80 cal
-  </div>
-
-  <script>
-    function parseMarkdownLog() {
-      const log = document.getElementById('markdown-log').innerText;
-      let steps = 0;
-      let calories = 0;
-
-      const stepRegex = /(\d+)\s*steps/gi;
-      const calRegex = /(\d+)\s*cal/gi;
-
-      let match;
-      while ((match = stepRegex.exec(log)) !== null) steps += parseInt(match[1]);
-      while ((match = calRegex.exec(log)) !== null) calories += parseInt(match[1]);
-
-      document.getElementById('total-steps').innerText = steps;
-      document.getElementById('total-calories').innerText = calories;
-    }
-
-    parseMarkdownLog();
-  </script>
-  <script>
-const owner = "walkerguy56604";
-const repo = "Health-Dashboard-2";
-const path = "logs/2025-11-19.md"; // today's log
-
-fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`)
-  .then(res => res.json())
-  .then(data => {
-    const content = atob(data.content); // decode Base64 from GitHub API
-    const logContainer = document.createElement("pre");
-    logContainer.textContent = content;
-    document.body.appendChild(logContainer);
-  })
-  .catch(err => console.error(err));
-</script>
-</body>
+// Get today’s date in YYYY-MM-DD format
+const today = new Date();
+const year = today.getFullYear();
+const month = String(today.getMonth() + 1).padStart(2, '0'); // months start at 0
+const day = String(today.getDate()).padStart(2, '0');
+const path = `logs/${year}-${month}-${day}.md`;

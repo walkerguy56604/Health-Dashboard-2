@@ -5,3 +5,10 @@
 - [Nov 28, 2025](daily-movement-2025-11-28.md)  # Thursday
 - [Nov 29, 2025](daily-movement-2025-11-29.md)  # Friday
 - [Nov 30, 2025](daily-movement-2025-11-30.md)  # Saturday
+- [Dec 1, 2025](daily-movement-2025-12-01.md)   # Sunday
+- [Dec 2, 2025](daily-movement-2025-12-02.md)   # Monday
+- [Dec 3, 2025](daily-movement-2025-12-03.md)   # Tuesday
+- [Dec 4, 2025](daily-movement-2025-12-04.md)   # Wednesday
+- [Dec 5, 2025](daily-movement-2025-12-05.md)   # Thursday
+- [Dec 6, 2025](daily-movement-2025-12-06.md)   # Friday
+- [Dec 7, 2025](daily-movement-2025-12-07.md)   # Saturday

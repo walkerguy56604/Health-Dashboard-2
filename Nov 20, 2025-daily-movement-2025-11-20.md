@@ -6,30 +6,28 @@
 - [Nov 22, 2025](daily-movement-2025-11-22.md)
 - [Nov 23, 2025](daily-movement-2025-11-23.md)
 
-# Daily Movement — Nov 20, 2025
+# Daily Log — 2025-11-20
 
-## Activity
-- Walks:
-- Strength training:
-- Steps:
-- Other movement:
+## Walks
+| # | Time          | Duration | Trigger |
+|---|---------------|----------|---------|
+| 1 | 7:50–7:55 AM  | 5 min    | Siri    |
+| 2 | 2:10–2:15 PM  | 5 min    | Siri    |
+| 3 | 4:45–4:50 PM  | 5 min    | Siri    |
 
-## Nutrition
-- Meals:
-- Snacks:
-- Notes:
+## Activity / Exercise
+- 
 
 ## Blood Pressure
-- Morning:
-- Evening:
-- Observations:
+| Time | Reading | Notes |
+|------|---------|-------|
+|      |         |       |
 
-## General Notes
-- Energy:
-- Sleep:
-- Mood:
-- Symptoms:
-- Plans/Goals:
+## Meals & Snacks
+Breakfast:
+Lunch:
+Dinner:
+Snacks:
 
----
-[Back to Health Dashboard](health-dashboard.md)
+## Notes
+-

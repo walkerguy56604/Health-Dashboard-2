@@ -115,3 +115,45 @@ Dashboard Placeholder
 - Energy, mood, observations:
 - Blood Pressure / Pulse trends:
 - Other notes:
+# Siri Adaptive Core + Companion
+
+**Owner:** Mark  
+**Project:** Personal health shortcuts suite (blood pressure logging, notes, exports, dashboard)  
+**Date:** 2025-11-29
+
+## Overview
+This repo contains a suite of iOS Shortcuts that together form the **Siri Adaptive Core + Companion** system — a modular, voice-first personal health platform. The core captures blood pressure (BP) readings, timestamps in multiple formats, device context, and stores readings as structured dictionaries in a master list (`AppReadings`). Companion shortcuts (Notes, GitHub sync, email, etc.) interact with the core by appending or reading `AppReadings`.
+
+## Key Concepts
+- **One reading = one dictionary.** Each reading is self-contained (Raw, Formatted, Device, Meta).
+- **AppReadings** = list of dictionaries (the master history).
+- **Repeat** blocks iterate **per dictionary** (Repeat Item → keys).
+- **Modular companions** read/write to `AppReadings` so features can be added without changing core logic.
+
+## Data schema (per reading)
+```json
+{
+  "Raw": {
+    "Sys": 125,
+    "Dia": 80,
+    "Pulse": 72
+  },
+  "Formatted": {
+    "BPString": "125/80",
+    "PulseString": "72 BPM",
+    "ISOTime": "2025-11-29T10:49:32-08:00",
+    "RFCTime": "Sat, 29 Nov 2025 10:49:32 -0800",
+    "LocalTime": "10:49 AM"
+  },
+  "Device": {
+    "Model": "iPad13,18",
+    "Battery": 82,
+    "Network": "TELUS1496",
+    "LocationHint": "Walking"
+  },
+  "Meta": {
+    "Version": "2.0",
+    "DataType": "BloodPressureReading",
+    "UUID": "D9F2A3C0-..."
+  }
+}

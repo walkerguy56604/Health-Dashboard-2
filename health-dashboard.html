@@ -1,96 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Dashboard</title>
-<style>
-  body { font-family: sans-serif; margin: 20px; }
-  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-  th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
-  th { background-color: #f0f0f0; }
-  tr.latest { background-color: #d1ffd6; font-weight: bold; transition: background-color 0.5s; }
-  tr.flash {
-    background-color: #ffff99 !important;
-    animation: fadeHighlight 1s ease-out;
-  }
-  @keyframes fadeHighlight {
-    from { background-color: #ffff99; }
-    to { background-color: #d1ffd6; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>Health Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #2c3e50; }
+    .reading { margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    .highlight { background-color: #ffff99; transition: background-color 1s ease; }
+  </style>
 </head>
 <body>
-<h1>🩺 Health Dashboard</h1>
-<p id="loaded">Loaded: --</p>
-<table id="bpTable">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Systolic</th>
-      <th>Diastolic</th>
-      <th>Pulse</th>
-      <th>IHB</th>
-      <th>Arm</th>
-      <th>Position</th>
-      <th>Symptoms</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+  <h1>🩺 Health Dashboard</h1>
+  <p id="last-updated">Loaded: --</p>
+  
+  <div id="latest-reading" class="reading">
+    <p><strong>Systolic:</strong> <span id="bp-systolic">--</span></p>
+    <p><strong>Diastolic:</strong> <span id="bp-diastolic">--</span></p>
+    <p><strong>Pulse:</strong> <span id="bp-pulse">--</span></p>
+    <p><strong>IHB:</strong> <span id="bp-ihb">--</span></p>
+    <p><strong>Arm:</strong> <span id="bp-arm">--</span></p>
+    <p><strong>Position:</strong> <span id="bp-position">--</span></p>
+    <p><strong>Symptoms:</strong> <span id="bp-symptoms">--</span></p>
+    <p><strong>Notes:</strong> <span id="bp-notes">--</span></p>
+  </div>
 
-<script>
-const JSON_URL = 'latest.json';
-let lastReadingIds = new Set();
+  <script>
+    const latestReadingEl = document.getElementById('latest-reading');
+    const lastUpdatedEl = document.getElementById('last-updated');
 
-async function loadData() {
-  const timestamp = new Date().getTime(); // cache buster
-  try {
-    const response = await fetch(`${JSON_URL}?ts=${timestamp}`);
-    const data = await response.json();
-    const tbody = document.querySelector('#bpTable tbody');
-    tbody.innerHTML = '';
+    let lastData = {};
 
-    const readings = Array.isArray(data) ? data.slice().reverse() : [data];
+    async function fetchLatest() {
+      try {
+        // Add a timestamp to prevent caching
+        const ts = new Date().getTime();
+        const response = await fetch(`latest.json?ts=${ts}`);
+        const data = await response.json();
 
-    readings.forEach((reading, index) => {
-      const tr = document.createElement('tr');
-      if(index === 0) tr.classList.add('latest');
+        // Update each field
+        const fields = ['systolic','diastolic','pulse','IHB','arm','position','symptoms','notes'];
+        let changed = false;
+        fields.forEach(f => {
+          const el = document.getElementById(`bp-${f.toLowerCase()}`);
+          if(el && lastData[f] !== data[f]) {
+            el.textContent = data[f];
+            changed = true;
+          }
+        });
 
-      // Generate a unique ID for each reading
-      const readingId = `${reading.date}-${reading.systolic}-${reading.diastolic}-${reading.pulse}`;
-      if(!lastReadingIds.has(readingId)) {
-        tr.classList.add('flash'); // new reading
+        if(changed) {
+          latestReadingEl.classList.add('highlight');
+          setTimeout(() => {
+            latestReadingEl.classList.remove('highlight');
+          }, 1000);
+        }
+
+        const now = new Date();
+        lastUpdatedEl.textContent = `Loaded: ${now.toLocaleString()}`;
+        lastData = data;
+      } catch(err) {
+        console.error('Error fetching latest JSON:', err);
       }
+    }
 
-      tr.innerHTML = `
-        <td>${reading.date}</td>
-        <td>${reading.systolic}</td>
-        <td>${reading.diastolic}</td>
-        <td>${reading.pulse}</td>
-        <td>${reading.IHB}</td>
-        <td>${reading.arm}</td>
-        <td>${reading.position}</td>
-        <td>${reading.symptoms}</td>
-        <td>${reading.notes}</td>
-      `;
-      tbody.appendChild(tr);
-      lastReadingIds.add(readingId);
-    });
-
-    document.getElementById('loaded').textContent = `Loaded: ${new Date().toLocaleString()}`;
-
-  } catch (err) {
-    console.error('Error loading JSON:', err);
-  }
-}
-
-// Initial load
-loadData();
-
-// Auto-refresh every 15 seconds
-setInterval(loadData, 15000);
-</script>
+    // Initial fetch
+    fetchLatest();
+    // Fetch every 15 seconds
+    setInterval(fetchLatest, 15000);
+  </script>
 </body>
 </html>

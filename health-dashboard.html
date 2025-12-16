@@ -7,56 +7,78 @@
 <style>
   body { font-family: Arial, sans-serif; margin: 20px; }
   h1 { text-align: center; }
-  .reading { border: 1px solid #ccc; padding: 12px; margin-bottom: 10px; border-radius: 6px; transition: background-color 1s ease; }
-  .highlight { background-color: #ffff99; }
-  .timestamp { font-size: 0.85em; color: #666; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+  th { background-color: #f2f2f2; }
+  tr.highlight { background-color: #ffff99; transition: background-color 1.5s ease; }
 </style>
 </head>
 <body>
-<h1>🩺 Health Dashboard</h1>
-<div id="readings-container">Loading readings...</div>
+<h1>🩺 Health Dashboard – Full History</h1>
+<table id="readings-table">
+  <thead>
+    <tr>
+      <th>Timestamp</th>
+      <th>Systolic</th>
+      <th>Diastolic</th>
+      <th>Pulse</th>
+      <th>IHB</th>
+      <th>Arm</th>
+      <th>Position</th>
+      <th>Symptoms</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td colspan="9">Loading readings...</td></tr>
+  </tbody>
+</table>
 
 <script>
-const readingsContainer = document.getElementById('readings-container');
-const jsonFile = 'latest.json'; // Make sure latest.json is in the same folder
+const tableBody = document.querySelector('#readings-table tbody');
+const jsonFile = 'latest.json'; // make sure latest.json is in the same folder
 
-// Helper to format timestamps nicely
+// Format timestamp
 function formatTimestamp(ts) {
     const d = new Date(ts);
     return d.toLocaleString();
 }
 
-// Fetch and display readings
+// Keep track of last loaded reading timestamps to highlight new rows
+let lastTimestamps = new Set();
+
 async function loadReadings() {
     try {
         const response = await fetch(`${jsonFile}?ts=${Date.now()}`); // cache buster
         const data = await response.json();
-
-        // Support both single reading and array of readings
         const readings = Array.isArray(data) ? data.slice().reverse() : [data];
 
-        readingsContainer.innerHTML = '';
-        readings.forEach((r, i) => {
-            const div = document.createElement('div');
-            div.className = 'reading highlight';
-            div.innerHTML = `
-                <div class="timestamp">Loaded: ${formatTimestamp(r.date)}</div>
-                <strong>Systolic:</strong> ${r.systolic} &nbsp;
-                <strong>Diastolic:</strong> ${r.diastolic} &nbsp;
-                <strong>Pulse:</strong> ${r.pulse} &nbsp;
-                <strong>IHB:</strong> ${r.IHB} <br>
-                <strong>Arm:</strong> ${r.arm} &nbsp;
-                <strong>Position:</strong> ${r.position} <br>
-                <strong>Symptoms:</strong> ${r.symptoms} <br>
-                <strong>Notes:</strong> ${r.notes}
+        tableBody.innerHTML = '';
+        readings.forEach(r => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${formatTimestamp(r.date)}</td>
+                <td>${r.systolic}</td>
+                <td>${r.diastolic}</td>
+                <td>${r.pulse}</td>
+                <td>${r.IHB}</td>
+                <td>${r.arm}</td>
+                <td>${r.position}</td>
+                <td>${r.symptoms}</td>
+                <td>${r.notes}</td>
             `;
-            readingsContainer.appendChild(div);
 
-            // Remove highlight after 2 seconds
-            setTimeout(() => div.classList.remove('highlight'), 2000);
+            // Highlight new readings
+            if (!lastTimestamps.has(r.date)) {
+                tr.classList.add('highlight');
+                setTimeout(() => tr.classList.remove('highlight'), 2000);
+            }
+
+            lastTimestamps.add(r.date);
+            tableBody.appendChild(tr);
         });
     } catch (err) {
-        readingsContainer.innerHTML = 'Error loading readings.';
+        tableBody.innerHTML = `<tr><td colspan="9">Error loading readings</td></tr>`;
         console.error(err);
     }
 }
@@ -64,7 +86,7 @@ async function loadReadings() {
 // Initial load
 loadReadings();
 
-// Optional: refresh every 20 seconds
+// Auto-refresh every 20 seconds
 setInterval(loadReadings, 20000);
 </script>
 </body>

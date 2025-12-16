@@ -5,38 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Health Dashboard</title>
 <style>
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-  th { cursor: pointer; background-color: #f0f0f0; }
-  .highlight { background-color: #fffa90; transition: background-color 1s ease; }
-  input.filter-input { width: 100%; box-sizing: border-box; padding: 4px; }
-  #summary { margin-bottom: 15px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; }
+  body { font-family: sans-serif; padding: 1em; background: #f9f9f9; }
+  table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+  th, td { padding: 0.5em; border: 1px solid #ccc; text-align: left; }
+  th { cursor: pointer; background: #eee; }
+  tr.highlight { background-color: #ffff99; transition: background 2s ease; }
 </style>
 </head>
 <body>
 <h1>Health Dashboard</h1>
-
-<div id="summary">
-  <strong>Last Reading:</strong> <span id="lastReading">-</span><br>
-  <strong>Average Systolic:</strong> <span id="avgSystolic">-</span><br>
-  <strong>Average Diastolic:</strong> <span id="avgDiastolic">-</span><br>
-  <strong>Average Pulse:</strong> <span id="avgPulse">-</span><br>
-  <strong>Total Readings:</strong> <span id="totalReadings">-</span>
-</div>
-
-<table id="healthTable">
+<table id="readingsTable">
   <thead>
     <tr>
-      <th data-key="date">Date<br><input class="filter-input" placeholder="Filter date"></th>
-      <th data-key="systolic">Systolic<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="diastolic">Diastolic<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="pulse">Pulse<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="IHB">IHB<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="arm">Arm<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="position">Position<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="symptoms">Symptoms<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="notes">Notes<br><input class="filter-input" placeholder="Filter"></th>
+      <th data-key="date">Date</th>
+      <th data-key="systolic">Systolic</th>
+      <th data-key="diastolic">Diastolic</th>
+      <th data-key="pulse">Pulse</th>
+      <th data-key="IHB">IHB</th>
+      <th data-key="arm">Arm</th>
+      <th data-key="position">Position</th>
+      <th data-key="symptoms">Symptoms</th>
+      <th data-key="notes">Notes</th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -44,37 +33,31 @@
 
 <script>
 let readingsData = [];
-let filteredData = [];
+let lastLoaded = 0;
 
 async function loadReadings() {
   try {
-    const ts = Date.now(); // cache buster
-    const response = await fetch(`latest.json?ts=${ts}`);
+    const response = await fetch('latest.json?t=' + new Date().getTime());
     const data = await response.json();
-    
+
+    // Ensure array (support single or multiple readings)
     readingsData = Array.isArray(data) ? data : [data];
-    readingsData.sort((a, b) => new Date(b.date) - new Date(a.date));
-    
-    filteredData = [...readingsData]; // start unfiltered
+
+    // Sort chronologically (oldest first)
+    readingsData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
     displayReadings(true);
-    updateSummary();
-  } catch (error) {
-    console.error('Error loading readings:', error);
+  } catch (err) {
+    console.error('Error loading readings:', err);
   }
 }
 
 function displayReadings(highlightNew = false) {
-  const tbody = document.querySelector('#healthTable tbody');
+  const tbody = document.querySelector('#readingsTable tbody');
   tbody.innerHTML = '';
 
-  filteredData.forEach((reading, index) => {
+  readingsData.forEach((reading, index) => {
     const row = document.createElement('tr');
-    
-    if (highlightNew && index === 0) {
-      row.classList.add('highlight');
-      setTimeout(() => row.classList.remove('highlight'), 2000);
-    }
-
     row.innerHTML = `
       <td>${new Date(reading.date).toLocaleString()}</td>
       <td>${reading.systolic}</td>
@@ -86,53 +69,30 @@ function displayReadings(highlightNew = false) {
       <td>${reading.symptoms}</td>
       <td>${reading.notes}</td>
     `;
+
+    // Highlight new reading
+    if (highlightNew && index === readingsData.length - 1) {
+      row.classList.add('highlight');
+      setTimeout(() => row.classList.remove('highlight'), 2000);
+    }
+
     tbody.appendChild(row);
   });
 
-  // Enable sorting
+  // Sorting feature
   document.querySelectorAll('th').forEach((th) => {
     th.onclick = () => {
       const key = th.dataset.key;
-      filteredData.sort((a, b) => {
-        if (key === 'date') return new Date(b.date) - new Date(a.date);
-        return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, { numeric: true });
+      readingsData.sort((a, b) => {
+        if (key === 'date') return new Date(a.date) - new Date(b.date);
+        return (a[key] || '').toString().localeCompare((b[key] || '').toString(), undefined, {numeric: true});
       });
       displayReadings();
     };
   });
 }
 
-// Filter functionality
-document.querySelectorAll('.filter-input').forEach((input, i) => {
-  input.addEventListener('input', () => {
-    const filters = Array.from(document.querySelectorAll('.filter-input')).map(f => f.value.toLowerCase());
-    
-    filteredData = readingsData.filter(r => {
-      const keys = ['date','systolic','diastolic','pulse','IHB','arm','position','symptoms','notes'];
-      return keys.every((key, idx) => r[key].toString().toLowerCase().includes(filters[idx]));
-    });
-
-    displayReadings();
-    updateSummary();
-  });
-});
-
-function updateSummary() {
-  const last = readingsData[0];
-  const total = readingsData.length;
-
-  const avgSystolic = total ? Math.round(readingsData.reduce((a,b)=>a+b.systolic,0)/total) : '-';
-  const avgDiastolic = total ? Math.round(readingsData.reduce((a,b)=>a+b.diastolic,0)/total) : '-';
-  const avgPulse = total ? Math.round(readingsData.reduce((a,b)=>a+b.pulse,0)/total) : '-';
-
-  document.getElementById('lastReading').textContent = last ? new Date(last.date).toLocaleString() : '-';
-  document.getElementById('avgSystolic').textContent = avgSystolic;
-  document.getElementById('avgDiastolic').textContent = avgDiastolic;
-  document.getElementById('avgPulse').textContent = avgPulse;
-  document.getElementById('totalReadings').textContent = total;
-}
-
-// Initial load and auto-refresh every 20 seconds
+// Initial load + refresh every 20s
 loadReadings();
 setInterval(loadReadings, 20000);
 </script>

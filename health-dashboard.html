@@ -10,7 +10,14 @@
   th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
   th { background-color: #f0f0f0; }
   tr.latest { background-color: #d1ffd6; font-weight: bold; transition: background-color 0.5s; }
-  tr.flash { background-color: #ffff99 !important; }
+  tr.flash {
+    background-color: #ffff99 !important;
+    animation: fadeHighlight 1s ease-out;
+  }
+  @keyframes fadeHighlight {
+    from { background-color: #ffff99; }
+    to { background-color: #d1ffd6; }
+  }
 </style>
 </head>
 <body>
@@ -35,7 +42,7 @@
 
 <script>
 const JSON_URL = 'latest.json';
-let lastLatestDate = '';
+let lastReadingIds = new Set();
 
 async function loadData() {
   const timestamp = new Date().getTime(); // cache buster
@@ -49,7 +56,14 @@ async function loadData() {
 
     readings.forEach((reading, index) => {
       const tr = document.createElement('tr');
-      if(index === 0) tr.classList.add('latest'); // highlight latest
+      if(index === 0) tr.classList.add('latest');
+
+      // Generate a unique ID for each reading
+      const readingId = `${reading.date}-${reading.systolic}-${reading.diastolic}-${reading.pulse}`;
+      if(!lastReadingIds.has(readingId)) {
+        tr.classList.add('flash'); // new reading
+      }
+
       tr.innerHTML = `
         <td>${reading.date}</td>
         <td>${reading.systolic}</td>
@@ -62,20 +76,11 @@ async function loadData() {
         <td>${reading.notes}</td>
       `;
       tbody.appendChild(tr);
+      lastReadingIds.add(readingId);
     });
 
-    // Flash latest reading if new
-    const latestDate = readings[0]?.date;
-    if(latestDate && latestDate !== lastLatestDate) {
-      lastLatestDate = latestDate;
-      const latestRow = tbody.querySelector('tr.latest');
-      if(latestRow) {
-        latestRow.classList.add('flash');
-        setTimeout(() => latestRow.classList.remove('flash'), 800);
-      }
-    }
-
     document.getElementById('loaded').textContent = `Loaded: ${new Date().toLocaleString()}`;
+
   } catch (err) {
     console.error('Error loading JSON:', err);
   }

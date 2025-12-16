@@ -10,22 +10,24 @@
   th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
   th { cursor: pointer; background-color: #f0f0f0; }
   .highlight { background-color: #fffa90; transition: background-color 1s ease; }
+  input.filter-input { width: 100%; box-sizing: border-box; padding: 4px; }
 </style>
 </head>
 <body>
 <h1>Health Dashboard</h1>
+
 <table id="healthTable">
   <thead>
     <tr>
-      <th data-key="date">Date</th>
-      <th data-key="systolic">Systolic</th>
-      <th data-key="diastolic">Diastolic</th>
-      <th data-key="pulse">Pulse</th>
-      <th data-key="IHB">IHB</th>
-      <th data-key="arm">Arm</th>
-      <th data-key="position">Position</th>
-      <th data-key="symptoms">Symptoms</th>
-      <th data-key="notes">Notes</th>
+      <th data-key="date">Date<br><input class="filter-input" placeholder="Filter date"></th>
+      <th data-key="systolic">Systolic<br><input class="filter-input" placeholder="Filter"></th>
+      <th data-key="diastolic">Diastolic<br><input class="filter-input" placeholder="Filter"></th>
+      <th data-key="pulse">Pulse<br><input class="filter-input" placeholder="Filter"></th>
+      <th data-key="IHB">IHB<br><input class="filter-input" placeholder="Filter"></th>
+      <th data-key="arm">Arm<br><input class="filter-input" placeholder="Filter"></th>
+      <th data-key="position">Position<br><input class="filter-input" placeholder="Filter"></th>
+      <th data-key="symptoms">Symptoms<br><input class="filter-input" placeholder="Filter"></th>
+      <th data-key="notes">Notes<br><input class="filter-input" placeholder="Filter"></th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -33,6 +35,7 @@
 
 <script>
 let readingsData = [];
+let filteredData = [];
 
 async function loadReadings() {
   try {
@@ -40,12 +43,10 @@ async function loadReadings() {
     const response = await fetch(`latest.json?ts=${ts}`);
     const data = await response.json();
     
-    // Ensure it's always an array
     readingsData = Array.isArray(data) ? data : [data];
-
-    // Sort newest first
     readingsData.sort((a, b) => new Date(b.date) - new Date(a.date));
     
+    filteredData = [...readingsData]; // start unfiltered
     displayReadings(true);
   } catch (error) {
     console.error('Error loading readings:', error);
@@ -56,10 +57,9 @@ function displayReadings(highlightNew = false) {
   const tbody = document.querySelector('#healthTable tbody');
   tbody.innerHTML = '';
 
-  readingsData.forEach((reading, index) => {
+  filteredData.forEach((reading, index) => {
     const row = document.createElement('tr');
     
-    // Highlight the newest reading
     if (highlightNew && index === 0) {
       row.classList.add('highlight');
       setTimeout(() => row.classList.remove('highlight'), 2000);
@@ -79,18 +79,32 @@ function displayReadings(highlightNew = false) {
     tbody.appendChild(row);
   });
 
-  // Enable sorting by clicking headers
+  // Enable sorting
   document.querySelectorAll('th').forEach((th, index) => {
-    th.addEventListener('click', () => {
+    th.onclick = () => {
       const key = th.dataset.key;
-      readingsData.sort((a, b) => {
+      filteredData.sort((a, b) => {
         if (key === 'date') return new Date(b.date) - new Date(a.date);
         return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, { numeric: true });
       });
       displayReadings();
-    });
+    };
   });
 }
+
+// Filter functionality
+document.querySelectorAll('.filter-input').forEach((input, i) => {
+  input.addEventListener('input', () => {
+    const filters = Array.from(document.querySelectorAll('.filter-input')).map(f => f.value.toLowerCase());
+    
+    filteredData = readingsData.filter(r => {
+      const keys = ['date','systolic','diastolic','pulse','IHB','arm','position','symptoms','notes'];
+      return keys.every((key, idx) => r[key].toString().toLowerCase().includes(filters[idx]));
+    });
+
+    displayReadings();
+  });
+});
 
 // Initial load and auto-refresh every 20 seconds
 loadReadings();

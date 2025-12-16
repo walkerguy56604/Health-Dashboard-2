@@ -6,15 +6,24 @@
 <title>Health Dashboard</title>
 <style>
   body { font-family: Arial, sans-serif; margin: 20px; }
-  table { border-collapse: collapse; width: 100%; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
   th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
   th { cursor: pointer; background-color: #f0f0f0; }
   .highlight { background-color: #fffa90; transition: background-color 1s ease; }
   input.filter-input { width: 100%; box-sizing: border-box; padding: 4px; }
+  #summary { margin-bottom: 15px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; }
 </style>
 </head>
 <body>
 <h1>Health Dashboard</h1>
+
+<div id="summary">
+  <strong>Last Reading:</strong> <span id="lastReading">-</span><br>
+  <strong>Average Systolic:</strong> <span id="avgSystolic">-</span><br>
+  <strong>Average Diastolic:</strong> <span id="avgDiastolic">-</span><br>
+  <strong>Average Pulse:</strong> <span id="avgPulse">-</span><br>
+  <strong>Total Readings:</strong> <span id="totalReadings">-</span>
+</div>
 
 <table id="healthTable">
   <thead>
@@ -48,6 +57,7 @@ async function loadReadings() {
     
     filteredData = [...readingsData]; // start unfiltered
     displayReadings(true);
+    updateSummary();
   } catch (error) {
     console.error('Error loading readings:', error);
   }
@@ -80,7 +90,7 @@ function displayReadings(highlightNew = false) {
   });
 
   // Enable sorting
-  document.querySelectorAll('th').forEach((th, index) => {
+  document.querySelectorAll('th').forEach((th) => {
     th.onclick = () => {
       const key = th.dataset.key;
       filteredData.sort((a, b) => {
@@ -103,8 +113,24 @@ document.querySelectorAll('.filter-input').forEach((input, i) => {
     });
 
     displayReadings();
+    updateSummary();
   });
 });
+
+function updateSummary() {
+  const last = readingsData[0];
+  const total = readingsData.length;
+
+  const avgSystolic = total ? Math.round(readingsData.reduce((a,b)=>a+b.systolic,0)/total) : '-';
+  const avgDiastolic = total ? Math.round(readingsData.reduce((a,b)=>a+b.diastolic,0)/total) : '-';
+  const avgPulse = total ? Math.round(readingsData.reduce((a,b)=>a+b.pulse,0)/total) : '-';
+
+  document.getElementById('lastReading').textContent = last ? new Date(last.date).toLocaleString() : '-';
+  document.getElementById('avgSystolic').textContent = avgSystolic;
+  document.getElementById('avgDiastolic').textContent = avgDiastolic;
+  document.getElementById('avgPulse').textContent = avgPulse;
+  document.getElementById('totalReadings').textContent = total;
+}
 
 // Initial load and auto-refresh every 20 seconds
 loadReadings();

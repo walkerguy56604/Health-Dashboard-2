@@ -1,11 +1,24 @@
-{
-  "date": "2025-12-16T12:00:00",
-  "systolic": 128,
-  "diastolic": 89,
-  "pulse": 70,
-  "IHB": "No",
-  "arm": "Right",
-  "position": "Sitting",
-  "symptoms": "None",
-  "notes": "Feeling good"
-}
+[
+  {
+    "date": "2025-12-16T11:00:00",
+    "systolic": 125,
+    "diastolic": 85,
+    "pulse": 68,
+    "IHB": "No",
+    "arm": "Right",
+    "position": "Sitting",
+    "symptoms": "None",
+    "notes": "Feeling fine"
+  },
+  {
+    "date": "2025-12-16T12:00:00",
+    "systolic": 128,
+    "diastolic": 89,
+    "pulse": 70,
+    "IHB": "No",
+    "arm": "Right",
+    "position": "Sitting",
+    "symptoms": "None",
+    "notes": "Feeling good"
+  }
+]

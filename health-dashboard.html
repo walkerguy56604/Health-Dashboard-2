@@ -5,24 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Health Dashboard</title>
 <style>
-  body { font-family: sans-serif; margin: 20px; }
+  body { font-family: Arial, sans-serif; margin: 20px; }
   table { border-collapse: collapse; width: 100%; }
   th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
   th { cursor: pointer; background-color: #f0f0f0; }
-  .highlight {
-    background-color: #fff3a0; /* soft yellow */
-    animation: fadeHighlight 2s ease-out;
-  }
-  @keyframes fadeHighlight {
-    from { background-color: #fff3a0; }
-    to   { background-color: transparent; }
-  }
+  .highlight { background-color: #fffa90; transition: background-color 1s ease; }
 </style>
 </head>
 <body>
-
 <h1>Health Dashboard</h1>
-<table>
+<table id="healthTable">
   <thead>
     <tr>
       <th data-key="date">Date</th>
@@ -41,32 +33,40 @@
 
 <script>
 let readingsData = [];
-let previousReadings = [];
 
 async function loadReadings() {
   try {
-    const response = await fetch('latest.json?ts=' + Date.now()); // cache buster
-    readingsData = await response.json();
-    displayReadings();
+    const ts = Date.now(); // cache buster
+    const response = await fetch(`latest.json?ts=${ts}`);
+    const data = await response.json();
+    
+    // Ensure it's always an array
+    readingsData = Array.isArray(data) ? data : [data];
+
+    // Sort newest first
+    readingsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    displayReadings(true);
   } catch (error) {
     console.error('Error loading readings:', error);
   }
 }
 
-function highlightRow(row) {
-  row.classList.add('highlight');
-  setTimeout(() => row.classList.remove('highlight'), 2000);
-}
-
-function displayReadings() {
-  const tbody = document.querySelector('tbody');
+function displayReadings(highlightNew = false) {
+  const tbody = document.querySelector('#healthTable tbody');
   tbody.innerHTML = '';
 
   readingsData.forEach((reading, index) => {
     const row = document.createElement('tr');
+    
+    // Highlight the newest reading
+    if (highlightNew && index === 0) {
+      row.classList.add('highlight');
+      setTimeout(() => row.classList.remove('highlight'), 2000);
+    }
 
     row.innerHTML = `
-      <td>${reading.date}</td>
+      <td>${new Date(reading.date).toLocaleString()}</td>
       <td>${reading.systolic}</td>
       <td>${reading.diastolic}</td>
       <td>${reading.pulse}</td>
@@ -76,35 +76,25 @@ function displayReadings() {
       <td>${reading.symptoms}</td>
       <td>${reading.notes}</td>
     `;
-
-    // Highlight latest or changed reading
-    if (index === 0 || JSON.stringify(reading) !== JSON.stringify(previousReadings[index])) {
-      highlightRow(row);
-    }
-
     tbody.appendChild(row);
   });
 
-  previousReadings = JSON.parse(JSON.stringify(readingsData));
+  // Enable sorting by clicking headers
+  document.querySelectorAll('th').forEach((th, index) => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.key;
+      readingsData.sort((a, b) => {
+        if (key === 'date') return new Date(b.date) - new Date(a.date);
+        return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, { numeric: true });
+      });
+      displayReadings();
+    });
+  });
 }
 
-// Sorting by header click
-document.querySelectorAll('th').forEach((th) => {
-  th.addEventListener('click', () => {
-    const key = th.dataset.key;
-    const sorted = readingsData.sort((a, b) => {
-      if (key === 'date') return new Date(b.date) - new Date(a.date);
-      return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
-    });
-    readingsData = sorted;
-    displayReadings();
-  });
-});
-
-// Initial load + refresh every 20s
+// Initial load and auto-refresh every 20 seconds
 loadReadings();
 setInterval(loadReadings, 20000);
 </script>
-
 </body>
 </html>

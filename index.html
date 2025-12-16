@@ -3,103 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Health Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      margin: 16px;
-      background: #0f172a;
-      color: #e5e7eb;
-    }
-
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 4px;
-    }
-
-    .timestamp {
-      font-size: 0.85rem;
-      color: #94a3b8;
-      margin-bottom: 16px;
-    }
-
-    .card {
-      background: #020617;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
-
-    .card h2 {
-      font-size: 1rem;
-      margin-bottom: 8px;
-      color: #93c5fd;
-    }
-
-    .metric {
-      font-size: 1.1rem;
-      margin: 4px 0;
-    }
-
-    .muted {
-      color: #94a3b8;
-    }
-
-    pre {
-      white-space: pre-wrap;
-      font-size: 0.9rem;
-    }
-  </style>
 </head>
-
 <body>
-
   <h1>🩺 Health Dashboard</h1>
-  <div class="timestamp" id="loadedAt"></div>
-
-  <div class="card">
-    <h2>Latest Reading</h2>
-    <pre id="latestLog">Loading latest reading…</pre>
-  </div>
-
-  <script>
-    document.getElementById("loadedAt").textContent =
-      "Loaded " + new Date().toLocaleString();
-
-    const username = "walkerguy56604";
-    const repo = "Health-Dashboard-2";
-
-    async function loadLatestLog() {
-      try {
-        const res = await fetch(
-          `https://api.github.com/repos/${username}/${repo}/contents/logs`
-        );
-        const files = await res.json();
-
-        if (!Array.isArray(files) || files.length === 0) {
-          document.getElementById("latestLog").textContent =
-            "No readings available yet.";
-          return;
-        }
-
-        files.sort((a, b) => b.name.localeCompare(a.name));
-
-        const latestFile = files[0];
-        const textRes = await fetch(latestFile.download_url);
-        const text = await textRes.text();
-
-        document.getElementById("latestLog").textContent = text;
-
-      } catch (err) {
-        document.getElementById("latestLog").textContent =
-          "Unable to load data.";
-      }
-    }
-
-    loadLatestLog();
-  </script>
-
+  <iframe src="latest.json?ts=2025-12-16T12:00:00" 
+          style="width:100%; height:500px;" frameborder="0"></iframe>
 </body>
 </html>

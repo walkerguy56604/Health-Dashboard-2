@@ -1,0 +1,10 @@
+{
+  "systolic": 0,
+  "diastolic": 0,
+  "pulse": 0,
+  "arm": "Right",
+  "position": "Sitting",
+  "symptoms": "None",
+  "notes": "None",
+  "date": "YYYY-MM-DD, HH:MM AM/PM"
+}

@@ -1,123 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Dashboard</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  h1 { text-align: center; }
-  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-  th, td { border: 1px solid #ccc; padding: 8px; text-align: center; cursor: pointer; }
-  th { background-color: #f2f2f2; position: sticky; top: 0; }
-  tr.highlight { background-color: #ffff99; transition: background-color 1.5s ease; }
-  input.filter-input { width: 90%; padding: 4px; margin: 2px 0; box-sizing: border-box; }
-</style>
-</head>
-<body>
-<h1>🩺 Health Dashboard – Full History with Filters & Sorting</h1>
-<table id="readings-table">
-  <thead>
-    <tr>
-      <th data-key="date">Timestamp<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="systolic">Systolic<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="diastolic">Diastolic<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="pulse">Pulse<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="IHB">IHB<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="arm">Arm<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="position">Position<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="symptoms">Symptoms<br><input class="filter-input" placeholder="Filter"></th>
-      <th data-key="notes">Notes<br><input class="filter-input" placeholder="Filter"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td colspan="9">Loading readings...</td></tr>
-  </tbody>
-</table>
-
 <script>
-const tableBody = document.querySelector('#readings-table tbody');
-const table = document.getElementById('readings-table');
-const jsonFile = 'latest.json';
 let readingsData = [];
-let lastTimestamps = new Set();
 
-// Format timestamp
-function formatTimestamp(ts) {
-  const d = new Date(ts);
-  return d.toLocaleString();
-}
-
-// Load readings
 async function loadReadings() {
   try {
-    const response = await fetch(`${jsonFile}?ts=${Date.now()}`);
-    const data = await response.json();
-    readingsData = Array.isArray(data) ? data.slice().reverse() : [data];
-
-    displayReadings();
-  } catch (err) {
-    tableBody.innerHTML = `<tr><td colspan="9">Error loading readings</td></tr>`;
-    console.error(err);
+    const res = await fetch('latest.json?ts=' + Date.now());
+    const data = await res.json();
+    readingsData = Array.isArray(data) ? data : [data];
+    displayReadings(true);
+  } catch (e) {
+    console.error('Failed to load JSON', e);
   }
 }
 
-// Display readings with highlight for new
-function displayReadings() {
-  tableBody.innerHTML = '';
-  const filters = Array.from(document.querySelectorAll('.filter-input')).map(input => input.value.toLowerCase());
+function displayReadings(highlightNew = false) {
+  const tbody = document.querySelector('tbody');
+  tbody.innerHTML = '';
 
-  readingsData.forEach(r => {
-    // Apply filters
-    const values = [
-      formatTimestamp(r.date), r.systolic, r.diastolic, r.pulse,
-      r.IHB, r.arm, r.position, r.symptoms, r.notes
-    ];
-    const show = values.every((v,i) => String(v).toLowerCase().includes(filters[i]));
-    if (!show) return;
+  readingsData
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .forEach((r, index) => {
+      const row = document.createElement('tr');
 
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${formatTimestamp(r.date)}</td>
-      <td>${r.systolic}</td>
-      <td>${r.diastolic}</td>
-      <td>${r.pulse}</td>
-      <td>${r.IHB}</td>
-      <td>${r.arm}</td>
-      <td>${r.position}</td>
-      <td>${r.symptoms}</td>
-      <td>${r.notes}</td>
-    `;
-    if (!lastTimestamps.has(r.date)) {
-      tr.classList.add('highlight');
-      setTimeout(() => tr.classList.remove('highlight'), 2000);
-    }
-    lastTimestamps.add(r.date);
-    tableBody.appendChild(tr);
-  });
+      row.innerHTML = `
+        <td>${new Date(r.date).toLocaleString()}</td>
+        <td>${r.systolic}</td>
+        <td>${r.diastolic}</td>
+        <td>${r.pulse}</td>
+        <td>${r.IHB}</td>
+        <td>${r.arm}</td>
+        <td>${r.position}</td>
+        <td>${r.symptoms}</td>
+        <td>${r.notes}</td>
+      `;
+
+      if (highlightNew && index === 0) {
+        row.classList.add('highlight');
+        setTimeout(() => row.classList.remove('highlight'), 2000);
+      }
+
+      tbody.appendChild(row);
+    });
 }
 
-// Sorting functionality
-table.querySelectorAll('th').forEach((th, index) => {
+// Column sorting
+document.querySelectorAll('th').forEach(th => {
   th.addEventListener('click', () => {
     const key = th.dataset.key;
-    const sorted = readingsData.sort((a, b) => {
+    readingsData.sort((a, b) => {
       if (key === 'date') return new Date(b.date) - new Date(a.date);
-      return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
+      return (b[key] ?? '')
+        .toString()
+        .localeCompare((a[key] ?? '').toString(), undefined, { numeric: true });
     });
-    readingsData = sorted;
     displayReadings();
   });
 });
 
-// Filter events
-document.querySelectorAll('.filter-input').forEach(input => {
-  input.addEventListener('input', displayReadings);
-});
-
-// Initial load
+// Initial load + auto refresh
 loadReadings();
 setInterval(loadReadings, 20000);
 </script>
-</body>
-</html>

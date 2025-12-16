@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Health Dashboard</title>
+</head>
+<body>
+  <h2>Latest Blood Pressure Entry</h2>
+  <pre id="bp-display">Loading...</pre>
 
+  <script>
+    fetch('latest.json')
+      .then(response => response.json())
+      .then(data => {
+        // Format the display
+        const display = `
+Systolic: ${data.systolic}
+Diastolic: ${data.diastolic}
+Pulse: ${data.pulse}
+IHB: ${data.ihb}
+Arm: ${data.arm}
+Position: ${data.position}
+Symptoms: ${data.symptoms}
+Notes: ${data.notes}
+Date: ${data.date}
+        `;
+        document.getElementById('bp-display').textContent = display;
+      })
+      .catch(err => {
+        document.getElementById('bp-display').textContent = 'Error loading data';
+        console.error(err);
+      });
+  </script>
+</body>
+</html>

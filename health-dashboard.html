@@ -9,7 +9,8 @@
   table { width: 100%; border-collapse: collapse; margin-top: 20px; }
   th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
   th { background-color: #f0f0f0; }
-  tr.latest { background-color: #d1ffd6; font-weight: bold; }
+  tr.latest { background-color: #d1ffd6; font-weight: bold; transition: background-color 0.5s; }
+  tr.flash { background-color: #ffff99 !important; }
 </style>
 </head>
 <body>
@@ -34,17 +35,16 @@
 
 <script>
 const JSON_URL = 'latest.json';
+let lastLatestDate = '';
 
 async function loadData() {
   const timestamp = new Date().getTime(); // cache buster
   try {
     const response = await fetch(`${JSON_URL}?ts=${timestamp}`);
     const data = await response.json();
-
     const tbody = document.querySelector('#bpTable tbody');
     tbody.innerHTML = '';
 
-    // Sort readings: latest first
     const readings = Array.isArray(data) ? data.slice().reverse() : [data];
 
     readings.forEach((reading, index) => {
@@ -63,6 +63,17 @@ async function loadData() {
       `;
       tbody.appendChild(tr);
     });
+
+    // Flash latest reading if new
+    const latestDate = readings[0]?.date;
+    if(latestDate && latestDate !== lastLatestDate) {
+      lastLatestDate = latestDate;
+      const latestRow = tbody.querySelector('tr.latest');
+      if(latestRow) {
+        latestRow.classList.add('flash');
+        setTimeout(() => latestRow.classList.remove('flash'), 800);
+      }
+    }
 
     document.getElementById('loaded').textContent = `Loaded: ${new Date().toLocaleString()}`;
   } catch (err) {

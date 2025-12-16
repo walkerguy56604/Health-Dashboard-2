@@ -1,16 +1,11 @@
 {
-  "commit_message": "Update latest blood pressure reading",
-  "branch": "main",
-  "file_path": "latest.json",
-  "file_content": {
-    "systolic": "{{BP_Systolic}}",
-    "diastolic": "{{BP_Diastolic}}",
-    "pulse": "{{BP_Pulse}}",
-    "IHB": "{{BP_IHB}}",
-    "arm": "{{BP_Arm}}",
-    "position": "{{BP_Position}}",
-    "symptoms": "{{BP_Symptoms}}",
-    "notes": "{{BP_Notes}}",
-    "timestamp": "{{BP_Date}}"
-  }
+  "systolic": 0,
+  "diastolic": 0,
+  "pulse": 0,
+  "IHB": "No",
+  "arm": "",
+  "position": "",
+  "symptoms": "",
+  "notes": "",
+  "timestamp": ""
 }

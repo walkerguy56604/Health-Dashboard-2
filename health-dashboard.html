@@ -1,62 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Dashboard</title>
+<style>
+  body { font-family: sans-serif; margin: 20px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  th { cursor: pointer; background-color: #f0f0f0; }
+  .highlight {
+    background-color: #fff3a0; /* soft yellow */
+    animation: fadeHighlight 2s ease-out;
+  }
+  @keyframes fadeHighlight {
+    from { background-color: #fff3a0; }
+    to   { background-color: transparent; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Health Dashboard</h1>
+<table>
+  <thead>
+    <tr>
+      <th data-key="date">Date</th>
+      <th data-key="systolic">Systolic</th>
+      <th data-key="diastolic">Diastolic</th>
+      <th data-key="pulse">Pulse</th>
+      <th data-key="IHB">IHB</th>
+      <th data-key="arm">Arm</th>
+      <th data-key="position">Position</th>
+      <th data-key="symptoms">Symptoms</th>
+      <th data-key="notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
 <script>
 let readingsData = [];
+let previousReadings = [];
 
 async function loadReadings() {
   try {
-    const res = await fetch('latest.json?ts=' + Date.now());
-    const data = await res.json();
-    readingsData = Array.isArray(data) ? data : [data];
-    displayReadings(true);
-  } catch (e) {
-    console.error('Failed to load JSON', e);
+    const response = await fetch('latest.json?ts=' + Date.now()); // cache buster
+    readingsData = await response.json();
+    displayReadings();
+  } catch (error) {
+    console.error('Error loading readings:', error);
   }
 }
 
-function displayReadings(highlightNew = false) {
+function highlightRow(row) {
+  row.classList.add('highlight');
+  setTimeout(() => row.classList.remove('highlight'), 2000);
+}
+
+function displayReadings() {
   const tbody = document.querySelector('tbody');
   tbody.innerHTML = '';
 
-  readingsData
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .forEach((r, index) => {
-      const row = document.createElement('tr');
+  readingsData.forEach((reading, index) => {
+    const row = document.createElement('tr');
 
-      row.innerHTML = `
-        <td>${new Date(r.date).toLocaleString()}</td>
-        <td>${r.systolic}</td>
-        <td>${r.diastolic}</td>
-        <td>${r.pulse}</td>
-        <td>${r.IHB}</td>
-        <td>${r.arm}</td>
-        <td>${r.position}</td>
-        <td>${r.symptoms}</td>
-        <td>${r.notes}</td>
-      `;
+    row.innerHTML = `
+      <td>${reading.date}</td>
+      <td>${reading.systolic}</td>
+      <td>${reading.diastolic}</td>
+      <td>${reading.pulse}</td>
+      <td>${reading.IHB}</td>
+      <td>${reading.arm}</td>
+      <td>${reading.position}</td>
+      <td>${reading.symptoms}</td>
+      <td>${reading.notes}</td>
+    `;
 
-      if (highlightNew && index === 0) {
-        row.classList.add('highlight');
-        setTimeout(() => row.classList.remove('highlight'), 2000);
-      }
+    // Highlight latest or changed reading
+    if (index === 0 || JSON.stringify(reading) !== JSON.stringify(previousReadings[index])) {
+      highlightRow(row);
+    }
 
-      tbody.appendChild(row);
-    });
+    tbody.appendChild(row);
+  });
+
+  previousReadings = JSON.parse(JSON.stringify(readingsData));
 }
 
-// Column sorting
-document.querySelectorAll('th').forEach(th => {
+// Sorting by header click
+document.querySelectorAll('th').forEach((th) => {
   th.addEventListener('click', () => {
     const key = th.dataset.key;
-    readingsData.sort((a, b) => {
+    const sorted = readingsData.sort((a, b) => {
       if (key === 'date') return new Date(b.date) - new Date(a.date);
-      return (b[key] ?? '')
-        .toString()
-        .localeCompare((a[key] ?? '').toString(), undefined, { numeric: true });
+      return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
     });
+    readingsData = sorted;
     displayReadings();
   });
 });
 
-// Initial load + auto refresh
+// Initial load + refresh every 20s
 loadReadings();
 setInterval(loadReadings, 20000);
 </script>
+
+</body>
+</html>

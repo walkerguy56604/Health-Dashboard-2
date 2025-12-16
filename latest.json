@@ -1,11 +1,31 @@
 {
-  "systolic": 0,
-  "diastolic": 0,
-  "pulse": 0,
-  "IHB": "No",
-  "arm": "",
-  "position": "",
-  "symptoms": "",
-  "notes": "",
-  "timestamp": ""
+  "meta": {
+    "schema_version": "1.0",
+    "generated_at": "2025-12-16T09:00:00Z",
+    "source": "manual / shortcut / future-pwa"
+  },
+
+  "date": "2025-12-16",
+  "time_local": "09:00",
+
+  "blood_pressure": {
+    "systolic": 128,
+    "diastolic": 82,
+    "pulse": 64,
+    "arm": "left",
+    "position": "seated"
+  },
+
+  "weight": {
+    "value": 187.4,
+    "unit": "lb"
+  },
+
+  "activity": {
+    "steps": 4200,
+    "walk_minutes": 35,
+    "strength_training": true
+  },
+
+  "notes": "Felt good. Morning reading. Before coffee."
 }

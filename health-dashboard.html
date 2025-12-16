@@ -6,53 +6,16 @@
 <title>Health Dashboard</title>
 <style>
   body { font-family: sans-serif; margin: 20px; }
-  table { border-collapse: collapse; width: 100%; }
-  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-  th { background-color: #f2f2f2; }
-  tr.latest { background-color: #d1ffd1; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+  th { background-color: #f0f0f0; }
+  tr.latest { background-color: #d1ffd6; font-weight: bold; }
 </style>
-<script>
-async function loadData() {
-  const ts = new Date().getTime(); // timestamp cache-buster
-  try {
-    const response = await fetch(`latest.json?ts=${ts}`);
-    const data = await response.json();
-
-    const tableBody = document.getElementById('health-data');
-    tableBody.innerHTML = ''; // clear previous
-
-    data.forEach((entry, index) => {
-      const tr = document.createElement('tr');
-      if(index === data.length - 1) tr.classList.add('latest');
-
-      tr.innerHTML = `
-        <td>${entry.date}</td>
-        <td>${entry.systolic}</td>
-        <td>${entry.diastolic}</td>
-        <td>${entry.pulse}</td>
-        <td>${entry.ihb}</td>
-        <td>${entry.arm}</td>
-        <td>${entry.position}</td>
-        <td>${entry.symptoms}</td>
-        <td>${entry.notes}</td>
-      `;
-      tableBody.appendChild(tr);
-    });
-  } catch (err) {
-    console.error('Error loading health data:', err);
-  }
-}
-
-window.onload = () => {
-  loadData();
-  setInterval(loadData, 15000); // refresh every 15 seconds
-};
-</script>
 </head>
 <body>
 <h1>🩺 Health Dashboard</h1>
-<p>Latest readings auto-refresh every 15 seconds</p>
-<table>
+<p id="loaded">Loaded: --</p>
+<table id="bpTable">
   <thead>
     <tr>
       <th>Date</th>
@@ -66,9 +29,52 @@ window.onload = () => {
       <th>Notes</th>
     </tr>
   </thead>
-  <tbody id="health-data">
-    <!-- Entries will populate here -->
-  </tbody>
+  <tbody></tbody>
 </table>
+
+<script>
+const JSON_URL = 'latest.json';
+
+async function loadData() {
+  const timestamp = new Date().getTime(); // cache buster
+  try {
+    const response = await fetch(`${JSON_URL}?ts=${timestamp}`);
+    const data = await response.json();
+
+    const tbody = document.querySelector('#bpTable tbody');
+    tbody.innerHTML = '';
+
+    // Sort readings: latest first
+    const readings = Array.isArray(data) ? data.slice().reverse() : [data];
+
+    readings.forEach((reading, index) => {
+      const tr = document.createElement('tr');
+      if(index === 0) tr.classList.add('latest'); // highlight latest
+      tr.innerHTML = `
+        <td>${reading.date}</td>
+        <td>${reading.systolic}</td>
+        <td>${reading.diastolic}</td>
+        <td>${reading.pulse}</td>
+        <td>${reading.IHB}</td>
+        <td>${reading.arm}</td>
+        <td>${reading.position}</td>
+        <td>${reading.symptoms}</td>
+        <td>${reading.notes}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('loaded').textContent = `Loaded: ${new Date().toLocaleString()}`;
+  } catch (err) {
+    console.error('Error loading JSON:', err);
+  }
+}
+
+// Initial load
+loadData();
+
+// Auto-refresh every 15 seconds
+setInterval(loadData, 15000);
+</script>
 </body>
 </html>

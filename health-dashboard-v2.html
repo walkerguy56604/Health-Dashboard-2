@@ -6,22 +6,24 @@
 <title>Health Dashboard V2</title>
 <style>
   body { font-family: Arial, sans-serif; padding: 20px; }
-  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-  th { cursor: pointer; background-color: #f0f0f0; }
-  .highlight { background-color: #ffff99; transition: background-color 2s; }
-  select { margin-bottom: 10px; padding: 5px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  th { cursor: pointer; background-color: #f2f2f2; }
+  tr.highlight { background-color: #fffa91; transition: background-color 2s; }
 </style>
 </head>
 <body>
 
-<h1>Health Dashboard V2</h1>
+<h2>Health Dashboard V2</h2>
 
-<label for="armFilter">Filter by Arm:</label>
-<select id="armFilter">
-  <option value="All">All</option>
-  <option value="Right">Right</option>
-  <option value="Left">Left</option>
+<label for="filterArm">Filter by Arm:</label>
+<select id="filterArm">
+  <option value="">All</option>
+</select>
+
+<label for="filterPosition">Filter by Position:</label>
+<select id="filterPosition">
+  <option value="">All</option>
 </select>
 
 <table>
@@ -38,47 +40,84 @@
       <th data-key="notes">Notes</th>
     </tr>
   </thead>
-  <tbody id="readingsTableBody"></tbody>
+  <tbody></tbody>
 </table>
 
 <script>
 let readingsData = [];
 
 async function loadReadings() {
-  const response = await fetch('latest.json');
-  const data = await response.json();
-  readingsData = Array.isArray(data) ? data : [data];
-  displayReadings();
+  try {
+    const ts = new Date().getTime();
+    const response = await fetch('latest.json?ts=' + ts);
+    const data = await response.json();
+    readingsData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    populateFilters();
+    displayReadings(true);
+  } catch (err) {
+    console.error('Error fetching latest.json:', err);
+  }
 }
 
-function displayReadings() {
-  const tbody = document.getElementById('readingsTableBody');
-  tbody.innerHTML = '';
+function populateFilters() {
+  const armSelect = document.getElementById('filterArm');
+  const positionSelect = document.getElementById('filterPosition');
 
-  const armFilter = document.getElementById('armFilter').value;
-  const filteredData = readingsData.filter(r => armFilter === 'All' || r.arm === armFilter);
+  const arms = [...new Set(readingsData.map(r => r.arm))];
+  const positions = [...new Set(readingsData.map(r => r.position))];
 
-  filteredData.forEach((reading, index) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${new Date(reading.date).toLocaleString()}</td>
-      <td>${reading.systolic}</td>
-      <td>${reading.diastolic}</td>
-      <td>${reading.pulse}</td>
-      <td>${reading.IHB}</td>
-      <td>${reading.arm}</td>
-      <td>${reading.position}</td>
-      <td>${reading.symptoms}</td>
-      <td>${reading.notes}</td>
-    `;
-    if (index === 0) row.classList.add('highlight');
-    tbody.appendChild(row);
-    if (index === 0) setTimeout(() => row.classList.remove('highlight'), 2000);
+  arms.forEach(a => {
+    if (![...armSelect.options].map(o => o.value).includes(a)) {
+      const opt = document.createElement('option');
+      opt.value = a; opt.textContent = a;
+      armSelect.appendChild(opt);
+    }
+  });
+
+  positions.forEach(p => {
+    if (![...positionSelect.options].map(o => o.value).includes(p)) {
+      const opt = document.createElement('option');
+      opt.value = p; opt.textContent = p;
+      positionSelect.appendChild(opt);
+    }
   });
 }
 
-// Sorting when clicking table headers
-document.querySelectorAll('th').forEach((th) => {
+function displayReadings(highlightNew = false) {
+  const tbody = document.querySelector('tbody');
+  tbody.innerHTML = '';
+
+  const armFilter = document.getElementById('filterArm').value;
+  const positionFilter = document.getElementById('filterPosition').value;
+
+  const filteredData = readingsData.filter(r => {
+    return (armFilter ? r.arm === armFilter : true) &&
+           (positionFilter ? r.position === positionFilter : true);
+  });
+
+  filteredData.forEach((r, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${new Date(r.date).toLocaleString()}</td>
+      <td>${r.systolic}</td>
+      <td>${r.diastolic}</td>
+      <td>${r.pulse}</td>
+      <td>${r.IHB}</td>
+      <td>${r.arm}</td>
+      <td>${r.position}</td>
+      <td>${r.symptoms}</td>
+      <td>${r.notes}</td>
+    `;
+    if (highlightNew && index === 0) {
+      row.classList.add('highlight');
+      setTimeout(() => row.classList.remove('highlight'), 2000);
+    }
+    tbody.appendChild(row);
+  });
+}
+
+// Sorting columns
+document.querySelectorAll('th').forEach((th, index) => {
   th.addEventListener('click', () => {
     const key = th.dataset.key;
     readingsData.sort((a, b) => {
@@ -89,13 +128,13 @@ document.querySelectorAll('th').forEach((th) => {
   });
 });
 
-// Filter dropdown change
-document.getElementById('armFilter').addEventListener('change', displayReadings);
+// Filter dropdowns
+document.getElementById('filterArm').addEventListener('change', () => displayReadings());
+document.getElementById('filterPosition').addEventListener('change', () => displayReadings());
 
-// Initial load
+// Initial load and periodic refresh
 loadReadings();
-setInterval(loadReadings, 20000); // refresh every 20 sec
+setInterval(loadReadings, 20000);
 </script>
-
 </body>
 </html>

@@ -1,42 +1,36 @@
-name: Update Health Dashboard
+const fs = require('fs');
+const path = require('path');
 
-on:
-  push:
-    paths:
-      - latest.json
-  schedule:
-    - cron: '*/20 * * * *'  # every 20 minutes, optional
+// Path to latest.json
+const filePath = path.join(__dirname, '..', 'latest.json');
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
+// Sample new reading (replace with actual data source if needed)
+const newReading = {
+  date: new Date().toISOString(),
+  systolic: 130,
+  diastolic: 88,
+  pulse: 72,
+  IHB: "No",
+  arm: "Right",
+  position: "Sitting",
+  symptoms: "None",
+  notes: "Auto-updated"
+};
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+// Load existing data
+let readings = [];
+if (fs.existsSync(filePath)) {
+  const data = fs.readFileSync(filePath, 'utf8');
+  try {
+    readings = JSON.parse(data);
+  } catch (err) {
+    console.error("Error parsing latest.json:", err);
+  }
+}
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+// Append new reading
+readings.push(newReading);
 
-      - name: Update latest.json (optional script)
-        run: |
-          echo "Add your script here to update latest.json if needed"
-          # e.g., node scripts/update-latest.js
-
-      - name: Commit & Push changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add latest.json
-          git commit -m "Update latest.json via GitHub Actions" || echo "No changes to commit"
-          git push
-
-      - name: Cloudflare Cache Purge (optional)
-        if: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
-          -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-          -H "Content-Type: application/json" \
-          --data '{"purge_everything":true}'
+// Save back to latest.json
+fs.writeFileSync(filePath, JSON.stringify(readings, null, 2));
+console.log("Added new reading:", newReading.date);

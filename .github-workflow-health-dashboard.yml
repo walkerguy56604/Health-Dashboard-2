@@ -1,0 +1,29 @@
+name: Health Dashboard Auto Update
+
+on:
+  push:
+    paths:
+      - "latest.json"
+
+permissions:
+  contents: write
+
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate timestamp
+        run: |
+          echo "{ \"lastUpdated\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\" }" > lastUpdated.json
+
+      - name: Commit timestamp update
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add lastUpdated.json
+          git commit -m "Auto-update dashboard timestamp" || echo "No changes to commit"
+          git push

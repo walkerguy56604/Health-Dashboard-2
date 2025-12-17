@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Dashboard V2</title>
+<style>
+  body { font-family: sans-serif; margin: 20px; background: #f4f4f9; }
+  h1 { text-align: center; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+  th { cursor: pointer; background: #e0e0e0; }
+  tr.highlight { background-color: #ffff99; transition: background 2s ease; }
+</style>
+</head>
+<body>
+
+<h1>Health Dashboard V2</h1>
+<table id="healthTable">
+  <thead>
+    <tr>
+      <th data-key="date">Date</th>
+      <th data-key="systolic">Systolic</th>
+      <th data-key="diastolic">Diastolic</th>
+      <th data-key="pulse">Pulse</th>
+      <th data-key="IHB">IHB</th>
+      <th data-key="arm">Arm</th>
+      <th data-key="position">Position</th>
+      <th data-key="symptoms">Symptoms</th>
+      <th data-key="notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+const latestJSON = 'latest.json'; // Make sure latest.json is in same folder
+let readingsData = [];
+let lastLoaded = null;
+
+async function loadReadings() {
+  try {
+    const cacheBuster = new Date().getTime(); // prevent Safari caching
+    const res = await fetch(`${latestJSON}?t=${cacheBuster}`);
+    const data = await res.json();
+
+    // Sort by date descending
+    readingsData = data.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+    // Highlight only if new readings
+    let highlightNew = false;
+    if (lastLoaded && data.length > readingsData.length) {
+      highlightNew = true;
+    }
+    lastLoaded = data.length;
+
+    displayReadings(highlightNew);
+  } catch(err) {
+    console.error("Error loading readings:", err);
+  }
+}
+
+function displayReadings(highlightNew = false) {
+  const tbody = document.querySelector('#healthTable tbody');
+  tbody.innerHTML = '';
+
+  readingsData.forEach((reading, index) => {
+    const row = document.createElement('tr');
+    if (highlightNew && index === 0) {
+      row.classList.add('highlight');
+      setTimeout(() => row.classList.remove('highlight'), 2000);
+    }
+
+    row.innerHTML = `
+      <td>${new Date(reading.date).toLocaleString()}</td>
+      <td>${reading.systolic}</td>
+      <td>${reading.diastolic}</td>
+      <td>${reading.pulse}</td>
+      <td>${reading.IHB}</td>
+      <td>${reading.arm}</td>
+      <td>${reading.position}</td>
+      <td>${reading.symptoms}</td>
+      <td>${reading.notes}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  // Sorting
+  document.querySelectorAll('#healthTable th').forEach((th, index) => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.key;
+      readingsData.sort((a, b) => {
+        if (key === 'date') return new Date(b.date) - new Date(a.date);
+        return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
+      });
+      displayReadings();
+    });
+  });
+}
+
+// Initial load + refresh every 20 seconds
+loadReadings();
+setInterval(loadReadings, 20000);
+</script>
+
+</body>
+</html>

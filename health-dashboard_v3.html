@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Dashboard V3</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; background: #f5f5f5; }
+  table { width: 100%; border-collapse: collapse; background: white; }
+  th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+  th { cursor: pointer; background: #eee; }
+  .highlight { background-color: #ffff99; transition: background 2s; }
+</style>
+</head>
+<body>
+<h1>Health Dashboard V3</h1>
+<table id="healthTable">
+  <thead>
+    <tr>
+      <th data-key="date">Date</th>
+      <th data-key="systolic">Systolic</th>
+      <th data-key="diastolic">Diastolic</th>
+      <th data-key="pulse">Pulse</th>
+      <th data-key="IHB">IHB</th>
+      <th data-key="arm">Arm</th>
+      <th data-key="position">Position</th>
+      <th data-key="symptoms">Symptoms</th>
+      <th data-key="notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
 
+<script>
+  // Embedded JSON readings
+  let readingsData = [
+    {
+      "date": "2025-12-16T11:00:00",
+      "systolic": 125,
+      "diastolic": 85,
+      "pulse": 68,
+      "IHB": "No",
+      "arm": "Right",
+      "position": "Sitting",
+      "symptoms": "None",
+      "notes": "Feeling fine"
+    },
+    {
+      "date": "2025-12-16T12:00:00",
+      "systolic": 128,
+      "diastolic": 89,
+      "pulse": 70,
+      "IHB": "No",
+      "arm": "Right",
+      "position": "Sitting",
+      "symptoms": "None",
+      "notes": "Feeling good"
+    }
+  ];
+
+  const tbody = document.querySelector("#healthTable tbody");
+
+  function displayReadings() {
+    tbody.innerHTML = "";
+    readingsData.forEach((reading, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${new Date(reading.date).toLocaleString()}</td>
+        <td>${reading.systolic}</td>
+        <td>${reading.diastolic}</td>
+        <td>${reading.pulse}</td>
+        <td>${reading.IHB}</td>
+        <td>${reading.arm}</td>
+        <td>${reading.position}</td>
+        <td>${reading.symptoms}</td>
+        <td>${reading.notes}</td>
+      `;
+      // Highlight the latest reading
+      if(index === readingsData.length - 1) {
+        row.classList.add('highlight');
+        setTimeout(() => row.classList.remove('highlight'), 2000);
+      }
+      tbody.appendChild(row);
+    });
+  }
+
+  // Sort table when header is clicked
+  document.querySelectorAll('#healthTable th').forEach((th) => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.key;
+      readingsData.sort((a, b) => {
+        if(key === "date") return new Date(b.date) - new Date(a.date);
+        return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
+      });
+      displayReadings();
+    });
+  });
+
+  // Initial display
+  displayReadings();
+</script>
+</body>
+</html>

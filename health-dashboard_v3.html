@@ -1,13 +1,126 @@
-[
-  {
-    "date": "2025-12-16T13:00:00",
-    "systolic": 130,
-    "diastolic": 88,
-    "pulse": 72,
-    "IHB": "No",
-    "arm": "Right",
-    "position": "Sitting",
-    "symptoms": "None",
-    "notes": "Feeling good"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Health Dashboard</title>
+
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f6f7f9;
+    margin: 0;
+    padding: 16px;
   }
-]
+
+  h1 {
+    margin-bottom: 12px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+  }
+
+  th {
+    background: #f0f2f5;
+    cursor: pointer;
+  }
+
+  tr.highlight {
+    animation: flash 2s ease-out;
+  }
+
+  @keyframes flash {
+    0% { background: #fff3cd; }
+    100% { background: white; }
+  }
+
+  .status {
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #555;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Health Dashboard</h1>
+<div class="status" id="status">Loading readings…</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Systolic</th>
+      <th>Diastolic</th>
+      <th>Pulse</th>
+      <th>IHB</th>
+      <th>Arm</th>
+      <th>Position</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody id="table-body"></tbody>
+</table>
+
+<script>
+const STATUS = document.getElementById("status");
+const T_BODY = document.getElementById("table-body");
+
+// Cache buster for Safari / iOS
+const DATA_URL = "readings-live.json?t=" + Date.now();
+
+fetch(DATA_URL)
+  .then(res => {
+    if (!res.ok) throw new Error("Fetch failed");
+    return res.json();
+  })
+  .then(data => {
+    if (!Array.isArray(data)) data = [data];
+
+    // newest first
+    data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    STATUS.textContent = `Loaded ${data.length} reading(s)`;
+
+    data.forEach((r, index) => {
+      const row = document.createElement("tr");
+
+      if (index === 0) {
+        row.classList.add("highlight");
+      }
+
+      row.innerHTML = `
+        <td>${new Date(r.date).toLocaleString()}</td>
+        <td>${r.systolic}</td>
+        <td>${r.diastolic}</td>
+        <td>${r.pulse}</td>
+        <td>${r.IHB}</td>
+        <td>${r.arm}</td>
+        <td>${r.position}</td>
+        <td>${r.notes || ""}</td>
+      `;
+
+      T_BODY.appendChild(row);
+    });
+  })
+  .catch(err => {
+    STATUS.textContent = "Error loading data";
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>

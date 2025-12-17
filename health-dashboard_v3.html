@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Health Dashboard V3</title>
+  <title>Health Dashboard V3 - Full History</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -14,7 +14,7 @@
   </style>
 </head>
 <body>
-  <h1>Health Dashboard V3</h1>
+  <h1>Health Dashboard V3 - Full History</h1>
 
   <label for="armFilter">Filter by Arm:</label>
   <select id="armFilter">
@@ -41,16 +41,17 @@
   <div id="lastUpdated"></div>
 
   <script>
-    const jsonFile = 'latest.json'; // Make sure this matches your JSON filename
+    const jsonFile = 'latestV2.json'; // Replace with your current JSON filename
     let readingsData = [];
 
     async function loadReadings() {
       try {
         const response = await fetch(`${jsonFile}?_=${Date.now()}`);
         const data = await response.json();
-
-        // Ensure data is always an array
         readingsData = Array.isArray(data) ? data : [data];
+
+        // Sort chronologically ascending
+        readingsData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         populateArmFilter();
         displayReadings();
@@ -64,7 +65,7 @@
     function populateArmFilter() {
       const armSelect = document.getElementById('armFilter');
       const arms = [...new Set(readingsData.map(r => r.arm))];
-      armSelect.innerHTML = `<option value="All">All</option>` + 
+      armSelect.innerHTML = `<option value="All">All</option>` +
         arms.map(a => `<option value="${a}">${a}</option>`).join('');
       armSelect.onchange = displayReadings;
     }
@@ -78,6 +79,7 @@
         if (filter !== 'All' && reading.arm !== filter) return;
 
         const row = document.createElement('tr');
+        // Highlight the most recent reading only
         if (index === readingsData.length - 1) { 
           row.classList.add('highlight');
           setTimeout(() => row.classList.remove('highlight'), 2000);
@@ -110,9 +112,8 @@
       });
     });
 
-    // Initial load + refresh every 20 seconds
     loadReadings();
-    setInterval(loadReadings, 20000);
+    setInterval(loadReadings, 20000); // Refresh every 20 seconds
   </script>
 </body>
 </html>

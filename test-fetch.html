@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fetch Test</title>
+</head>
+<body>
+<h2>Fetch Test for latest.json</h2>
+<pre id="output">Loading...</pre>
+
+<script>
+async function fetchLatest() {
+  try {
+    // Add a cache-busting timestamp to avoid Safari caching
+    const response = await fetch(`latest.json?t=${new Date().getTime()}`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+    
+    // Log to console so we can see what is fetched
+    console.log('Fetched JSON:', data);
+    
+    // Display in the page
+    document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+  } catch (err) {
+    console.error('Fetch failed:', err);
+    document.getElementById('output').textContent = `Error fetching latest.json:\n${err}`;
+  }
+}
+
+// Run the fetch
+fetchLatest();
+</script>
+</body>
+</html>

@@ -1,90 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Dashboard V3</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-  th { cursor: pointer; background-color: #f4f4f4; }
-  tr.highlight { background-color: #fffa91; transition: background-color 2s ease; }
-</style>
+  <meta charset="UTF-8">
+  <title>Health Dashboard V3</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f4f4f4; cursor: pointer; }
+    tr.highlight { background-color: #fffa91; transition: background-color 2s ease; }
+    #lastUpdated { margin-top: 10px; font-size: 0.9em; color: #555; }
+    select { margin-bottom: 10px; padding: 4px; }
+  </style>
 </head>
 <body>
-<h1>Health Dashboard V3</h1>
-<table id="readingsTable">
-  <thead>
-    <tr>
-      <th data-key="date">Date</th>
-      <th data-key="systolic">Systolic</th>
-      <th data-key="diastolic">Diastolic</th>
-      <th data-key="pulse">Pulse</th>
-      <th data-key="IHB">IHB</th>
-      <th data-key="arm">Arm</th>
-      <th data-key="position">Position</th>
-      <th data-key="symptoms">Symptoms</th>
-      <th data-key="notes">Notes</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+  <h1>Health Dashboard V3</h1>
 
-<script>
-let readingsData = [];
+  <label for="armFilter">Filter by Arm:</label>
+  <select id="armFilter">
+    <option value="All">All</option>
+  </select>
 
-async function loadReadings() {
-  try {
-    const cacheBuster = new Date().getTime();
-    const response = await fetch(`latest_v2.json?cb=${cacheBuster}`);
-    const data = await response.json();
-    readingsData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-    displayReadings(true);
-  } catch (err) {
-    console.error('Error loading readings:', err);
-  }
-}
+  <table id="healthTable">
+    <thead>
+      <tr>
+        <th data-key="date">Date</th>
+        <th data-key="systolic">Systolic</th>
+        <th data-key="diastolic">Diastolic</th>
+        <th data-key="pulse">Pulse</th>
+        <th data-key="IHB">IHB</th>
+        <th data-key="arm">Arm</th>
+        <th data-key="position">Position</th>
+        <th data-key="symptoms">Symptoms</th>
+        <th data-key="notes">Notes</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-function displayReadings(highlightNew = false) {
-  const tbody = document.querySelector('#readingsTable tbody');
-  tbody.innerHTML = '';
-  readingsData.forEach((reading, index) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${reading.date}</td>
-      <td>${reading.systolic}</td>
-      <td>${reading.diastolic}</td>
-      <td>${reading.pulse}</td>
-      <td>${reading.IHB}</td>
-      <td>${reading.arm}</td>
-      <td>${reading.position}</td>
-      <td>${reading.symptoms}</td>
-      <td>${reading.notes}</td>
-    `;
-    if (highlightNew && index === 0) {
-      row.classList.add('highlight');
-      setTimeout(() => row.classList.remove('highlight'), 2000);
+  <div id="lastUpdated"></div>
+
+  <script>
+    const jsonFile = 'latest.json'; // Make sure this matches your JSON filename
+    let readingsData = [];
+
+    async function loadReadings() {
+      try {
+        const response = await fetch(`${jsonFile}?_=${Date.now()}`);
+        const data = await response.json();
+
+        // Ensure data is always an array
+        readingsData = Array.isArray(data) ? data : [data];
+
+        populateArmFilter();
+        displayReadings();
+        document.getElementById('lastUpdated').textContent = 
+          `Last Updated: ${new Date().toLocaleString()}`;
+      } catch (error) {
+        console.error('Error fetching readings:', error);
+      }
     }
-    tbody.appendChild(row);
-  });
-}
 
-// Sort table when header clicked
-document.querySelectorAll('#readingsTable th').forEach((th) => {
-  th.addEventListener('click', () => {
-    const key = th.dataset.key;
-    readingsData.sort((a, b) => {
-      if (key === 'date') return new Date(b.date) - new Date(a.date);
-      return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
+    function populateArmFilter() {
+      const armSelect = document.getElementById('armFilter');
+      const arms = [...new Set(readingsData.map(r => r.arm))];
+      armSelect.innerHTML = `<option value="All">All</option>` + 
+        arms.map(a => `<option value="${a}">${a}</option>`).join('');
+      armSelect.onchange = displayReadings;
+    }
+
+    function displayReadings() {
+      const tbody = document.querySelector('#healthTable tbody');
+      tbody.innerHTML = '';
+      const filter = document.getElementById('armFilter').value;
+
+      readingsData.forEach((reading, index) => {
+        if (filter !== 'All' && reading.arm !== filter) return;
+
+        const row = document.createElement('tr');
+        if (index === readingsData.length - 1) { 
+          row.classList.add('highlight');
+          setTimeout(() => row.classList.remove('highlight'), 2000);
+        }
+
+        row.innerHTML = `
+          <td>${new Date(reading.date).toLocaleString()}</td>
+          <td>${reading.systolic}</td>
+          <td>${reading.diastolic}</td>
+          <td>${reading.pulse}</td>
+          <td>${reading.IHB}</td>
+          <td>${reading.arm}</td>
+          <td>${reading.position}</td>
+          <td>${reading.symptoms}</td>
+          <td>${reading.notes}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Sorting
+    document.querySelectorAll('th').forEach((th) => {
+      th.addEventListener('click', () => {
+        const key = th.dataset.key;
+        readingsData.sort((a, b) => {
+          if (key === 'date') return new Date(b.date) - new Date(a.date);
+          return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
+        });
+        displayReadings();
+      });
     });
-    displayReadings();
-  });
-});
 
-// Initial load
-loadReadings();
-setInterval(loadReadings, 20000); // refresh every 20 seconds
-</script>
+    // Initial load + refresh every 20 seconds
+    loadReadings();
+    setInterval(loadReadings, 20000);
+  </script>
 </body>
 </html>

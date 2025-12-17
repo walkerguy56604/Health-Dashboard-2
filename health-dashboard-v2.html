@@ -1,43 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Dashboard V2</title>
+<style>
+  body { font-family: sans-serif; margin: 20px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  th { cursor: pointer; background-color: #f4f4f4; }
+  tr.highlight { background-color: #fffb91; transition: background-color 2s ease; }
+  select { margin-top: 10px; padding: 5px; }
+</style>
+</head>
+<body>
+<h1>Health Dashboard V2</h1>
+
+<label for="filterArm">Filter by Arm:</label>
+<select id="filterArm">
+  <option value="">All</option>
+</select>
+
+<table id="readingsTable">
+  <thead>
+    <tr>
+      <th data-key="date">Date</th>
+      <th data-key="systolic">Systolic</th>
+      <th data-key="diastolic">Diastolic</th>
+      <th data-key="pulse">Pulse</th>
+      <th data-key="IHB">IHB</th>
+      <th data-key="arm">Arm</th>
+      <th data-key="position">Position</th>
+      <th data-key="symptoms">Symptoms</th>
+      <th data-key="notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
 <script>
 let readingsData = [];
+const table = document.getElementById('readingsTable');
+const tbody = table.querySelector('tbody');
+const filterArm = document.getElementById('filterArm');
 
-// Fetch latest readings with cache-buster
-function loadReadings() {
-  fetch(`latest.json?ts=${new Date().getTime()}`)
-    .then(response => response.json())
-    .then(data => {
-      readingsData = data;
-      displayReadings(true); // 'true' triggers highlight for newest
-    });
+// Fetch latest.json with cache-buster
+async function loadReadings() {
+  try {
+    const response = await fetch(`latest.json?ts=${new Date().getTime()}`);
+    const data = await response.json();
+    
+    // Ensure data is an array
+    readingsData = Array.isArray(data) ? data : [data];
+
+    // Sort chronologically newest first
+    readingsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    populateFilterOptions();
+    displayReadings();
+  } catch (err) {
+    console.error("Error fetching readings:", err);
+  }
 }
 
-// Display readings in table
-function displayReadings(highlightNew = false) {
-  const tbody = document.querySelector('#readings-table tbody');
+function populateFilterOptions() {
+  const arms = [...new Set(readingsData.map(r => r.arm))];
+  filterArm.innerHTML = '<option value="">All</option>';
+  arms.forEach(arm => {
+    const option = document.createElement('option');
+    option.value = arm;
+    option.textContent = arm;
+    filterArm.appendChild(option);
+  });
+}
+
+function displayReadings() {
   tbody.innerHTML = '';
-
+  const selectedArm = filterArm.value;
+  
   readingsData.forEach((reading, index) => {
-    const row = document.createElement('tr');
-    
-    // Create table cells
-    ['date', 'systolic', 'diastolic', 'pulse', 'IHB', 'arm', 'position', 'symptoms', 'notes'].forEach(key => {
-      const cell = document.createElement('td');
-      cell.textContent = reading[key];
-      row.appendChild(cell);
-    });
+    if (selectedArm && reading.arm !== selectedArm) return;
 
-    // Highlight newest reading if flag is true
-    if (highlightNew && index === readingsData.length - 1) {
+    const row = document.createElement('tr');
+    // Highlight the newest reading (first row)
+    if (index === 0) {
       row.classList.add('highlight');
       setTimeout(() => row.classList.remove('highlight'), 2000);
     }
 
+    row.innerHTML = `
+      <td>${reading.date}</td>
+      <td>${reading.systolic}</td>
+      <td>${reading.diastolic}</td>
+      <td>${reading.pulse}</td>
+      <td>${reading.IHB}</td>
+      <td>${reading.arm}</td>
+      <td>${reading.position}</td>
+      <td>${reading.symptoms}</td>
+      <td>${reading.notes}</td>
+    `;
     tbody.appendChild(row);
   });
 }
 
-// Sort by table headers
-document.querySelectorAll('th').forEach((th) => {
+// Sorting functionality
+table.querySelectorAll('th').forEach((th) => {
   th.addEventListener('click', () => {
     const key = th.dataset.key;
     readingsData.sort((a, b) => {
@@ -48,7 +115,12 @@ document.querySelectorAll('th').forEach((th) => {
   });
 });
 
-// Initial load & refresh every 20 seconds
+// Filter change
+filterArm.addEventListener('change', displayReadings);
+
+// Initial load and periodic refresh every 20 seconds
 loadReadings();
 setInterval(loadReadings, 20000);
 </script>
+</body>
+</html>

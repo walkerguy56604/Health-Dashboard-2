@@ -1,119 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Dashboard V3</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-  th { cursor: pointer; background-color: #f2f2f2; }
-  .highlight { background-color: #ffff99; transition: background 2s ease; }
-  select { margin-bottom: 10px; padding: 5px; }
-</style>
-</head>
-<body>
-
-<h1>Health Dashboard V3</h1>
-
-<label for="filter">Filter by Arm:</label>
-<select id="filter">
-  <option value="">All</option>
-</select>
-
-<table>
-  <thead>
-    <tr>
-      <th data-key="date">Date</th>
-      <th data-key="systolic">Systolic</th>
-      <th data-key="diastolic">Diastolic</th>
-      <th data-key="pulse">Pulse</th>
-      <th data-key="IHB">IHB</th>
-      <th data-key="arm">Arm</th>
-      <th data-key="position">Position</th>
-      <th data-key="symptoms">Symptoms</th>
-      <th data-key="notes">Notes</th>
-    </tr>
-  </thead>
-  <tbody id="table-body"></tbody>
-</table>
-
-<script>
-const readingsData = [
+[
   {
-    "date": "2025-12-16T11:00:00",
-    "systolic": 125,
-    "diastolic": 85,
-    "pulse": 68,
-    "IHB": "No",
-    "arm": "Right",
-    "position": "Sitting",
-    "symptoms": "None",
-    "notes": "Feeling fine"
-  },
-  {
-    "date": "2025-12-16T12:00:00",
-    "systolic": 128,
-    "diastolic": 89,
-    "pulse": 70,
+    "date": "2025-12-16T13:00:00",
+    "systolic": 130,
+    "diastolic": 88,
+    "pulse": 72,
     "IHB": "No",
     "arm": "Right",
     "position": "Sitting",
     "symptoms": "None",
     "notes": "Feeling good"
   }
-];
-
-const tbody = document.getElementById('table-body');
-const filterSelect = document.getElementById('filter');
-
-function displayReadings(filter = '') {
-  tbody.innerHTML = '';
-  readingsData
-    .filter(r => !filter || r.arm === filter)
-    .forEach((reading, index) => {
-      const row = document.createElement('tr');
-      Object.keys(reading).forEach(key => {
-        const td = document.createElement('td');
-        td.textContent = reading[key];
-        row.appendChild(td);
-      });
-      if (index === 0) row.classList.add('highlight');
-      tbody.appendChild(row);
-      if (index === 0) setTimeout(() => row.classList.remove('highlight'), 2000);
-    });
-}
-
-function populateFilter() {
-  const arms = [...new Set(readingsData.map(r => r.arm))];
-  arms.forEach(arm => {
-    const option = document.createElement('option');
-    option.value = arm;
-    option.textContent = arm;
-    filterSelect.appendChild(option);
-  });
-}
-
-document.querySelectorAll('th').forEach((th) => {
-  th.addEventListener('click', () => {
-    const key = th.dataset.key;
-    readingsData.sort((a, b) => {
-      if (key === 'date') return new Date(b.date) - new Date(a.date);
-      return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
-    });
-    displayReadings(filterSelect.value);
-  });
-});
-
-filterSelect.addEventListener('change', () => {
-  displayReadings(filterSelect.value);
-});
-
-// Initial load
-populateFilter();
-displayReadings();
-</script>
-
-</body>
-</html>
+]

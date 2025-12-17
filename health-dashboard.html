@@ -1,100 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Dashboard</title>
-<style>
-  body { font-family: sans-serif; padding: 1em; background: #f9f9f9; }
-  table { width: 100%; border-collapse: collapse; margin-top: 1em; }
-  th, td { padding: 0.5em; border: 1px solid #ccc; text-align: left; }
-  th { cursor: pointer; background: #eee; }
-  tr.highlight { background-color: #ffff99; transition: background 2s ease; }
-</style>
-</head>
-<body>
-<h1>Health Dashboard</h1>
-<table id="readingsTable">
-  <thead>
-    <tr>
-      <th data-key="date">Date</th>
-      <th data-key="systolic">Systolic</th>
-      <th data-key="diastolic">Diastolic</th>
-      <th data-key="pulse">Pulse</th>
-      <th data-key="IHB">IHB</th>
-      <th data-key="arm">Arm</th>
-      <th data-key="position">Position</th>
-      <th data-key="symptoms">Symptoms</th>
-      <th data-key="notes">Notes</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+name: Update Health Dashboard
 
-<script>
-let readingsData = [];
-let lastLoaded = 0;
+on:
+  push:
+    paths:
+      - latest.json
+  schedule:
+    - cron: '*/20 * * * *'  # every 20 minutes, optional
 
-async function loadReadings() {
-  try {
-    const response = await fetch('latest.json?t=' + new Date().getTime());
-    const data = await response.json();
+jobs:
+  update:
+    runs-on: ubuntu-latest
 
-    // Ensure array (support single or multiple readings)
-    readingsData = Array.isArray(data) ? data : [data];
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    // Sort chronologically (oldest first)
-    readingsData.sort((a, b) => new Date(a.date) - new Date(b.date));
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    displayReadings(true);
-  } catch (err) {
-    console.error('Error loading readings:', err);
-  }
-}
+      - name: Update latest.json (optional script)
+        run: |
+          echo "Add your script here to update latest.json if needed"
+          # e.g., node scripts/update-latest.js
 
-function displayReadings(highlightNew = false) {
-  const tbody = document.querySelector('#readingsTable tbody');
-  tbody.innerHTML = '';
+      - name: Commit & Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add latest.json
+          git commit -m "Update latest.json via GitHub Actions" || echo "No changes to commit"
+          git push
 
-  readingsData.forEach((reading, index) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${new Date(reading.date).toLocaleString()}</td>
-      <td>${reading.systolic}</td>
-      <td>${reading.diastolic}</td>
-      <td>${reading.pulse}</td>
-      <td>${reading.IHB}</td>
-      <td>${reading.arm}</td>
-      <td>${reading.position}</td>
-      <td>${reading.symptoms}</td>
-      <td>${reading.notes}</td>
-    `;
-
-    // Highlight new reading
-    if (highlightNew && index === readingsData.length - 1) {
-      row.classList.add('highlight');
-      setTimeout(() => row.classList.remove('highlight'), 2000);
-    }
-
-    tbody.appendChild(row);
-  });
-
-  // Sorting feature
-  document.querySelectorAll('th').forEach((th) => {
-    th.onclick = () => {
-      const key = th.dataset.key;
-      readingsData.sort((a, b) => {
-        if (key === 'date') return new Date(a.date) - new Date(b.date);
-        return (a[key] || '').toString().localeCompare((b[key] || '').toString(), undefined, {numeric: true});
-      });
-      displayReadings();
-    };
-  });
-}
-
-// Initial load + refresh every 20s
-loadReadings();
-setInterval(loadReadings, 20000);
-</script>
-</body>
-</html>
+      - name: Cloudflare Cache Purge (optional)
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+          -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          --data '{"purge_everything":true}'

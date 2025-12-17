@@ -1,123 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Dashboard V2</title>
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-  th { cursor: pointer; background-color: #f2f2f2; }
-  tr.highlight { background-color: #fffa91; transition: background-color 2s; }
-</style>
-</head>
-<body>
-
-<h2>Health Dashboard V2</h2>
-
-<label for="filterArm">Filter by Arm:</label>
-<select id="filterArm">
-  <option value="">All</option>
-</select>
-
-<label for="filterPosition">Filter by Position:</label>
-<select id="filterPosition">
-  <option value="">All</option>
-</select>
-
-<table>
-  <thead>
-    <tr>
-      <th data-key="date">Date</th>
-      <th data-key="systolic">Systolic</th>
-      <th data-key="diastolic">Diastolic</th>
-      <th data-key="pulse">Pulse</th>
-      <th data-key="IHB">IHB</th>
-      <th data-key="arm">Arm</th>
-      <th data-key="position">Position</th>
-      <th data-key="symptoms">Symptoms</th>
-      <th data-key="notes">Notes</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
-
 <script>
 let readingsData = [];
 
-async function loadReadings() {
-  try {
-    const ts = new Date().getTime();
-    const response = await fetch('latest.json?ts=' + ts);
-    const data = await response.json();
-    readingsData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-    populateFilters();
-    displayReadings(true);
-  } catch (err) {
-    console.error('Error fetching latest.json:', err);
-  }
+// Fetch latest readings with cache-buster
+function loadReadings() {
+  fetch(`latest.json?ts=${new Date().getTime()}`)
+    .then(response => response.json())
+    .then(data => {
+      readingsData = data;
+      displayReadings(true); // 'true' triggers highlight for newest
+    });
 }
 
-function populateFilters() {
-  const armSelect = document.getElementById('filterArm');
-  const positionSelect = document.getElementById('filterPosition');
-
-  const arms = [...new Set(readingsData.map(r => r.arm))];
-  const positions = [...new Set(readingsData.map(r => r.position))];
-
-  arms.forEach(a => {
-    if (![...armSelect.options].map(o => o.value).includes(a)) {
-      const opt = document.createElement('option');
-      opt.value = a; opt.textContent = a;
-      armSelect.appendChild(opt);
-    }
-  });
-
-  positions.forEach(p => {
-    if (![...positionSelect.options].map(o => o.value).includes(p)) {
-      const opt = document.createElement('option');
-      opt.value = p; opt.textContent = p;
-      positionSelect.appendChild(opt);
-    }
-  });
-}
-
+// Display readings in table
 function displayReadings(highlightNew = false) {
-  const tbody = document.querySelector('tbody');
+  const tbody = document.querySelector('#readings-table tbody');
   tbody.innerHTML = '';
 
-  const armFilter = document.getElementById('filterArm').value;
-  const positionFilter = document.getElementById('filterPosition').value;
-
-  const filteredData = readingsData.filter(r => {
-    return (armFilter ? r.arm === armFilter : true) &&
-           (positionFilter ? r.position === positionFilter : true);
-  });
-
-  filteredData.forEach((r, index) => {
+  readingsData.forEach((reading, index) => {
     const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${new Date(r.date).toLocaleString()}</td>
-      <td>${r.systolic}</td>
-      <td>${r.diastolic}</td>
-      <td>${r.pulse}</td>
-      <td>${r.IHB}</td>
-      <td>${r.arm}</td>
-      <td>${r.position}</td>
-      <td>${r.symptoms}</td>
-      <td>${r.notes}</td>
-    `;
-    if (highlightNew && index === 0) {
+    
+    // Create table cells
+    ['date', 'systolic', 'diastolic', 'pulse', 'IHB', 'arm', 'position', 'symptoms', 'notes'].forEach(key => {
+      const cell = document.createElement('td');
+      cell.textContent = reading[key];
+      row.appendChild(cell);
+    });
+
+    // Highlight newest reading if flag is true
+    if (highlightNew && index === readingsData.length - 1) {
       row.classList.add('highlight');
       setTimeout(() => row.classList.remove('highlight'), 2000);
     }
+
     tbody.appendChild(row);
   });
 }
 
-// Sorting columns
-document.querySelectorAll('th').forEach((th, index) => {
+// Sort by table headers
+document.querySelectorAll('th').forEach((th) => {
   th.addEventListener('click', () => {
     const key = th.dataset.key;
     readingsData.sort((a, b) => {
@@ -128,13 +48,7 @@ document.querySelectorAll('th').forEach((th, index) => {
   });
 });
 
-// Filter dropdowns
-document.getElementById('filterArm').addEventListener('change', () => displayReadings());
-document.getElementById('filterPosition').addEventListener('change', () => displayReadings());
-
-// Initial load and periodic refresh
+// Initial load & refresh every 20 seconds
 loadReadings();
 setInterval(loadReadings, 20000);
 </script>
-</body>
-</html>

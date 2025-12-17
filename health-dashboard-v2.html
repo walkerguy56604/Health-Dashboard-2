@@ -5,18 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Health Dashboard V2</title>
 <style>
-  body { font-family: sans-serif; margin: 20px; background: #f4f4f9; }
-  h1 { text-align: center; }
-  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-  th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
-  th { cursor: pointer; background: #e0e0e0; }
-  tr.highlight { background-color: #ffff99; transition: background 2s ease; }
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  th { cursor: pointer; background-color: #f0f0f0; }
+  .highlight { background-color: #ffff99; transition: background-color 2s; }
+  select { margin-bottom: 10px; padding: 5px; }
 </style>
 </head>
 <body>
 
 <h1>Health Dashboard V2</h1>
-<table id="healthTable">
+
+<label for="armFilter">Filter by Arm:</label>
+<select id="armFilter">
+  <option value="All">All</option>
+  <option value="Right">Right</option>
+  <option value="Left">Left</option>
+</select>
+
+<table>
   <thead>
     <tr>
       <th data-key="date">Date</th>
@@ -30,47 +38,28 @@
       <th data-key="notes">Notes</th>
     </tr>
   </thead>
-  <tbody></tbody>
+  <tbody id="readingsTableBody"></tbody>
 </table>
 
 <script>
-const latestJSON = 'latest.json'; // Make sure latest.json is in same folder
 let readingsData = [];
-let lastLoaded = null;
 
 async function loadReadings() {
-  try {
-    const cacheBuster = new Date().getTime(); // prevent Safari caching
-    const res = await fetch(`${latestJSON}?t=${cacheBuster}`);
-    const data = await res.json();
-
-    // Sort by date descending
-    readingsData = data.sort((a,b) => new Date(b.date) - new Date(a.date));
-
-    // Highlight only if new readings
-    let highlightNew = false;
-    if (lastLoaded && data.length > readingsData.length) {
-      highlightNew = true;
-    }
-    lastLoaded = data.length;
-
-    displayReadings(highlightNew);
-  } catch(err) {
-    console.error("Error loading readings:", err);
-  }
+  const response = await fetch('latest.json');
+  const data = await response.json();
+  readingsData = Array.isArray(data) ? data : [data];
+  displayReadings();
 }
 
-function displayReadings(highlightNew = false) {
-  const tbody = document.querySelector('#healthTable tbody');
+function displayReadings() {
+  const tbody = document.getElementById('readingsTableBody');
   tbody.innerHTML = '';
 
-  readingsData.forEach((reading, index) => {
-    const row = document.createElement('tr');
-    if (highlightNew && index === 0) {
-      row.classList.add('highlight');
-      setTimeout(() => row.classList.remove('highlight'), 2000);
-    }
+  const armFilter = document.getElementById('armFilter').value;
+  const filteredData = readingsData.filter(r => armFilter === 'All' || r.arm === armFilter);
 
+  filteredData.forEach((reading, index) => {
+    const row = document.createElement('tr');
     row.innerHTML = `
       <td>${new Date(reading.date).toLocaleString()}</td>
       <td>${reading.systolic}</td>
@@ -82,25 +71,30 @@ function displayReadings(highlightNew = false) {
       <td>${reading.symptoms}</td>
       <td>${reading.notes}</td>
     `;
+    if (index === 0) row.classList.add('highlight');
     tbody.appendChild(row);
-  });
-
-  // Sorting
-  document.querySelectorAll('#healthTable th').forEach((th, index) => {
-    th.addEventListener('click', () => {
-      const key = th.dataset.key;
-      readingsData.sort((a, b) => {
-        if (key === 'date') return new Date(b.date) - new Date(a.date);
-        return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
-      });
-      displayReadings();
-    });
+    if (index === 0) setTimeout(() => row.classList.remove('highlight'), 2000);
   });
 }
 
-// Initial load + refresh every 20 seconds
+// Sorting when clicking table headers
+document.querySelectorAll('th').forEach((th) => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.key;
+    readingsData.sort((a, b) => {
+      if (key === 'date') return new Date(b.date) - new Date(a.date);
+      return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
+    });
+    displayReadings();
+  });
+});
+
+// Filter dropdown change
+document.getElementById('armFilter').addEventListener('change', displayReadings);
+
+// Initial load
 loadReadings();
-setInterval(loadReadings, 20000);
+setInterval(loadReadings, 20000); // refresh every 20 sec
 </script>
 
 </body>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Dashboard V2</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { padding: 8px 12px; border: 1px solid #ccc; text-align: left; }
+  th { background: #eee; cursor: pointer; }
+  tr.highlight { background-color: #ffff99; transition: background 2s; }
+</style>
+</head>
+<body>
+<h1>Health Dashboard V2</h1>
+<table id="readingsTable">
+  <thead>
+    <tr>
+      <th data-key="date">Date</th>
+      <th data-key="systolic">Systolic</th>
+      <th data-key="diastolic">Diastolic</th>
+      <th data-key="pulse">Pulse</th>
+      <th data-key="IHB">IHB</th>
+      <th data-key="arm">Arm</th>
+      <th data-key="position">Position</th>
+      <th data-key="symptoms">Symptoms</th>
+      <th data-key="notes">Notes</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+let readingsData = [];
+
+async function loadReadings() {
+  try {
+    const response = await fetch('latest.json?' + new Date().getTime());
+    const data = await response.json();
+    readingsData = Array.isArray(data) ? data : [data];
+    displayReadings(true);
+  } catch(err) {
+    console.error('Failed to fetch latest.json:', err);
+  }
+}
+
+function displayReadings(highlightNew=false) {
+  const tbody = document.querySelector('#readingsTable tbody');
+  tbody.innerHTML = '';
+  readingsData.slice().reverse().forEach((reading, index) => {
+    const row = document.createElement('tr');
+    if(highlightNew && index === 0) {
+      row.classList.add('highlight');
+      setTimeout(() => row.classList.remove('highlight'), 2000);
+    }
+    row.innerHTML = `
+      <td>${reading.date}</td>
+      <td>${reading.systolic}</td>
+      <td>${reading.diastolic}</td>
+      <td>${reading.pulse}</td>
+      <td>${reading.IHB}</td>
+      <td>${reading.arm}</td>
+      <td>${reading.position}</td>
+      <td>${reading.symptoms}</td>
+      <td>${reading.notes}</td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+// Sorting by column
+document.querySelectorAll('th').forEach((th, index) => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.key;
+    readingsData.sort((a, b) => {
+      if(key === 'date') return new Date(b.date) - new Date(a.date);
+      return (b[key] || '').toString().localeCompare((a[key] || '').toString(), undefined, {numeric: true});
+    });
+    displayReadings();
+  });
+});
+
+// Initial load
+loadReadings();
+setInterval(loadReadings, 20000);
+</script>
+</body>
+</html>

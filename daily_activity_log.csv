@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-# File paths
+
 csv_file = "daily_activity_log.csv"
 png_file = "daily_activity_plot.png"
 

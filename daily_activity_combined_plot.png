@@ -22,8 +22,8 @@ for entry in data["entries"]:
     glucose.append(entry.get("glucose", None))
     weight.append(entry.get("weight", None))
     
-    # Highlight post-strength and post-walk readings
-    if entry.get("event") in ["after_strength", "after_walk"]:
+    # Highlight any post-activity event dynamically
+    if entry.get("event", "").startswith("after_"):
         highlights.append(True)
     else:
         highlights.append(False)
@@ -38,7 +38,7 @@ ax1.set_xlabel("Time")
 ax1.set_ylabel("BP (mmHg)")
 ax1.tick_params(axis='y')
 
-# Highlight post-strength and post-walk BP
+# Highlight post-activity BP readings
 for i, highlight in enumerate(highlights):
     if highlight:
         ax1.scatter(times[i], systolic[i], s=200, facecolors='none', edgecolors='orange', linewidths=2)
@@ -52,12 +52,12 @@ ax2.tick_params(axis='y', labelcolor='green')
 
 # Glucose and weight on tertiary y-axis
 ax3 = ax1.twinx()
-ax3.spines["right"].set_position(("outward", 60))  # move tertiary axis
+ax3.spines["right"].set_position(("outward", 60))
 ax3.plot(times, glucose, label="Glucose", marker='s', color='purple')
 ax3.plot(times, weight, label="Weight", marker='d', color='brown')
 ax3.set_ylabel("Glucose (mmol/L) / Weight (lbs)")
 
-# Combine all legends
+# Combine legends
 lines = ax1.get_lines() + ax2.get_lines() + ax3.get_lines()
 labels = [line.get_label() for line in lines]
 ax1.legend(lines, labels, loc="upper left")

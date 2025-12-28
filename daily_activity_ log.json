@@ -1,0 +1,29 @@
+[
+  {
+    "date": "2025-12-28",
+    "activity": "Siri Walk",
+    "duration": "5 min",
+    "BP": "122/69",
+    "HR": 85,
+    "glucose": null,
+    "notes": "M Hypertension, IHB"
+  },
+  {
+    "date": "2025-12-28",
+    "activity": "Strength Training",
+    "duration": "3 x 10 Lateral & Biceps",
+    "BP": "133/71",
+    "HR": 88,
+    "glucose": null,
+    "notes": "H Hypertension"
+  },
+  {
+    "date": "2025-12-28",
+    "activity": "Glucose Check",
+    "duration": null,
+    "BP": null,
+    "HR": null,
+    "glucose": 6.9,
+    "notes": null
+  }
+]

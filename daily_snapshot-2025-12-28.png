@@ -30,6 +30,8 @@ for i, row in df.iterrows():
         marker = 's'  # square marker
         color_sys = 'darkorange'
         color_dia = 'darkblue'
+        # Add label next to marker
+        ax1.text(i + 0.1, row['Systolic'] + 2, "Post-Workout BP", color='darkorange', fontsize=9, weight='bold')
     
     ax1.plot(i, row['Systolic'], marker=marker, color=color_sys, label='Systolic' if i==0 else "")
     ax1.plot(i, row['Diastolic'], marker=marker, color=color_dia, label='Diastolic' if i==0 else "")

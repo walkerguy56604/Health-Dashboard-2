@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from datetime import datetime
+
 
 
 csv_file = "daily_activity_log.csv"

@@ -41,3 +41,7 @@ plt.legend()
 plt.tight_layout()
 plt.savefig(png_file)
 plt.show()
+date,time,activity,systolic,diastolic,hr,glucose
+...
+(previous entries)
+2025-01-XX,12:05,Strength Training Post,136,70,94,3.8

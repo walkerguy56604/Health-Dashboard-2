@@ -1,29 +1,69 @@
-[
-  {
-    "date": "2025-12-28",
-    "activity": "Siri Walk",
-    "duration": "5 min",
-    "BP": "122/69",
-    "HR": 85,
-    "glucose": null,
-    "notes": "M Hypertension, IHB"
-  },
-  {
-    "date": "2025-12-28",
-    "activity": "Strength Training",
-    "duration": "3 x 10 Lateral & Biceps",
-    "BP": "133/71",
-    "HR": 88,
-    "glucose": null,
-    "notes": "H Hypertension"
-  },
-  {
-    "date": "2025-12-28",
-    "activity": "Glucose Check",
-    "duration": null,
-    "BP": null,
-    "HR": null,
-    "glucose": 6.9,
-    "notes": null
-  }
-]
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load CSV
+df = pd.read_csv("daily_snapshot_2025-12-28.csv")  # Update CSV file name here
+
+fig, ax1 = plt.subplots(figsize=(12, 6))
+
+# Determine Y-axis limits for BP and Heart Rate
+bp_min = min(df['Diastolic'].min(), df['Systolic'].min()) - 10
+bp_max = max(df['Diastolic'].max(), df['Systolic'].max()) + 10
+hr_min = df['Heart_Rate'].min() - 10 if not df['Heart_Rate'].isna().all() else 0
+hr_max = df['Heart_Rate'].max() + 10 if not df['Heart_Rate'].isna().all() else 100
+
+# Plot BP with color-coded activity markers
+for i, row in df.iterrows():
+    marker_sys = 'o'
+    marker_dia = 'o'
+    color_sys = 'red'
+    color_dia = 'blue'
+    
+    # Strength-training highlight
+    if str(row.get('Context', '')).lower() == 'after strength':
+        marker_sys = 's'  # square
+        color_sys = 'darkorange'
+        color_dia = 'darkblue'
+        ax1.text(i + 0.1, row['Systolic'] + 2, "Post-Workout BP", color='darkorange', fontsize=9, weight='bold')
+    
+    # Walk highlight
+    elif str(row.get('Context', '')).lower() == 'after walk':
+        marker_sys = 'D'  # diamond
+        color_sys = 'teal'
+        color_dia = 'lightblue'
+        ax1.text(i + 0.1, row['Systolic'] + 2, "Walk BP", color='teal', fontsize=9, weight='bold')
+    
+    # Default plotting
+    ax1.plot(i, row['Systolic'], marker=marker_sys, color=color_sys, label='Systolic' if i==0 else "")
+    ax1.plot(i, row['Diastolic'], marker=marker_dia, color=color_dia, label='Diastolic' if i==0 else "")
+
+ax1.set_ylabel('Blood Pressure (mmHg)')
+ax1.set_ylim(bp_min, bp_max)
+ax1.set_xticks(range(len(df)))
+ax1.set_xticklabels(df['Time/Context'], rotation=45, ha='right')
+ax1.grid(True, linestyle='--', alpha=0.5)
+
+# Heart rate on secondary axis
+ax2 = ax1.twinx()
+ax2.plot(df['Heart_Rate'], marker='x', linestyle='--', color='green', label='Heart Rate')
+ax2.set_ylabel('Heart Rate (bpm)')
+ax2.set_ylim(hr_min, hr_max)
+
+# Add Glucose & Weight as annotations
+for i, row in df.iterrows():
+    if not pd.isna(row['Glucose']):
+        ax1.text(i, row['Systolic']+5, f"G:{row['Glucose']}", color='purple', fontsize=9)
+    if not pd.isna(row['Weight']):
+        ax1.text(i, row['Diastolic']-10, f"W:{row['Weight']}", color='orange', fontsize=9)
+
+plt.title('Daily Snapshot - 2025-12-28')
+fig.tight_layout()
+
+# Combine legends
+handles1, labels1 = ax1.get_legend_handles_labels()
+handles2, labels2 = ax2.get_legend_handles_labels()
+ax1.legend(handles1 + handles2, labels1 + labels2, loc='upper left')
+
+# Save PNG
+plt.savefig("daily_snapshot_2025-12-28.png")
+plt.show()

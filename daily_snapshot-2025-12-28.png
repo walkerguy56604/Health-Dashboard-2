@@ -4,51 +4,33 @@ import matplotlib.pyplot as plt
 # Load CSV
 df = pd.read_csv("daily_snapshot_2025-12-28.csv")
 
-# Add order column for plotting
-df['Order'] = range(len(df))
+# Create figure
+fig, ax1 = plt.subplots(figsize=(10, 6))
 
-fig, ax1 = plt.subplots(figsize=(12,6))
-
-# Plot Blood Pressure
-ax1.plot(df['Order'], df['Systolic'], marker='o', color='red', label='Systolic BP')
-ax1.plot(df['Order'], df['Diastolic'], marker='o', color='blue', label='Diastolic BP')
+# Plot BP
+ax1.plot(df['Time/Context'], df['Systolic'], marker='o', color='red', label='Systolic')
+ax1.plot(df['Time/Context'], df['Diastolic'], marker='o', color='blue', label='Diastolic')
 ax1.set_ylabel('Blood Pressure (mmHg)')
-ax1.set_xticks(df['Order'])
 ax1.set_xticklabels(df['Time/Context'], rotation=45, ha='right')
 
-# Heart Rate on secondary axis
+# Plot Heart Rate
 ax2 = ax1.twinx()
-ax2.plot(df['Order'], df['Heart_Rate'], marker='x', color='green', label='Heart Rate')
+ax2.plot(df['Time/Context'], df['Heart_Rate'], marker='x', linestyle='--', color='green', label='Heart Rate')
 ax2.set_ylabel('Heart Rate (bpm)')
 
-# Glucose markers (scaled for visibility)
-for i, val in enumerate(df['Glucose']):
-    if not pd.isna(val):
-        ax2.scatter(i, val*15, color='purple', s=80, label='Glucose')
-
-# Weight reference line
-if 'Weight' in df.columns:
-    ax1.axhline(y=df['Weight'].iloc[0], color='orange', linestyle='--', label='Weight')
-
-# Activity markers: walks and strength training
-for i, activity in enumerate(df['Activity']):
-    if pd.notna(activity):
-        ax1.scatter(i, df['Systolic'].iloc[i]+5, marker='D', color='black', s=80, label=activity)
-
-# Pre/post labels for BP
+# Add Glucose & Weight as text annotations
 for i, row in df.iterrows():
-    if 'pre' in row['Time/Context'].lower() or 'post' in row['Time/Context'].lower():
-        ax1.text(i, row['Systolic']+7, row['Time/Context'], fontsize=8, rotation=45, ha='right')
+    if not pd.isna(row['Glucose']):
+        ax1.text(i, row['Systolic']+5, f"G:{row['Glucose']}", color='purple', fontsize=9)
+    if not pd.isna(row['Weight']):
+        ax1.text(i, row['Diastolic']-10, f"W:{row['Weight']}", color='orange', fontsize=9)
 
-# Legends (remove duplicates)
-lines, labels = ax1.get_legend_handles_labels()
-lines2, labels2 = ax2.get_legend_handles_labels()
-from collections import OrderedDict
-all_labels = list(OrderedDict.fromkeys(labels + labels2))
-all_lines = lines + lines2[:len(all_labels)-len(labels)]
-ax1.legend(all_lines, all_labels, loc='upper left')
+# Titles and legends
+plt.title('Daily Snapshot - 2025-12-28')
+fig.tight_layout()
+ax1.legend(loc='upper left')
+ax2.legend(loc='upper right')
 
-plt.title("Daily Snapshot - 2025-12-28 (Annotated)")
-plt.tight_layout()
-plt.savefig("daily_snapshot_2025-12-28_chart_annotated.png")
+# Save as PNG
+plt.savefig("daily_snapshot_2025-12-28.png")
 plt.show()

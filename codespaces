@@ -1,0 +1,65 @@
+import json
+import csv
+from datetime import datetime
+
+# Paths to your files in GitHub repo (or local copies)
+json_file = 'daily_activity_log.json'
+csv_file = 'daily_activity_log.csv'
+
+# Example new entry — update these values daily
+new_entry = {
+    "date": str(datetime.today().date()),
+    "activity": "Outdoor Walk",
+    "duration": "30 min",
+    "BP": "129/74",
+    "HR": 89,
+    "glucose": None,
+    "notes": "M Hypertension"
+}
+
+# --- JSON Append ---
+try:
+    with open(json_file, 'r') as f:
+        data = json.load(f)
+except FileNotFoundError:
+    data = []
+
+data.append(new_entry)
+
+with open(json_file, 'w') as f:
+    json.dump(data, f, indent=2)
+
+# --- CSV Append ---
+csv_headers = ["Date", "Activity", "Duration", "BP (mmHg)", "HR (bpm)", "Glucose (mmol/L)", "Notes"]
+
+try:
+    with open(csv_file, 'a', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=csv_headers)
+        # Write header if file is empty
+        f.seek(0, 2)
+        if f.tell() == 0:
+            writer.writeheader()
+        writer.writerow({
+            "Date": new_entry["date"],
+            "Activity": new_entry["activity"],
+            "Duration": new_entry["duration"],
+            "BP (mmHg)": new_entry["BP"],
+            "HR (bpm)": new_entry["HR"],
+            "Glucose (mmol/L)": new_entry["glucose"],
+            "Notes": new_entry["notes"]
+        })
+except FileNotFoundError:
+    with open(csv_file, 'w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=csv_headers)
+        writer.writeheader()
+        writer.writerow({
+            "Date": new_entry["date"],
+            "Activity": new_entry["activity"],
+            "Duration": new_entry["duration"],
+            "BP (mmHg)": new_entry["BP"],
+            "HR (bpm)": new_entry["HR"],
+            "Glucose (mmol/L)": new_entry["glucose"],
+            "Notes": new_entry["notes"]
+        })
+
+print("New entry added to JSON and CSV ✅")

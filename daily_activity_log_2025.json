@@ -1,0 +1,42 @@
+[
+  {
+    "timestamp": "2025-12-28T08:00",
+    "activity": "Short Walk",
+    "duration": "___ min",
+    "incline_speed": null,
+    "BP": null,
+    "HR": null,
+    "glucose": null,
+    "notes": "Temp entry, to update later"
+  },
+  {
+    "timestamp": "2025-12-28T08:10",
+    "activity": "Treadmill",
+    "duration": "___ min",
+    "incline_speed": "___",
+    "BP": null,
+    "HR": null,
+    "glucose": null,
+    "notes": "Temp entry, to update later"
+  },
+  {
+    "timestamp": "2025-12-28T08:30",
+    "activity": "Strength Training",
+    "duration": "___ sets x reps",
+    "incline_speed": null,
+    "BP": null,
+    "HR": null,
+    "glucose": null,
+    "notes": "Temp entry, to update later"
+  },
+  {
+    "timestamp": "2025-12-28T09:00",
+    "activity": "Other Activity",
+    "duration": "___ min/sets",
+    "incline_speed": null,
+    "BP": null,
+    "HR": null,
+    "glucose": null,
+    "notes": "Temp entry, to update later"
+  }
+]

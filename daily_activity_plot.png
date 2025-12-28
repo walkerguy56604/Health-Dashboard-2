@@ -1,0 +1,51 @@
+import json
+import matplotlib.pyplot as plt
+
+# Load the JSON data
+with open("daily_activity_log.json", "r") as f:
+    data = json.load(f)
+
+# Extract BP readings
+bp_times = []
+systolic = []
+diastolic = []
+heart_rate = []
+highlights = []
+
+for reading in data["blood_pressure_readings"]:
+    bp_times.append(reading["time"])
+    systolic.append(reading["systolic"])
+    diastolic.append(reading["diastolic"])
+    heart_rate.append(reading["heart_rate"])
+    
+    # Highlight post-strength and post-walk
+    if reading["time"] in ["after_strength", "after_walk"]:
+        highlights.append(True)
+    else:
+        highlights.append(False)
+
+# Plotting
+plt.figure(figsize=(10,6))
+
+# Systolic and Diastolic
+plt.plot(bp_times, systolic, label="Systolic", marker='o', color='blue')
+plt.plot(bp_times, diastolic, label="Diastolic", marker='o', color='red')
+
+# Heart rate (secondary y-axis)
+plt.twinx()
+plt.plot(bp_times, heart_rate, label="Heart Rate", marker='x', linestyle='--', color='green')
+plt.ylabel("Heart Rate (bpm)")
+
+# Highlight post-strength and post-walk BP
+for i, highlight in enumerate(highlights):
+    if highlight:
+        plt.scatter(bp_times[i], systolic[i], s=200, facecolors='none', edgecolors='orange', linewidths=2)
+        plt.scatter(bp_times[i], diastolic[i], s=200, facecolors='none', edgecolors='orange', linewidths=2)
+
+plt.title("Daily Blood Pressure and Heart Rate")
+plt.xlabel("Time")
+plt.ylabel("BP (mmHg)")
+plt.legend(loc="upper left")
+plt.tight_layout()
+plt.savefig("daily_activity_plot.png")
+plt.show()

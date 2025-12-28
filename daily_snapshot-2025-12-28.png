@@ -35,10 +35,14 @@ for i, activity in enumerate(df['Activity']):
     if pd.notna(activity):
         ax1.scatter(i, df['Systolic'].iloc[i]+5, marker='D', color='black', s=80, label=activity)
 
-# Legends
+# Pre/post labels for BP
+for i, row in df.iterrows():
+    if 'pre' in row['Time/Context'].lower() or 'post' in row['Time/Context'].lower():
+        ax1.text(i, row['Systolic']+7, row['Time/Context'], fontsize=8, rotation=45, ha='right')
+
+# Legends (remove duplicates)
 lines, labels = ax1.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
-# Remove duplicates in labels
 from collections import OrderedDict
 all_labels = list(OrderedDict.fromkeys(labels + labels2))
 all_lines = lines + lines2[:len(all_labels)-len(labels)]

@@ -1,0 +1,42 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load your CSV
+df = pd.read_csv("daily_snapshot_2025-12-28.csv")
+
+# Convert Time/Context to a simple order if needed
+df['Order'] = range(len(df))
+
+# Plot setup
+fig, ax1 = plt.subplots(figsize=(10,6))
+
+# Blood Pressure
+ax1.plot(df['Order'], df['Systolic'], marker='o', color='red', label='Systolic BP')
+ax1.plot(df['Order'], df['Diastolic'], marker='o', color='blue', label='Diastolic BP')
+ax1.set_ylabel('Blood Pressure (mmHg)')
+ax1.set_xticks(df['Order'])
+ax1.set_xticklabels(df['Time/Context'], rotation=45, ha='right')
+
+# Heart Rate on secondary y-axis
+ax2 = ax1.twinx()
+ax2.plot(df['Order'], df['Heart_Rate'], marker='x', color='green', label='Heart Rate')
+ax2.set_ylabel('Heart Rate (bpm)')
+
+# Add glucose markers
+for i, val in enumerate(df['Glucose']):
+    if not pd.isna(val):
+        ax2.scatter(i, val*15, color='purple', s=80, label='Glucose')  # scaled for visualization
+
+# Add weight as horizontal line (optional)
+if 'Weight' in df.columns:
+    ax1.axhline(y=df['Weight'].iloc[0], color='orange', linestyle='--', label='Weight')
+
+# Legends
+lines, labels = ax1.get_legend_handles_labels()
+lines2, labels2 = ax2.get_legend_handles_labels()
+ax1.legend(lines + lines2, labels + labels2, loc='upper left')
+
+plt.title("Daily Snapshot - 2025-12-28")
+plt.tight_layout()
+plt.savefig("daily_snapshot_2025-12-28_chart.png")
+plt.show()

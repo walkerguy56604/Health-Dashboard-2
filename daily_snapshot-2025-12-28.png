@@ -4,33 +4,53 @@ import matplotlib.pyplot as plt
 # Load CSV
 df = pd.read_csv("daily_snapshot_2025-12-28.csv")
 
-# Create figure
-fig, ax1 = plt.subplots(figsize=(10, 6))
+fig, ax1 = plt.subplots(figsize=(12, 6))
 
-# Plot BP
-ax1.plot(df['Time/Context'], df['Systolic'], marker='o', color='red', label='Systolic')
-ax1.plot(df['Time/Context'], df['Diastolic'], marker='o', color='blue', label='Diastolic')
+# Determine Y-axis limits for BP and Heart Rate
+bp_min = min(df['Diastolic'].min(), df['Systolic'].min()) - 10
+bp_max = max(df['Diastolic'].max(), df['Systolic'].max()) + 10
+hr_min = df['Heart_Rate'].min() - 10 if not df['Heart_Rate'].isna().all() else 0
+hr_max = df['Heart_Rate'].max() + 10 if not df['Heart_Rate'].isna().all() else 100
+
+# Plot BP with color-coded activity markers
+for i, row in df.iterrows():
+    if 'Strength' in str(row['Activity']):
+        ax1.plot(i, row['Systolic'], 'o', color='orange', label='Systolic (Strength)' if i==0 else "")
+        ax1.plot(i, row['Diastolic'], 'o', color='blue', label='Diastolic (Strength)' if i==0 else "")
+    elif 'Walk' in str(row['Activity']):
+        ax1.plot(i, row['Systolic'], 'o', color='purple', label='Systolic (Walk)' if i==0 else "")
+        ax1.plot(i, row['Diastolic'], 'o', color='cyan', label='Diastolic (Walk)' if i==0 else "")
+    else:
+        ax1.plot(i, row['Systolic'], 'o', color='red', label='Systolic' if i==0 else "")
+        ax1.plot(i, row['Diastolic'], 'o', color='blue', label='Diastolic' if i==0 else "")
+
 ax1.set_ylabel('Blood Pressure (mmHg)')
+ax1.set_ylim(bp_min, bp_max)
+ax1.set_xticks(range(len(df)))
 ax1.set_xticklabels(df['Time/Context'], rotation=45, ha='right')
+ax1.grid(True, linestyle='--', alpha=0.5)
 
-# Plot Heart Rate
+# Heart rate on secondary axis
 ax2 = ax1.twinx()
-ax2.plot(df['Time/Context'], df['Heart_Rate'], marker='x', linestyle='--', color='green', label='Heart Rate')
+ax2.plot(df['Heart_Rate'], marker='x', linestyle='--', color='green', label='Heart Rate')
 ax2.set_ylabel('Heart Rate (bpm)')
+ax2.set_ylim(hr_min, hr_max)
 
-# Add Glucose & Weight as text annotations
+# Add Glucose & Weight as annotations
 for i, row in df.iterrows():
     if not pd.isna(row['Glucose']):
         ax1.text(i, row['Systolic']+5, f"G:{row['Glucose']}", color='purple', fontsize=9)
     if not pd.isna(row['Weight']):
         ax1.text(i, row['Diastolic']-10, f"W:{row['Weight']}", color='orange', fontsize=9)
 
-# Titles and legends
 plt.title('Daily Snapshot - 2025-12-28')
 fig.tight_layout()
-ax1.legend(loc='upper left')
-ax2.legend(loc='upper right')
 
-# Save as PNG
+# Combine legends
+handles1, labels1 = ax1.get_legend_handles_labels()
+handles2, labels2 = ax2.get_legend_handles_labels()
+ax1.legend(handles1 + handles2, labels1 + labels2, loc='upper left')
+
+# Save PNG
 plt.savefig("daily_snapshot_2025-12-28.png")
 plt.show()

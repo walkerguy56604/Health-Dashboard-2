@@ -1,0 +1,50 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load CSV
+df = pd.read_csv("daily_snapshot_2025-12-28.csv")
+
+# Add order column for plotting
+df['Order'] = range(len(df))
+
+fig, ax1 = plt.subplots(figsize=(12,6))
+
+# Plot Blood Pressure
+ax1.plot(df['Order'], df['Systolic'], marker='o', color='red', label='Systolic BP')
+ax1.plot(df['Order'], df['Diastolic'], marker='o', color='blue', label='Diastolic BP')
+ax1.set_ylabel('Blood Pressure (mmHg)')
+ax1.set_xticks(df['Order'])
+ax1.set_xticklabels(df['Time/Context'], rotation=45, ha='right')
+
+# Heart Rate on secondary axis
+ax2 = ax1.twinx()
+ax2.plot(df['Order'], df['Heart_Rate'], marker='x', color='green', label='Heart Rate')
+ax2.set_ylabel('Heart Rate (bpm)')
+
+# Glucose markers (scaled for visibility)
+for i, val in enumerate(df['Glucose']):
+    if not pd.isna(val):
+        ax2.scatter(i, val*15, color='purple', s=80, label='Glucose')
+
+# Weight reference line
+if 'Weight' in df.columns:
+    ax1.axhline(y=df['Weight'].iloc[0], color='orange', linestyle='--', label='Weight')
+
+# Activity markers: walks and strength training
+for i, activity in enumerate(df['Activity']):
+    if pd.notna(activity):
+        ax1.scatter(i, df['Systolic'].iloc[i]+5, marker='D', color='black', s=80, label=activity)
+
+# Legends
+lines, labels = ax1.get_legend_handles_labels()
+lines2, labels2 = ax2.get_legend_handles_labels()
+# Remove duplicates in labels
+from collections import OrderedDict
+all_labels = list(OrderedDict.fromkeys(labels + labels2))
+all_lines = lines + lines2[:len(all_labels)-len(labels)]
+ax1.legend(all_lines, all_labels, loc='upper left')
+
+plt.title("Daily Snapshot - 2025-12-28 (Annotated)")
+plt.tight_layout()
+plt.savefig("daily_snapshot_2025-12-28_chart_annotated.png")
+plt.show()

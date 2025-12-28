@@ -14,15 +14,25 @@ hr_max = df['Heart_Rate'].max() + 10 if not df['Heart_Rate'].isna().all() else 1
 
 # Plot BP with color-coded activity markers
 for i, row in df.iterrows():
+    color_sys = 'red'
+    color_dia = 'blue'
+    marker = 'o'
+    
     if 'Strength' in str(row['Activity']):
-        ax1.plot(i, row['Systolic'], 'o', color='orange', label='Systolic (Strength)' if i==0 else "")
-        ax1.plot(i, row['Diastolic'], 'o', color='blue', label='Diastolic (Strength)' if i==0 else "")
+        color_sys = 'orange'
+        color_dia = 'blue'
     elif 'Walk' in str(row['Activity']):
-        ax1.plot(i, row['Systolic'], 'o', color='purple', label='Systolic (Walk)' if i==0 else "")
-        ax1.plot(i, row['Diastolic'], 'o', color='cyan', label='Diastolic (Walk)' if i==0 else "")
-    else:
-        ax1.plot(i, row['Systolic'], 'o', color='red', label='Systolic' if i==0 else "")
-        ax1.plot(i, row['Diastolic'], 'o', color='blue', label='Diastolic' if i==0 else "")
+        color_sys = 'purple'
+        color_dia = 'cyan'
+    
+    # Highlight after-strength-training BP
+    if str(row.get('Context', '')).lower() == 'after strength':
+        marker = 's'  # square marker
+        color_sys = 'darkorange'
+        color_dia = 'darkblue'
+    
+    ax1.plot(i, row['Systolic'], marker=marker, color=color_sys, label='Systolic' if i==0 else "")
+    ax1.plot(i, row['Diastolic'], marker=marker, color=color_dia, label='Diastolic' if i==0 else "")
 
 ax1.set_ylabel('Blood Pressure (mmHg)')
 ax1.set_ylim(bp_min, bp_max)

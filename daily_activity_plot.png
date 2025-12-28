@@ -5,47 +5,65 @@ import matplotlib.pyplot as plt
 with open("daily_activity_log.json", "r") as f:
     data = json.load(f)
 
-# Extract BP readings
-bp_times = []
+# Extract data
+times = []
 systolic = []
 diastolic = []
 heart_rate = []
+glucose = []
+weight = []
 highlights = []
 
-for reading in data["blood_pressure_readings"]:
-    bp_times.append(reading["time"])
-    systolic.append(reading["systolic"])
-    diastolic.append(reading["diastolic"])
-    heart_rate.append(reading["heart_rate"])
+for entry in data["entries"]:
+    times.append(entry["time"])
+    systolic.append(entry.get("systolic", None))
+    diastolic.append(entry.get("diastolic", None))
+    heart_rate.append(entry.get("heart_rate", None))
+    glucose.append(entry.get("glucose", None))
+    weight.append(entry.get("weight", None))
     
-    # Highlight post-strength and post-walk
-    if reading["time"] in ["after_strength", "after_walk"]:
+    # Highlight post-strength and post-walk readings
+    if entry.get("event") in ["after_strength", "after_walk"]:
         highlights.append(True)
     else:
         highlights.append(False)
 
 # Plotting
-plt.figure(figsize=(10,6))
+fig, ax1 = plt.subplots(figsize=(12,6))
 
-# Systolic and Diastolic
-plt.plot(bp_times, systolic, label="Systolic", marker='o', color='blue')
-plt.plot(bp_times, diastolic, label="Diastolic", marker='o', color='red')
-
-# Heart rate (secondary y-axis)
-plt.twinx()
-plt.plot(bp_times, heart_rate, label="Heart Rate", marker='x', linestyle='--', color='green')
-plt.ylabel("Heart Rate (bpm)")
+# Blood pressure
+ax1.plot(times, systolic, label="Systolic", marker='o', color='blue')
+ax1.plot(times, diastolic, label="Diastolic", marker='o', color='red')
+ax1.set_xlabel("Time")
+ax1.set_ylabel("BP (mmHg)")
+ax1.tick_params(axis='y')
 
 # Highlight post-strength and post-walk BP
 for i, highlight in enumerate(highlights):
     if highlight:
-        plt.scatter(bp_times[i], systolic[i], s=200, facecolors='none', edgecolors='orange', linewidths=2)
-        plt.scatter(bp_times[i], diastolic[i], s=200, facecolors='none', edgecolors='orange', linewidths=2)
+        ax1.scatter(times[i], systolic[i], s=200, facecolors='none', edgecolors='orange', linewidths=2)
+        ax1.scatter(times[i], diastolic[i], s=200, facecolors='none', edgecolors='orange', linewidths=2)
 
-plt.title("Daily Blood Pressure and Heart Rate")
-plt.xlabel("Time")
-plt.ylabel("BP (mmHg)")
-plt.legend(loc="upper left")
+# Heart rate on same y-axis as BP (optional) or on secondary axis
+ax2 = ax1.twinx()
+ax2.plot(times, heart_rate, label="Heart Rate", marker='x', linestyle='--', color='green')
+ax2.set_ylabel("Heart Rate (bpm)")
+ax2.tick_params(axis='y', labelcolor='green')
+
+# Glucose and Weight on secondary y-axis
+fig2, ax3 = plt.subplots(figsize=(12,6))
+ax3.plot(times, glucose, label="Glucose", marker='s', color='purple')
+ax3.plot(times, weight, label="Weight", marker='d', color='brown')
+ax3.set_xlabel("Time")
+ax3.set_ylabel("Glucose (mmol/L) / Weight (lbs)")
+ax3.legend()
+plt.title("Daily Glucose and Weight")
+
+# Combine legends
+lines_1, labels_1 = ax1.get_legend_handles_labels()
+lines_2, labels_2 = ax2.get_legend_handles_labels()
+ax1.legend(lines_1 + lines_2, labels_1 + labels_2, loc="upper left")
+plt.title("Daily Blood Pressure, Heart Rate, Glucose, and Weight")
 plt.tight_layout()
-plt.savefig("daily_activity_plot.png")
+plt.savefig("daily_activity_combined_plot.png")
 plt.show()

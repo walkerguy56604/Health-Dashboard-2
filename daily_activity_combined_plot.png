@@ -1,68 +1,59 @@
-import json
+import pandas as pd
 import matplotlib.pyplot as plt
+from datetime import datetime
 
-# Load JSON data
-with open("daily_activity_log.json", "r") as f:
-    data = json.load(f)
+# Files
+csv_file = "daily_activity_log.csv"
+png_file = "daily_activity_combined_plot.png"
 
-# Extract data
-times = []
-systolic = []
-diastolic = []
-heart_rate = []
-glucose = []
-weight = []
-highlights = []
+# Load CSV
+df = pd.read_csv(csv_file)
 
-for entry in data["entries"]:
-    times.append(entry["time"])
-    systolic.append(entry.get("systolic", None))
-    diastolic.append(entry.get("diastolic", None))
-    heart_rate.append(entry.get("heart_rate", None))
-    glucose.append(entry.get("glucose", None))
-    weight.append(entry.get("weight", None))
-    
-    # Highlight any post-activity event dynamically
-    if entry.get("event", "").startswith("after_"):
-        highlights.append(True)
-    else:
-        highlights.append(False)
+# Add latest entry
+new_entry = {
+    "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    "Activity": "Strength Training Post-Rest",
+    "BP_Systolic": 136,
+    "BP_Diastolic": 70,
+    "HeartRate": 94,
+    "Glucose": 3.8
+}
 
-# Create figure and axes
-fig, ax1 = plt.subplots(figsize=(14,7))
+df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
 
-# Blood pressure
-ax1.plot(times, systolic, label="Systolic BP", marker='o', color='blue')
-ax1.plot(times, diastolic, label="Diastolic BP", marker='o', color='red')
+# Save CSV
+df.to_csv(csv_file, index=False)
+
+# Convert timestamp for plotting
+df["Timestamp"] = pd.to_datetime(df["Timestamp"])
+
+# Plot
+fig, ax1 = plt.subplots(figsize=(11,6))
+
+# Blood Pressure (Left Y-axis)
+ax1.plot(df["Timestamp"], df["BP_Systolic"], marker="o", label="Systolic BP")
+ax1.plot(df["Timestamp"], df["BP_Diastolic"], marker="o", label="Diastolic BP")
+ax1.set_ylabel("Blood Pressure (mmHg)")
 ax1.set_xlabel("Time")
-ax1.set_ylabel("BP (mmHg)")
-ax1.tick_params(axis='y')
 
-# Highlight post-activity BP readings
-for i, highlight in enumerate(highlights):
-    if highlight:
-        ax1.scatter(times[i], systolic[i], s=200, facecolors='none', edgecolors='orange', linewidths=2)
-        ax1.scatter(times[i], diastolic[i], s=200, facecolors='none', edgecolors='orange', linewidths=2)
+# Highlight latest BP
+ax1.scatter(df["Timestamp"].iloc[-1], df["BP_Systolic"].iloc[-1], s=120, zorder=5)
+ax1.scatter(df["Timestamp"].iloc[-1], df["BP_Diastolic"].iloc[-1], s=120, zorder=5)
 
-# Heart rate on secondary y-axis
+# Glucose (Right Y-axis)
 ax2 = ax1.twinx()
-ax2.plot(times, heart_rate, label="Heart Rate", marker='x', linestyle='--', color='green')
-ax2.set_ylabel("Heart Rate (bpm)")
-ax2.tick_params(axis='y', labelcolor='green')
+ax2.plot(df["Timestamp"], df["Glucose"], marker="s", linestyle="--", label="Glucose")
+ax2.set_ylabel("Glucose (mmol/L)")
 
-# Glucose and weight on tertiary y-axis
-ax3 = ax1.twinx()
-ax3.spines["right"].set_position(("outward", 60))
-ax3.plot(times, glucose, label="Glucose", marker='s', color='purple')
-ax3.plot(times, weight, label="Weight", marker='d', color='brown')
-ax3.set_ylabel("Glucose (mmol/L) / Weight (lbs)")
+# Titles & formatting
+fig.suptitle("Daily Activity – Blood Pressure & Glucose Trends")
+fig.autofmt_xdate()
 
-# Combine legends
-lines = ax1.get_lines() + ax2.get_lines() + ax3.get_lines()
-labels = [line.get_label() for line in lines]
-ax1.legend(lines, labels, loc="upper left")
+# Legends
+lines_1, labels_1 = ax1.get_legend_handles_labels()
+lines_2, labels_2 = ax2.get_legend_handles_labels()
+ax1.legend(lines_1 + lines_2, labels_1 + labels_2, loc="upper left")
 
-plt.title("Daily Activity Combined Plot: BP, Heart Rate, Glucose, Weight")
 plt.tight_layout()
-plt.savefig("daily_activity_combined_plot.png")
+plt.savefig(png_file)
 plt.show()

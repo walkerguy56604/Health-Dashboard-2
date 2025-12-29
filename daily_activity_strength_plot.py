@@ -1,17 +1,2 @@
-<!-- Navigation Menu -->
-<nav>
-  <ul>
-    <li><a href="dashboard.html">Dashboard</a></li>
-    <li><a href="daily-activity-treadmill.html">Treadmill</a></li>
-    <li><a href="daily-activity-strength.html">Strength Training</a></li>
-    <li><a href="daily-activity-walk.html">Walk</a></li>
-  </ul>
-</nav>
-<hr>
-<nav>
-  <ul>
-    <li><a href="treadmill.html">Treadmill</a></li>
-    <li><a href="strength.html">Strength Training</a></li>
-    <li><a href="walk.html">Walks</a></li>
-  </ul>
-</nav>
+date,activity,start_time,end_time,duration_minutes,pre_bp,post_bp,notes
+2025-12-29,Strength Training,12:40,12:56,16,,128/67/96 M Hypertension IHB,3x10 lateral & biceps; post-workout BP

@@ -1,3 +1,6 @@
+Date,Time,Activity Type,Blood Pressure Systolic,Blood Pressure Diastolic,Heart Rate,Glucose,Steps,Weight,Notes
+
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime

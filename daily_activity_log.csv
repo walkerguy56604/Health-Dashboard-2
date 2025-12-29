@@ -1,22 +1,37 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from datetime import datetime
+import matplotlib.dates as mdates
 
-# Load your CSV
-df = pd.read_csv('daily_activity_log.csv')
+# Load your combined CSV
+df = pd.read_csv("daily_activity_combined.csv", parse_dates=["Date"])
 
-# Convert Date column to datetime
-df['Date'] = pd.to_datetime(df['Date'])
+# Convert time to datetime for plotting
+df['DateTime'] = pd.to_datetime(df['Date'].astype(str) + ' ' + df['Time'].str.split('-').str[0])
 
-# Plotting
-plt.figure(figsize=(10,6))
-plt.plot(df['Date'], df['BP Systolic'], marker='o', label='Systolic')
-plt.plot(df['Date'], df['BP Diastolic'], marker='o', label='Diastolic')
-plt.xlabel('Date')
-plt.ylabel('Blood Pressure (mmHg)')
-plt.title('Daily Blood Pressure Trend')
+# Separate by activity type for plotting
+walks = df[df['Activity Type'].str.lower() == 'walk']
+strength = df[df['Activity Type'].str.lower() == 'strength training']
+
+plt.figure(figsize=(12,6))
+
+# Plot BP points if available
+if 'BP Systolic' in df.columns:
+    plt.plot(df['DateTime'], df['BP Systolic'], 'ro-', label='Systolic BP')
+    plt.plot(df['DateTime'], df['BP Diastolic'], 'bo-', label='Diastolic BP')
+
+# Highlight walks
+plt.scatter(walks['DateTime'], [max(df['BP Systolic'].max(), 150)+5]*len(walks), 
+            color='green', s=100, label='Walk (5 min)')
+
+# Highlight strength training
+plt.scatter(strength['DateTime'], [max(df['BP Systolic'].max(), 150)+15]*len(strength), 
+            color='purple', s=100, label='Strength Training')
+
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+plt.xlabel("Time")
+plt.ylabel("BP / Activity")
+plt.title("Daily Activity & BP Overview")
 plt.legend()
-plt.grid(True)
 plt.tight_layout()
-plt.savefig('daily_activity_plot.png')
+plt.savefig("daily_activity_combined_plot.png")
 plt.show()

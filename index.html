@@ -3,20 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Health Dashboard</title>
-  <link rel="manifest" href="manifest/manifest.json">
-  <link rel="stylesheet" href="css/style.css">
+  <title>Health Dashboard PWA</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <h1>Welcome to Health Dashboard</h1>
-  <a href="dashboard.html">Go to Dashboard</a>
+  <header>
+    <h1>Health Dashboard</h1>
+  </header>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service/service-worker.js')
-        .then(() => console.log('Service Worker Registered'))
-        .catch(err => console.error('SW registration failed', err));
-    }
-  </script>
+  <main>
+    <section id="daily-summary">
+      <h2>Today's Summary</h2>
+      <div id="summary-content">
+        <p>Walks: 0</p>
+        <p>Strength Training: 0</p>
+        <p>Blood Pressure: -- / -- / --</p>
+        <p>Glucose: --</p>
+      </div>
+    </section>
+
+    <section id="activity-log">
+      <h2>Activity Log</h2>
+      <ul id="log-list"></ul>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>

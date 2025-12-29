@@ -5,35 +5,41 @@ from datetime import datetime
 # Load your CSV
 df = pd.read_csv('daily_activity_combined.csv')
 
-# Make sure the 'Date' column is datetime
+# Ensure the 'Date' column is datetime
 df['Date'] = pd.to_datetime(df['Date'])
-
-# Optional: Sort by date
 df = df.sort_values('Date')
 
 # Create the plot
 plt.figure(figsize=(12, 6))
 
-# Plot each activity type if columns exist
+# Plot all metrics
 if 'BP' in df.columns:
-    plt.plot(df['Date'], df['BP'], marker='o', label='Blood Pressure')
+    plt.plot(df['Date'], df['BP'], marker='o', label='BP', color='blue')
 if 'Glucose' in df.columns:
-    plt.plot(df['Date'], df['Glucose'], marker='o', label='Glucose')
+    plt.plot(df['Date'], df['Glucose'], marker='o', label='Glucose', color='green')
 if 'Strength' in df.columns:
-    plt.plot(df['Date'], df['Strength'], marker='o', label='Strength Training')
+    plt.plot(df['Date'], df['Strength'], marker='o', label='Strength Training', color='purple')
 if 'Walk' in df.columns:
-    plt.plot(df['Date'], df['Walk'], marker='o', label='Walks')
+    plt.plot(df['Date'], df['Walk'], marker='o', label='Walks', color='orange')
+
+# Highlight after-strength-training BP
+if 'BP_after_strength' in df.columns:
+    plt.scatter(df['Date'], df['BP_after_strength'], color='red', s=100, label='BP After Strength')
+
+# Highlight recent walks (optional: last 2 walks)
+if 'Walk' in df.columns:
+    plt.scatter(df['Date'].iloc[-2:], df['Walk'].iloc[-2:], color='darkorange', s=100, label='Recent Walks')
 
 # Customize Y-axis scaling dynamically
 plt.ylim(df.iloc[:, 1:].min().min() * 0.9, df.iloc[:, 1:].max().max() * 1.1)
 
-# Labels and title
+# Labels, title, legend
 plt.xlabel('Date')
 plt.ylabel('Activity Metrics')
-plt.title('Daily Activity Overview')
+plt.title('Daily Activity Overview with Highlights')
 plt.legend()
 plt.grid(True)
 
 # Save PNG
-plt.savefig('daily_activity_combined_plot.png', dpi=300)
+plt.savefig('daily_activity_combined_plot_highlighted.png', dpi=300)
 plt.show()

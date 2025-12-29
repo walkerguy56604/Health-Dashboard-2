@@ -1,4 +1,4 @@
-# daily_activity_dashboard.py
+# daily_activity_dashboard_autoY.py
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,11 +7,16 @@ from datetime import datetime
 # Load CSV
 df = pd.read_csv("daily_activity_log.csv")
 
-# Convert Date and Time to datetime
+# Convert Date + Time to datetime
 df['Datetime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
+
+# Determine min and max for Y-axis dynamically
+y_min = min(df['BP_Diastolic'].min(), df['BP_Systolic'].min(), df['HR'].min(), df['Glucose'].min()) - 10
+y_max = max(df['BP_Systolic'].max(), df['BP_Diastolic'].max(), df['HR'].max(), df['Glucose'].max()) + 10
 
 # Plotting
 plt.figure(figsize=(12, 6))
+plt.ylim(y_min, y_max)
 
 # Plot Systolic and Diastolic BP
 plt.plot(df['Datetime'], df['BP_Systolic'], label='Systolic BP', marker='o', color='red')
@@ -33,7 +38,7 @@ for i, row in df.iterrows():
     plt.text(row['Datetime'], max(row['BP_Systolic'], row['BP_Diastolic']) + 3, row['Activity'], rotation=45, ha='right')
 
 # Labels & Title
-plt.title("Daily Activity & Health Dashboard")
+plt.title("Daily Activity & Health Dashboard (Auto-Scaled Y)")
 plt.xlabel("Time")
 plt.ylabel("BP / HR / Glucose")
 plt.legend()
@@ -41,5 +46,5 @@ plt.grid(True)
 plt.tight_layout()
 
 # Save PNG
-plt.savefig("daily_activity_dashboard.png")
+plt.savefig("daily_activity_dashboard_autoY.png")
 plt.show()

@@ -2,27 +2,25 @@ const cacheName = 'health-dashboard-v1';
 const assetsToCache = [
   '/',
   '/index.html',
-  '/css/style.css',
-  '/js/app.js'
+  '/css-style.css',
+  '/js-app.js'
 ];
 
-// Install service worker
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(cacheName).then(cache => {
-      return cache.addAll(assetsToCache);
-    })
+// Install event
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(cacheName).then(cache => cache.addAll(assetsToCache))
   );
 });
 
-// Activate service worker
-self.addEventListener('activate', e => {
+// Activate event
+self.addEventListener('activate', event => {
   console.log('Service Worker activated');
 });
 
-// Fetch from cache first
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(response => response || fetch(e.request))
+// Fetch event
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });

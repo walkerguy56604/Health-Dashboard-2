@@ -1,0 +1,45 @@
+# daily_activity_dashboard.py
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
+
+# Load CSV
+df = pd.read_csv("daily_activity_log.csv")
+
+# Convert Date and Time to datetime
+df['Datetime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
+
+# Plotting
+plt.figure(figsize=(12, 6))
+
+# Plot Systolic and Diastolic BP
+plt.plot(df['Datetime'], df['BP_Systolic'], label='Systolic BP', marker='o', color='red')
+plt.plot(df['Datetime'], df['BP_Diastolic'], label='Diastolic BP', marker='o', color='blue')
+
+# Highlight After-Strength Training readings
+after_strength = df[df['Notes'].str.contains("Post-workout|Afternoon session|Evening post-BP")]
+plt.scatter(after_strength['Datetime'], after_strength['BP_Systolic'], color='darkred', s=100, label='After Strength BP')
+plt.scatter(after_strength['Datetime'], after_strength['BP_Diastolic'], color='darkblue', s=100)
+
+# Plot Heart Rate
+plt.plot(df['Datetime'], df['HR'], label='Heart Rate', marker='x', linestyle='--', color='green')
+
+# Plot Glucose as points
+plt.scatter(df['Datetime'], df['Glucose'], label='Glucose', color='purple', s=80)
+
+# Annotate activities
+for i, row in df.iterrows():
+    plt.text(row['Datetime'], max(row['BP_Systolic'], row['BP_Diastolic']) + 3, row['Activity'], rotation=45, ha='right')
+
+# Labels & Title
+plt.title("Daily Activity & Health Dashboard")
+plt.xlabel("Time")
+plt.ylabel("BP / HR / Glucose")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+
+# Save PNG
+plt.savefig("daily_activity_dashboard.png")
+plt.show()

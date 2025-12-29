@@ -1,37 +1,4 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-
-# Load your combined CSV
-df = pd.read_csv("daily_activity_combined.csv", parse_dates=["Date"])
-
-# Convert time to datetime for plotting
-df['DateTime'] = pd.to_datetime(df['Date'].astype(str) + ' ' + df['Time'].str.split('-').str[0])
-
-# Separate by activity type for plotting
-walks = df[df['Activity Type'].str.lower() == 'walk']
-strength = df[df['Activity Type'].str.lower() == 'strength training']
-
-plt.figure(figsize=(12,6))
-
-# Plot BP points if available
-if 'BP Systolic' in df.columns:
-    plt.plot(df['DateTime'], df['BP Systolic'], 'ro-', label='Systolic BP')
-    plt.plot(df['DateTime'], df['BP Diastolic'], 'bo-', label='Diastolic BP')
-
-# Highlight walks
-plt.scatter(walks['DateTime'], [max(df['BP Systolic'].max(), 150)+5]*len(walks), 
-            color='green', s=100, label='Walk (5 min)')
-
-# Highlight strength training
-plt.scatter(strength['DateTime'], [max(df['BP Systolic'].max(), 150)+15]*len(strength), 
-            color='purple', s=100, label='Strength Training')
-
-plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-plt.xlabel("Time")
-plt.ylabel("BP / Activity")
-plt.title("Daily Activity & BP Overview")
-plt.legend()
-plt.tight_layout()
-plt.savefig("daily_activity_combined_plot.png")
-plt.show()
+Date,Time,Activity,Duration (min),BP_Systolic,BP_Diastolic,HR,Glucose,Notes
+2025-12-29,08:20,Strength Training,16,,,
+2025-12-29,08:36,Post-Rest BP,5,?,?,?,
+2025-12-29,09:00,Treadmill,10,,,

@@ -4,19 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Health Dashboard</title>
-  <link rel="manifest" href="manifest/manifest.json">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <h1>Welcome to Health Dashboard</h1>
-  <a href="dashboard.html">Go to Dashboard</a>
+  <h1>My Health Dashboard</h1>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service/service-worker.js')
-        .then(() => console.log('Service Worker Registered'))
-        .catch(err => console.error('SW registration failed', err));
-    }
-  </script>
+  <section id="activity-log">
+    <h2>Today's Activity</h2>
+    <ul id="activities">
+      <!-- Activity entries will appear here -->
+    </ul>
+  </section>
+
+  <section id="bp-log">
+    <h2>Blood Pressure</h2>
+    <ul id="bp-entries">
+      <!-- BP entries will appear here -->
+    </ul>
+  </section>
+
+  <section id="glucose-log">
+    <h2>Glucose</h2>
+    <ul id="glucose-entries">
+      <!-- Glucose entries will appear here -->
+    </ul>
+  </section>
+
+  <script src="app.js"></script>
 </body>
 </html>

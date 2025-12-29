@@ -1,47 +1,10 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-
-
-
-csv_file = "daily_activity_log.csv"
-png_file = "daily_activity_plot.png"
-
-# Load existing CSV
-df = pd.read_csv(csv_file)
-
-# Add new entry (post-strength-training)
-new_entry = {
-    "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    "Activity": "Strength Training Post-Rest",
-    "BP_Systolic": 136,
-    "BP_Diastolic": 70,
-    "HeartRate": 94,
-    "Glucose": 3.8
+{
+  "date": "2025-12-28",
+  "activity": "Walk",
+  "start_time": "",
+  "end_time": "",
+  "duration_minutes": 5,
+  "pre_bp": "",
+  "post_bp": "",
+  "notes": "Short walk after strength training"
 }
-
-df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
-
-# Save updated CSV
-df.to_csv(csv_file, index=False)
-
-# Plotting
-plt.figure(figsize=(10,6))
-plt.plot(df['Timestamp'], df['BP_Systolic'], marker='o', label='Systolic')
-plt.plot(df['Timestamp'], df['BP_Diastolic'], marker='o', label='Diastolic')
-
-# Highlight the latest BP
-plt.scatter(df['Timestamp'].iloc[-1], df['BP_Systolic'].iloc[-1], color='red', s=100, zorder=5, label='Latest Systolic')
-plt.scatter(df['Timestamp'].iloc[-1], df['BP_Diastolic'].iloc[-1], color='orange', s=100, zorder=5, label='Latest Diastolic')
-
-plt.xticks(rotation=45)
-plt.xlabel("Timestamp")
-plt.ylabel("Blood Pressure (mmHg)")
-plt.title("Daily Blood Pressure Trend")
-plt.legend()
-plt.tight_layout()
-plt.savefig(png_file)
-plt.show()
-date,time,activity,systolic,diastolic,hr,glucose
-...
-(previous entries)
-2025-01-XX,12:05,Strength Training Post,136,70,94,3.8

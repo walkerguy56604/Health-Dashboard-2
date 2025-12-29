@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Health Dashboard</title>
-</head>
-<body>
-  <h1>🩺 Health Dashboard</h1>
-  <iframe src="latest.json?ts=2025-12-16T12:00:00" 
-          style="width:100%; height:500px;" frameborder="0"></iframe>
-</body>
-</html>
+<!-- PWA Meta -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1E90FF">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/icons/icon-192.png" sizes="192x192">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('Service Worker registered', reg))
+      .catch(err => console.error('Service Worker failed', err));
+  }
+</script>

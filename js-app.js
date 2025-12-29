@@ -1,3 +1,10 @@
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(reg => console.log('Service Worker registered', reg))
+    .catch(err => console.log('Service Worker registration failed', err));
+}
+
+
 // Sample data for testing
 const activities = [
   { time: "8:05-8:10", activity: "5 min walk" },

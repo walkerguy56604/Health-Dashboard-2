@@ -1,26 +1,25 @@
-const cacheName = 'health-dashboard-v1';
-const assetsToCache = [
-  '/',
-  '/index.html',
-  '/css-style.css',
-  '/js-app.js'
+const CACHE_NAME = "health-dashboard-v1";
+
+const FILES_TO_CACHE = [
+  "./",
+  "./index.html",
+  "./css-style.css",
+  "./app.js"
 ];
 
-// Install event
-self.addEventListener('install', event => {
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(cacheName).then(cache => cache.addAll(assetsToCache))
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(FILES_TO_CACHE);
+    })
   );
+  self.skipWaiting();
 });
 
-// Activate event
-self.addEventListener('activate', event => {
-  console.log('Service Worker activated');
-});
-
-// Fetch event
-self.addEventListener('fetch', event => {
+self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });

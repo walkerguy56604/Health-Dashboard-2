@@ -1,0 +1,39 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
+
+# Load your CSV
+df = pd.read_csv('daily_activity_combined.csv')
+
+# Make sure the 'Date' column is datetime
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Optional: Sort by date
+df = df.sort_values('Date')
+
+# Create the plot
+plt.figure(figsize=(12, 6))
+
+# Plot each activity type if columns exist
+if 'BP' in df.columns:
+    plt.plot(df['Date'], df['BP'], marker='o', label='Blood Pressure')
+if 'Glucose' in df.columns:
+    plt.plot(df['Date'], df['Glucose'], marker='o', label='Glucose')
+if 'Strength' in df.columns:
+    plt.plot(df['Date'], df['Strength'], marker='o', label='Strength Training')
+if 'Walk' in df.columns:
+    plt.plot(df['Date'], df['Walk'], marker='o', label='Walks')
+
+# Customize Y-axis scaling dynamically
+plt.ylim(df.iloc[:, 1:].min().min() * 0.9, df.iloc[:, 1:].max().max() * 1.1)
+
+# Labels and title
+plt.xlabel('Date')
+plt.ylabel('Activity Metrics')
+plt.title('Daily Activity Overview')
+plt.legend()
+plt.grid(True)
+
+# Save PNG
+plt.savefig('daily_activity_combined_plot.png', dpi=300)
+plt.show()

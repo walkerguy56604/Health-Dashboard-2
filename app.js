@@ -1,212 +1,110 @@
-// app.js - Pre-filled Activity Logger for PWA
-// Includes walks, treadmill, strength, blood pressure, and glucose readings
+// Load existing activities from localStorage or start fresh
+let activities = JSON.parse(localStorage.getItem("activities")) || [];
 
-let activities = [
-  // Dec 28, 2025
-  {
-    date: "2025-12-28",
-    type: "Walk",
-    start_time: "08:05",
-    end_time: "08:10",
-    duration_minutes: 5,
-    distance_km: null,
-    notes: "Morning Siri walk before strength training",
-    pre_bp: "",
-    post_bp: "",
-    glucose: null
-  },
-  {
-    date: "2025-12-28",
-    type: "Strength Training",
-    start_time: "08:20",
-    end_time: "08:34",
-    exercises: [
-      { name: "Lateral", sets: 3, reps: 10 },
-      { name: "Biceps", sets: 3, reps: 10 }
-    ],
-    notes: "Morning session",
-    pre_bp: "121/73/96 M",
-    post_bp: "114/59/94 L",
-    glucose: 3.8
-  },
-  {
-    date: "2025-12-28",
-    type: "Treadmill",
-    start_time: "13:42",
-    end_time: "13:52",
-    duration_minutes: 10,
-    distance_km: 0.24,
-    avg_hr: 107,
-    max_hr: 117,
-    calories: 11,
-    speed: 1.4,
-    notes: "Post-walk treadmill",
-    pre_bp: "",
-    post_bp: "",
-    glucose: null
-  },
-  {
-    date: "2025-12-28",
-    type: "Blood Pressure",
-    time: "13:47",
-    reading: "135/70/94 H",
-    notes: "After 5-min treadmill",
-    glucose: null
-  },
-  {
-    date: "2025-12-28",
-    type: "Blood Pressure",
-    time: "13:52",
-    reading: "120/63/95 M",
-    notes: "After 10-min treadmill",
-    glucose: null
-  },
-  {
-    date: "2025-12-28",
-    type: "Walk",
-    start_time: "14:05",
-    end_time: "14:35",
-    duration_minutes: 30,
-    distance_km: null,
-    notes: "Afternoon walk",
-    pre_bp: "",
-    post_bp: "",
-    glucose: null
-  },
-  {
-    date: "2025-12-28",
-    type: "Strength Training",
-    start_time: "15:50",
-    end_time: "16:12",
-    exercises: [
-      { name: "Lateral", sets: 3, reps: 10 },
-      { name: "Biceps", sets: 3, reps: 10 }
-    ],
-    notes: "Afternoon session",
-    pre_bp: "",
-    post_bp: "130/71/94 H",
-    glucose: null
-  },
-  // Dec 29, 2025
-  {
-    date: "2025-12-29",
-    type: "Blood Pressure",
-    time: "08:22",
-    reading: "129/73/84 M",
-    notes: "Morning check #1",
-    glucose: null
-  },
-  {
-    date: "2025-12-29",
-    type: "Blood Pressure",
-    time: "08:24",
-    reading: "127/70/84 M",
-    notes: "Morning check #2",
-    glucose: null
-  },
-  {
-    date: "2025-12-29",
-    type: "Walk",
-    start_time: "08:30",
-    end_time: "08:35",
-    duration_minutes: 5,
-    distance_km: null,
-    notes: "Morning Siri walk",
-    pre_bp: "",
-    post_bp: "",
-    glucose: null
-  },
-  {
-    date: "2025-12-29",
-    type: "Strength Training",
-    start_time: "08:20",
-    end_time: "08:34",
-    exercises: [
-      { name: "Lateral", sets: 3, reps: 10 },
-      { name: "Biceps", sets: 3, reps: 10 }
-    ],
-    notes: "Morning session",
-    pre_bp: "",
-    post_bp: "",
-    glucose: null
-  },
-  {
-    date: "2025-12-29",
-    type: "Treadmill",
-    start_time: "10:45",
-    end_time: "10:55",
-    duration_minutes: 10,
-    distance_km: 0.24,
-    avg_hr: 107,
-    max_hr: 117,
-    calories: 12,
-    speed: 1.4,
-    notes: "Pre-strength treadmill",
-    pre_bp: "",
-    post_bp: "",
-    glucose: null
-  },
-  {
-    date: "2025-12-29",
-    type: "Walk",
-    start_time: "11:05",
-    end_time: "11:35",
-    duration_minutes: 30,
-    distance_km: null,
-    notes: "Midday walk",
-    pre_bp: "",
-    post_bp: "",
-    glucose: null
-  }
-];
-
-// Function to add new activity
-function addActivity(activity) {
-  activities.push(activity);
+// Save to localStorage
+function saveActivities() {
   localStorage.setItem("activities", JSON.stringify(activities));
-  console.log("Activity added:", activity);
 }
 
-// Optional: Function to export CSV
-function exportCSV() {
-  if (!activities.length) return;
-  const header = Object.keys(activities[0]).join(",");
-  const rows = activities.map(obj =>
-    Object.values(obj)
-      .map(v => (typeof v === "object" ? JSON.stringify(v) : `"${v}"`))
-      .join(",")
-  );
-  const csvContent = [header, ...rows].join("\n");
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "daily_log.csv";
-  link.click();
-}
-// Helper to log a new activity interactively
-function logNewActivity() {
-  const type = prompt("Enter activity type (Walk, Treadmill, Strength Training, Blood Pressure):");
-  const date = new Date().toISOString().split("T")[0];
-  const start_time = prompt("Start time (HH:MM) or leave blank:");
-  const end_time = prompt("End time (HH:MM) or leave blank:");
-  const duration_minutes = prompt("Duration in minutes or leave blank:");
-  const notes = prompt("Any notes for this activity?");
-  const pre_bp = prompt("Pre-activity BP (optional):");
-  const post_bp = prompt("Post-activity BP (optional):");
-  const glucose = prompt("Glucose reading (optional):");
-
-  const newActivity = {
-    date,
-    type,
-    start_time: start_time || "",
-    end_time: end_time || "",
-    duration_minutes: duration_minutes || null,
-    notes: notes || "",
-    pre_bp: pre_bp || "",
-    post_bp: post_bp || "",
-    glucose: glucose || null
+// Logging functions
+function logWalk() {
+  let entry = {
+    type: "Walk",
+    duration: 5,
+    timestamp: new Date().toLocaleTimeString()
   };
-
-  addActivity(newActivity);
-  alert("Activity logged successfully!");
+  activities.push(entry);
+  saveActivities();
+  updateSummary();
 }
+
+function logTreadmill() {
+  let entry = {
+    type: "Treadmill",
+    duration: 10,
+    speed: 1.4,
+    calories: 12,
+    timestamp: new Date().toLocaleTimeString()
+  };
+  activities.push(entry);
+  saveActivities();
+  updateSummary();
+}
+
+function logStrength() {
+  let entry = {
+    type: "Strength",
+    sets: 3,
+    reps: 10,
+    exercises: ["Lateral", "Biceps"],
+    timestamp: new Date().toLocaleTimeString()
+  };
+  activities.push(entry);
+  saveActivities();
+  updateSummary();
+}
+
+function logBP() {
+  let entry = {
+    type: "BP",
+    systolic: 130,
+    diastolic: 71,
+    pulse: 94,
+    timestamp: new Date().toLocaleTimeString()
+  };
+  activities.push(entry);
+  saveActivities();
+  updateSummary();
+}
+
+function logGlucose() {
+  let entry = {
+    type: "Glucose",
+    value: 6.9,
+    timestamp: new Date().toLocaleTimeString()
+  };
+  activities.push(entry);
+  saveActivities();
+  updateSummary();
+}
+
+// Generate daily summary
+function updateSummary() {
+  let summaryDiv = document.getElementById("summary-content");
+  summaryDiv.innerHTML = "";
+  activities.forEach(a => {
+    let div = document.createElement("div");
+    div.textContent = `[${a.timestamp}] ${a.type}: ${JSON.stringify(a)}`;
+    summaryDiv.appendChild(div);
+  });
+}
+
+// Export CSV
+function exportCSV() {
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += "Type,Details,Timestamp\n";
+  activities.forEach(a => {
+    let details = JSON.stringify(a).replace(/,/g, ";"); // avoid CSV commas
+    csvContent += `${a.type},${details},${a.timestamp}\n`;
+  });
+
+  let encodedUri = encodeURI(csvContent);
+  let link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "daily_log.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// Optional: Clear all activities
+function clearActivities() {
+  if(confirm("Clear all activities?")) {
+    activities = [];
+    saveActivities();
+    updateSummary();
+  }
+}
+
+// Initialize summary on page load
+updateSummary();

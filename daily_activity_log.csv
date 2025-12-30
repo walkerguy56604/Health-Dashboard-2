@@ -4,3 +4,5 @@ DateTime,Activity,Duration,HeartRate,Calories
 2025-12-29 08:10,Walk,5,88,22
 2025-12-29 08:20,Strength,16,94,15
 2025-12-29 08:40,Treadmill,10,107,12
+DateTime,BP_Systolic,BP_Diastolic,HeartRate,Category,Activity
+2025-12-29 20:06,122,67,90,M,Strength Training Post-Rest

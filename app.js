@@ -140,3 +140,11 @@ document.getElementById('dailySummaryBtn').addEventListener('click', function() 
         <p>Average Heart Rate: ${summary.avgHeartRate}</p>
     `;
 });
+document.getElementById("dailySummaryBtn").addEventListener("click", () => {
+  const dailySummary = `
+    <p><strong>BP:</strong> 122/67</p>
+    <p><strong>Heart Rate:</strong> 90</p>
+    <p><strong>Activity:</strong> Strength Training</p>
+  `;
+  document.getElementById("dailySummaryOutput").innerHTML = dailySummary;
+});

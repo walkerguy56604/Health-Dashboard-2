@@ -1,31 +1,4 @@
 DateTime,BP_Systolic,BP_Diastolic,HeartRate,Category,Activity
-2025-12-29 20:12,122,67,90,M hypertension,Strength Training
 import pandas as pd
 from datetime import datetime
-
-# File path
-csv_file = "daily_activity_log.csv"
-
-# New entry
-new_entry = {
-    "DateTime": datetime.now().strftime("%Y-%m-%d %H:%M"),
-    "BP_Systolic": 122,
-    "BP_Diastolic": 67,
-    "HeartRate": 90,
-    "Category": "M",
-    "Activity": "Strength Training Post-Rest"
-}
-
-# Load existing CSV or create new if not exists
-try:
-    df = pd.read_csv(csv_file, parse_dates=["DateTime"])
-except FileNotFoundError:
-    df = pd.DataFrame(columns=new_entry.keys())
-
-# Append new entry
-df = df.append(new_entry, ignore_index=True)
-
-# Save updated CSV
-df.to_csv(csv_file, index=False)
-
-print("✅ Daily activity log updated successfully!")
+...

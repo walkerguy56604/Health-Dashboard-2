@@ -126,3 +126,17 @@ function getDailySummary(date) {
 const today = "2025-12-29";
 const dailySummary = getDailySummary(today);
 console.log(`Daily Summary for ${today}:`, dailySummary);
+document.getElementById('dailySummaryBtn').addEventListener('click', function() {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const summary = getDailySummary(today); // Assuming this function exists in your app.js
+    const outputDiv = document.getElementById('dailySummaryOutput');
+    
+    outputDiv.innerHTML = `
+        <h3>Daily Summary for ${today}</h3>
+        <p>Walks: ${summary.walks}</p>
+        <p>Treadmill: ${summary.treadmill}</p>
+        <p>Strength Training: ${summary.strength}</p>
+        <p>Calories burned: ${summary.calories}</p>
+        <p>Average Heart Rate: ${summary.avgHeartRate}</p>
+    `;
+});

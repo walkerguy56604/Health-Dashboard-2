@@ -2,3 +2,28 @@ Date,Time,Activity,Duration (min),BP_Systolic,BP_Diastolic,HR,Glucose,Notes
 2025-12-29,08:20,Strength Training,16,,,
 2025-12-29,08:36,Post-Rest BP,5,?,?,?,
 2025-12-29,09:00,Treadmill,10,,,
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load your CSV
+df = pd.read_csv('daily_activity.csv', parse_dates=['Date'])
+
+# Sort by date just in case
+df = df.sort_values('Date')
+
+# Plot all blood pressure readings
+plt.plot(df['Date'], df['BP_Systolic'], label='Systolic', color='blue')
+plt.plot(df['Date'], df['BP_Diastolic'], label='Diastolic', color='green')
+
+# Highlight the latest entry
+latest = df.iloc[-1]  # gets last row
+plt.scatter(latest['Date'], latest['BP_Systolic'], color='red', s=100, label='Latest Systolic')
+plt.scatter(latest['Date'], latest['BP_Diastolic'], color='orange', s=100, label='Latest Diastolic')
+
+plt.xlabel('Date')
+plt.ylabel('Blood Pressure')
+plt.title('Blood Pressure Trend')
+plt.legend()
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()

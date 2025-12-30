@@ -1,6 +1,26 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Read your CSV
+df = pd.read_csv("daily_activity_log.csv", parse_dates=["DateTime"])
+
+# Example: basic plot of HeartRate over time
+plt.figure(figsize=(10,5))
+plt.plot(df["DateTime"], df["HeartRate"], marker='o', linestyle='-')
+plt.title("Daily Activity Heart Rate")
+plt.xlabel("Time")
+plt.ylabel("Heart Rate")
+plt.grid(True)
+plt.xticks(rotation=45)
+
+# Save as PNG
+plt.savefig("daily_activity_plot.png", bbox_inches='tight')
+plt.show()
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
 # Load the CSV (make sure your CSV is in the same folder or adjust the path)
 df = pd.read_csv("daily_activity_log.csv", parse_dates=["DateTime"])
 

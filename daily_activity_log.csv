@@ -1,4 +1,1 @@
-Date,Time,Activity,Duration (min),BP_Systolic,BP_Diastolic,HR,Glucose,Notes
-2025-12-29,08:20,Strength Training,16,,,
-2025-12-29,08:36,Post-Rest BP,5,?,?,?,
-2025-12-29,09:00,Treadmill,10,,,
+df = pd.read_csv("daily_activity_log.csv", parse_dates=["DateTime"])

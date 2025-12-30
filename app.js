@@ -183,3 +183,30 @@ function exportCSV() {
   link.download = "daily_log.csv";
   link.click();
 }
+// Helper to log a new activity interactively
+function logNewActivity() {
+  const type = prompt("Enter activity type (Walk, Treadmill, Strength Training, Blood Pressure):");
+  const date = new Date().toISOString().split("T")[0];
+  const start_time = prompt("Start time (HH:MM) or leave blank:");
+  const end_time = prompt("End time (HH:MM) or leave blank:");
+  const duration_minutes = prompt("Duration in minutes or leave blank:");
+  const notes = prompt("Any notes for this activity?");
+  const pre_bp = prompt("Pre-activity BP (optional):");
+  const post_bp = prompt("Post-activity BP (optional):");
+  const glucose = prompt("Glucose reading (optional):");
+
+  const newActivity = {
+    date,
+    type,
+    start_time: start_time || "",
+    end_time: end_time || "",
+    duration_minutes: duration_minutes || null,
+    notes: notes || "",
+    pre_bp: pre_bp || "",
+    post_bp: post_bp || "",
+    glucose: glucose || null
+  };
+
+  addActivity(newActivity);
+  alert("Activity logged successfully!");
+}

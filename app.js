@@ -82,3 +82,47 @@ function addBloodPressure(bpReading) {
 
 console.log("Activities loaded:", activities);
 console.log("Blood Pressure Readings loaded:", bloodPressureReadings);
+// =======================
+// DAILY SUMMARY FUNCTION
+// =======================
+function getDailySummary(date) {
+  const summary = {
+    walkDuration: 0,
+    treadmillDuration: 0,
+    strengthDuration: 0,
+    walkDistance: 0,
+    treadmillDistance: 0,
+    strengthExercises: 0,
+    caloriesBurned: 0,
+  };
+
+  activities.forEach(a => {
+    if (a.date === date) {
+      switch(a.type) {
+        case "Walk":
+          summary.walkDuration += a.duration || 0;
+          summary.walkDistance += a.distance || 0;
+          summary.caloriesBurned += a.calories || 0;
+          break;
+        case "Treadmill":
+          summary.treadmillDuration += a.duration || 0;
+          summary.treadmillDistance += a.distance || 0;
+          summary.caloriesBurned += a.calories || 0;
+          break;
+        case "Strength":
+          summary.strengthDuration += a.duration || 0;
+          summary.strengthExercises += (a.exercises ? a.exercises.length : 0);
+          break;
+      }
+    }
+  });
+
+  return summary;
+}
+
+// =======================
+// USAGE EXAMPLE
+// =======================
+const today = "2025-12-29";
+const dailySummary = getDailySummary(today);
+console.log(`Daily Summary for ${today}:`, dailySummary);
